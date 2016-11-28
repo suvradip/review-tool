@@ -1,7 +1,7 @@
 var gulp 			= require('gulp'),
  	nodemon 		= require('gulp-nodemon'),
 	sass            = require( 'gulp-sass' ),
-    browserSync     = require( 'browser-sync-ejs' ),
+    browserSync     = require( 'browser-sync'),
     reload          = browserSync.reload,
     autoprefixer    = require( 'gulp-autoprefixer' ),
     plumber         = require( 'gulp-plumber' );
@@ -59,9 +59,7 @@ gulp.task( 'html', function() {
 //////////////////////////////////////////
 gulp.task( 'browserSync', function() {
 	browserSync.init(['./public/css/*.css',  './views/index.ejs'], {
-	    server: {
-	      baseDir: __dirname
-	    }
+        proxy: "localhost:3000"
   	});	
 });
 
@@ -81,5 +79,4 @@ gulp.task('watch', function() {
 
 
 
-
-gulp.task('dev', ['watch:server', 'browserSync', 'watch']);
+gulp.task('dev', ['watch:server', 'watch', 'browserSync']);
