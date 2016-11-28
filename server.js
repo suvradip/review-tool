@@ -14,6 +14,7 @@ app.use(express.static('public'));
 app.use('/bower_components', express.static('bower_components'));
 app.set('view engine', 'ejs');
 
+//if port number is changing, also change in gulpfile for browsersync proxy
 app.listen(3000, function(){ console.log('[server.js] Running on port :3000'); });
 
 app.get('/', function(req, res){
