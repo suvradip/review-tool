@@ -1,0 +1,36 @@
+//Header
+
+header {
+	.wrapper {
+		width: 100%;
+		padding: 15px 0 10px;
+		background-color: $baseColor; 
+		position: fixed;
+		z-index: 2000;
+	}
+}
+
+
+//content
+.content {
+	padding-top: 60px;
+}
+.chart-wrapper {
+	margin: 30px 0;
+	text-align: center;
+}
+
+//Footer
+footer {
+	font-family: $lightFontFamily;
+	letter-spacing: .10em;
+	width: 100%;
+	padding: 20px 0;
+	background-color: $baseColor; 
+	color: $mobileNavHoverColor; 
+	@include font-size(.8);
+	text-align: center;
+	@media (min-width: $screen-md) {
+		text-align: left;
+	}   
+}

@@ -1,0 +1,49 @@
+.btn, 
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+	border: 1px solid $lightGray;
+	border-radius: 3px;
+	background: $lighterGray;	
+	@include font-size(1);
+	font-family: $lightFontFamily;
+	line-height: 1;
+	padding:10px 15px;
+	text-transform: uppercase;
+	letter-spacing: .05em;
+	&:hover {
+		border-color: darken($lightGray, 10%);
+		
+	}
+
+	&:active,
+	&:focus {
+		border-color: darken($lightGray, 10%);
+		
+	}
+}
+
+.btn {
+	&.btn-info {
+		border: 1px solid darken($infoColor, 5%);
+		background: $infoColor;
+		color: $white;
+
+		&:hover {
+		border-color: darken($infoColor, 10%);
+		background: darken($infoColor, 5%);
+		}
+
+		&:active,
+		&:focus {
+			border-color: darken($infoColor, 10%);
+			background: darken($infoColor, 5%);
+		}
+	}
+
+	&.btn-large {
+		padding: 12px 30px;
+		@include font-size(1.1);
+	}
+}

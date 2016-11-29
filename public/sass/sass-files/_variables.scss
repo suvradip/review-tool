@@ -1,0 +1,75 @@
+/*--------------------------------------------------------------
+# Colors
+--------------------------------------------------------------*/
+// Gray colors  =====================================
+
+$black                  : #000;
+$darkGray               : #5f5f5f;
+$lightGray              : #858585; 
+$lighterGray            : #c1c1c1;
+$themeGray              : #edeff0;
+$white                  : #fff;
+
+
+// Base colors 	=====================================
+
+$alertColor             : #ffd600;
+$errorColor             : #dd0000;
+$infoColor 		        : #006bb8;
+$successColor 	        : #71a408;
+$warningColor       	: #f48100;
+$inverseColor           : #3c3c3c;
+
+// Base typography  =====================================
+
+$baseFontSize           : 14px;
+$baseLineHeight         : 20px;
+$baseFontColor          : $darkGray;
+$baseFontFamily         : robotoregular, Arial, sans-serif;
+$headingFontFamily      : robotoregular, Arial, sans-serif; 
+$boldFontFamily         : robotoregular, Arial, sans-serif;
+$subHeadingFontFamily   : robotomedium, Arial, sans-serif;
+$lightFontFamily        : robotolight, Arial, sans-serif;
+$italicFontFamily       : robotomedium_italic, Arial, sans-serif;
+$monoFontFamily         : PTMonoRegular, "Courier New", monospace; 
+
+// Base Colors =====================================
+
+$backgroundColor        : #eff1f2;
+$baseColor              : #2b2243;
+
+// Link Colors =====================================
+
+$linkColor              : #0079d5;
+$linkHoverColor         : #1c97f6;
+$linkVistedColor        : #36b8d8;
+$linkFocusColor         : #1c97f6;
+
+
+// Primary Nav color    ====================================
+$navBaseColor           : #594883;
+
+// Mobile Navigation Colors  ===============================
+$mobileNavBaseColor     : #9c8bc7;
+$mobileNavHoverColor    : #8775b1;
+$mobileNavActiveColor   : #5b4a85;
+$mobileNavSubnavColor   : #7763ab;
+$mobileNavFocusColor    : #ef900f;
+
+
+
+
+// Extra small screen / phone
+$screen-xs:                  480px !default;
+// Small screen / tablet
+$screen-sm:                  768px !default;
+
+// Medium screen / desktop
+$screen-md:                  992px !default;
+
+// Large screen / wide desktop
+$screen-lg:                  1200px !default;
+
+
+
+
