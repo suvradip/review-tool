@@ -237,6 +237,16 @@ th {
 /*--------------------------------------------------------------
 # Layout
 --------------------------------------------------------------*/
+header .wrapper {
+  width: 100%;
+  padding: 15px 0 10px;
+  background-color: #2b2243;
+  position: fixed;
+  z-index: 2000; }
+
+.content {
+  padding-top: 60px; }
+
 .chart-wrapper {
   margin: 30px 0;
   text-align: center; }
@@ -247,9 +257,13 @@ footer {
   width: 100%;
   padding: 20px 0;
   background-color: #2b2243;
-  color: #fff;
+  color: #8775b1;
   font-size: 12.8px;
-  font-size: 0.8rem; }
+  font-size: 0.8rem;
+  text-align: center; }
+  @media (min-width: 992px) {
+    footer {
+      text-align: left; } }
 
 /*--------------------------------------------------------------
 # Forms
@@ -435,22 +449,30 @@ input[type="submit"] {
 .social-icon-holder {
   list-style: none;
   margin: 0;
-  padding: 0; }
+  padding: 0;
+  text-align: center; }
+  @media (min-width: 992px) {
+    .social-icon-holder {
+      text-align: right; } }
   .social-icon-holder li {
     margin-left: 8px;
-    margin-bottom: 0; }
+    margin-bottom: 0;
+    display: inline-block;
+    *zoom: 1;
+    *display: inline; }
     .social-icon-holder li a {
       display: block;
       background: url(../images/fc-social-icons.png) no-repeat right -2px;
       width: 48px;
       height: 48px;
-      border-bottom: none; }
+      border-bottom: none;
+      text-decoration: none !important; }
       .social-icon-holder li a:hover {
         text-decoration: none !important;
         background-position: right -53px; }
       .social-icon-holder li a span {
         display: block;
-        text-indent: -9999px; }
+        font-size: 0; }
     .social-icon-holder li.fc-blog-icon {
       margin-left: 0; }
     .social-icon-holder li.fc-blog-icon a {
