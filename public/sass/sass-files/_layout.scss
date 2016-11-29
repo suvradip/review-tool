@@ -1,0 +1,14 @@
+/*--------------------------------------------------------------
+# Bootstrap Grid 
+--------------------------------------------------------------*/
+@import "../bootstrap/_variables";
+@import "../bootstrap/_mixins";
+@import "../bootstrap/_grid"; 
+
+
+//Footer
+footer {
+	width: 100%;
+	background-color: $baseColor; 
+	color: $white; 
+}

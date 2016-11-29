@@ -4,6 +4,7 @@ var gulp 			= require('gulp'),
     browserSync     = require( 'browser-sync'),
     reload          = browserSync.reload,
     autoprefixer    = require( 'gulp-autoprefixer' ),
+    gutil           = require( 'gulp-util' ),
     plumber         = require( 'gulp-plumber' );
 
 gulp.task('watch:server', function () {
@@ -59,7 +60,7 @@ gulp.task( 'html', function() {
 //////////////////////////////////////////
 gulp.task( 'browserSync', function() {
 	browserSync.init(['./public/css/*.css',  './views/index.ejs'], {
-        proxy: "localhost:3000"
+        proxy: "localhost:3300"
   	});	
 });
 

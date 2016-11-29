@@ -5,7 +5,7 @@ var express,
 
 express = require("express");
 path = require("path");
-review = require("./models/reviews");
+// review = require("./models/reviews");
 
 app = express();
 
@@ -15,7 +15,7 @@ app.use('/bower_components', express.static('bower_components'));
 app.set('view engine', 'ejs');
 
 //if port number is changing, also change in gulpfile for browsersync proxy
-app.listen(3000, function(){ console.log('[server.js] Running on port :3000'); });
+app.listen(3300, function(){ console.log('[server.js] Running on port :3300'); });
 
 app.get('/', function(req, res){
 	res.render('index');
