@@ -451,6 +451,17 @@ input[type="submit"] {
         font-size: 0.75rem;
         line-height: 1.2;
         color: #858585; }
+      .reviews ul li .attachment {
+        font-size: 12px;
+        font-size: 0.75rem;
+        color: #858585;
+        margin-top: 5px;
+        padding-left: 20px;
+        background: url(../images/clip.png) no-repeat left 0;
+        opacity: .8;
+        cursor: pointer; }
+        .reviews ul li .attachment:hover {
+          opacity: 1; }
     .reviews ul ul {
       clear: both;
       margin-top: 15px;
