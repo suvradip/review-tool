@@ -73,7 +73,7 @@ gulp.task( 'browserSync', function() {
 //////////////////////////////////////////
 
 gulp.task('watch', function() {
-    gulp.watch('./public/sass/*.scss', ['sass']);
+    gulp.watch('./public/sass/**/*.scss', ['sass']);
     gulp.watch('./views/index.ejs', ['html']);
     gulp.watch('./public/css/*.css');
 });

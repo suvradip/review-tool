@@ -1,7 +1,7 @@
 /*--------------------------------------------------------------
 >>> TABLE OF CONTENTS:
 ----------------------------------------------------------------
-# Normalize
+# Normalize  
 # Typography 
 # Layout
 # Forms
@@ -231,11 +231,187 @@ th {
 * {
   font-family: robotoregular, Arial, sans-serif;
   font-size: 14px;
-  line-height: 20px; }
+  line-height: 20px;
+  box-sizing: border-box; }
 
 /*--------------------------------------------------------------
 # Layout
 --------------------------------------------------------------*/
+footer {
+  width: 100%;
+  background-color: #2b2243;
+  color: #fff; }
+
+/*--------------------------------------------------------------
+# Forms
+--------------------------------------------------------------*/
+input[type="text"],
+input[type="email"],
+input[type="url"],
+input[type="password"],
+input[type="search"],
+input[type="number"],
+input[type="tel"],
+input[type="range"],
+input[type="date"],
+input[type="month"],
+input[type="week"],
+input[type="time"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="color"],
+textarea {
+  color: #858585;
+  border: 1px solid #d1d6d9;
+  border-radius: 3px;
+  padding: 5px; }
+  input[type="text"]:focus,
+  input[type="email"]:focus,
+  input[type="url"]:focus,
+  input[type="password"]:focus,
+  input[type="search"]:focus,
+  input[type="number"]:focus,
+  input[type="tel"]:focus,
+  input[type="range"]:focus,
+  input[type="date"]:focus,
+  input[type="month"]:focus,
+  input[type="week"]:focus,
+  input[type="time"]:focus,
+  input[type="datetime"]:focus,
+  input[type="datetime-local"]:focus,
+  input[type="color"]:focus,
+  textarea:focus {
+    color: #858585; }
+
+select {
+  border: 1px solid #d1d6d9; }
+
+input[type="text"],
+input[type="email"],
+input[type="url"],
+input[type="password"],
+input[type="search"],
+input[type="number"],
+input[type="tel"],
+input[type="range"],
+input[type="date"],
+input[type="month"],
+input[type="week"],
+input[type="time"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="color"] {
+  padding: 5px; }
+
+textarea {
+  width: 100%; }
+
+/*--------------------------------------------------------------
+# Buttons
+--------------------------------------------------------------*/
+.btn,
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+  border: 1px solid #858585;
+  border-radius: 3px;
+  background: #c1c1c1;
+  font-size: 16px;
+  font-size: 1rem;
+  line-height: 1;
+  padding: 10px 15px; }
+  .btn:hover,
+  button:hover,
+  input[type="button"]:hover,
+  input[type="reset"]:hover,
+  input[type="submit"]:hover {
+    border-color: #6c6c6c; }
+  .btn:active, .btn:focus,
+  button:active,
+  button:focus,
+  input[type="button"]:active,
+  input[type="button"]:focus,
+  input[type="reset"]:active,
+  input[type="reset"]:focus,
+  input[type="submit"]:active,
+  input[type="submit"]:focus {
+    border-color: #6c6c6c; }
+
+.btn.btn-info {
+  border: 1px solid #005c9f;
+  background: #006bb8;
+  color: #fff; }
+  .btn.btn-info:hover {
+    border-color: #004d85;
+    background: #005c9f; }
+  .btn.btn-info:active, .btn.btn-info:focus {
+    border-color: #004d85;
+    background: #005c9f; }
+
+.btn.btn-large {
+  padding: 15px 20px;
+  font-size: 19.2px;
+  font-size: 1.2rem; }
+
+/*--------------------------------------------------------------
+# General
+--------------------------------------------------------------*/
+.reviews {
+  border-top: 1px solid #edeff0;
+  margin-top: 40px; }
+  .reviews ul {
+    list-style: none;
+    margin: 40px 0;
+    padding: 0; }
+    .reviews ul li {
+      content: "";
+      display: table;
+      table-layout: fixed;
+      margin-top: 25px; }
+      .reviews ul li:first-child {
+        margin-top: 0; }
+      .reviews ul li .reviewer {
+        max-width: 82px;
+        float: left;
+        text-align: center;
+        overflow: hidden; }
+        .reviews ul li .reviewer img {
+          border: 1px solid #dfe3e4;
+          outline: none; }
+        .reviews ul li .reviewer .reviewer-name {
+          color: #9f9f9f;
+          font-size: 12px;
+          line-height: 1.2; }
+      .reviews ul li .review-info {
+        color: #858585;
+        background-color: #fbfbfc;
+        border: 1px solid #dfe3e4;
+        padding: 10px;
+        margin-left: 110px;
+        min-height: 80px;
+        position: relative; }
+        .reviews ul li .review-info:after {
+          content: "";
+          display: block;
+          width: 0;
+          height: 0;
+          border-right: 13px solid #fbfbfc;
+          border-top: 13px solid transparent;
+          position: absolute;
+          top: 11px;
+          left: -12px; }
+        .reviews ul li .review-info:before {
+          content: "";
+          display: block;
+          width: 0;
+          height: 0;
+          border-right: 15px solid #dfe3e4;
+          border-top: 15px solid transparent;
+          position: absolute;
+          top: 10px;
+          left: -15px; }
+
 /*--------------------------------------------------------------
 # Bootstrap Grid 
 --------------------------------------------------------------*/
@@ -758,84 +934,3 @@ th {
     margin-left: 91.66667%; }
   .col-lg-offset-12 {
     margin-left: 100%; } }
-
-footer {
-  width: 100%;
-  background-color: #2b2243;
-  color: #fff; }
-
-/*--------------------------------------------------------------
-# Forms
---------------------------------------------------------------*/
-input[type="text"],
-input[type="email"],
-input[type="url"],
-input[type="password"],
-input[type="search"],
-input[type="number"],
-input[type="tel"],
-input[type="range"],
-input[type="date"],
-input[type="month"],
-input[type="week"],
-input[type="time"],
-input[type="datetime"],
-input[type="datetime-local"],
-input[type="color"],
-textarea {
-  border-radius: 3px; }
-
-input[type="text"],
-input[type="email"],
-input[type="url"],
-input[type="password"],
-input[type="search"],
-input[type="number"],
-input[type="tel"],
-input[type="range"],
-input[type="date"],
-input[type="month"],
-input[type="week"],
-input[type="time"],
-input[type="datetime"],
-input[type="datetime-local"],
-input[type="color"] {
-  padding: 3px; }
-
-textarea {
-  padding-left: 3px;
-  width: 100%; }
-
-/*--------------------------------------------------------------
-# Buttons
---------------------------------------------------------------*/
-button,
-input[type="button"],
-input[type="reset"],
-input[type="submit"] {
-  border: 1px solid;
-  border-radius: 3px;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), inset 0 15px 17px rgba(255, 255, 255, 0.5), inset 0 -5px 12px rgba(0, 0, 0, 0.05);
-  color: rgba(0, 0, 0, 0.8);
-  font-size: 12px;
-  font-size: 0.75rem;
-  line-height: 1;
-  padding: .6em 1em .4em;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8); }
-  button:hover,
-  input[type="button"]:hover,
-  input[type="reset"]:hover,
-  input[type="submit"]:hover {
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), inset 0 15px 17px rgba(255, 255, 255, 0.8), inset 0 -5px 12px rgba(0, 0, 0, 0.02); }
-  button:active, button:focus,
-  input[type="button"]:active,
-  input[type="button"]:focus,
-  input[type="reset"]:active,
-  input[type="reset"]:focus,
-  input[type="submit"]:active,
-  input[type="submit"]:focus {
-    box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.5), inset 0 2px 5px rgba(0, 0, 0, 0.15); }
-
-/*--------------------------------------------------------------
-# General
---------------------------------------------------------------*/
