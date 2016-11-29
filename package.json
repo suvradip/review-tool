@@ -17,6 +17,7 @@
     "gulp-plumber": "^1.1.0",
     "gulp-sass": "^2.3.2",
     "mongoose": "^4.7.0",
-    "body-parser": "~1.15.2"
+    "body-parser": "~1.15.2",
+    "socket.io": "~1.7.1"
   }
 }

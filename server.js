@@ -14,7 +14,10 @@ app.set('view engine', 'ejs');
 
 app.use(bodyParser.json());
 app.use(express.static('public'));
+//bower components directory mapping
 app.use('/bower_components', express.static('bower_components'));
+//angular app directory mapping
+app.use('/webapp', express.static('webapp'));
 
 app.use('/api/review', require(__dirname+'/controllers/api/reviews'));
 //if port number is changing, also change in gulpfile for browsersync proxy
