@@ -4,8 +4,58 @@
 	<title></title>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+	<!-- a js file for angular operation -->
+    <script type="text/javascript" src="webapp/app.js"></script>
 </head>
 <body>
-ok
+	<header>
+		
+	</header>
+	<div class="content" ng-app='reviewapp' >
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<section >
+						<div class="chart-wrapper"></div>
+					</section>
+					<section ng-controller='reviewSection'>
+						<div class="review-section">
+							<div class="review-form">
+								<textarea name="" id="" cols="30" rows="10" ng-model="review"></textarea>
+								<input type="submit" value="Post" ng-click="postReview()">
+							</div>
+						</div>
+						<div class="reviews">
+							<ul>
+								<li ng-repeat='unit in posts'>
+									<div class="reviewer">
+										<img src="" alt="" width="80" height="80" ng-src='{{ unit.avatar }}' >
+										<div class="reviewer-name">{{ unit.name }}</div>
+									</div>
+									<div class="review-info">{{ unit.review }}</div>
+								</li>
+							</ul>
+						</div>
+					</section>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6"><p class="copyright small mt10">&copy; 2002-
+				2016 InfoSoft Global Private Limited. <span>All Rights Reserved.</span></p></div>
+				<div class="col-lg-6">
+				<ul class="social-icon-holder">
+					<li class="fc-blog-icon"><a data-analytics-event="Outgoing Links|Blog|Blog" class="trackEvent" href="http://www.fusioncharts.com/blog/" target="_blank" title="The FusionCharts Blog"><span>The FusionCharts Blog</span></a></li>
+					<li class="facebook-icon"><a data-analytics-event="Outgoing Links|Social Follows|FaceBook" class="trackEvent" href="https://www.facebook.com/FusionCharts" target="_blank" title="Like us on Facebook"><span>Like us on Facebook</span></a></li>
+					<li class="twitter-icon"><a data-analytics-event="Outgoing Links|Social Follows|Twitter" class="trackEvent" href="https://twitter.com/FusionCharts" target="_blank" title="Follow us on Twitter"><span>Follow FusionCharts on Twitter</span></a></li>
+					<li class="googleplus-icon"><a data-analytics-event="Outgoing Links|Social Follows|Google Plus" class="trackEvent" href="https://plus.google.com/+FusionCharts" target="_blank" title="Follow us on Google Plus"><span>Need Info</span></a></li>
+				</ul>
+				</div>
+			</div>
+		</div>
+	</footer>
 </body>
 </html>

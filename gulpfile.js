@@ -4,6 +4,7 @@ var gulp 			= require('gulp'),
     browserSync     = require( 'browser-sync'),
     reload          = browserSync.reload,
     autoprefixer    = require( 'gulp-autoprefixer' ),
+    gutil           = require( 'gulp-util' ),
     plumber         = require( 'gulp-plumber' );
 
 gulp.task('watch:server', function () {
