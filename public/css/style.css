@@ -445,6 +445,16 @@ input[type="submit"] {
           position: absolute;
           top: 10px;
           left: -15px; }
+      .reviews ul li .review-date {
+        margin-top: 5px;
+        font-size: 12px;
+        font-size: 0.75rem;
+        line-height: 1.2;
+        color: #858585; }
+    .reviews ul ul {
+      clear: both;
+      margin-top: 15px;
+      padding-left: 107px; }
 
 .social-icon-holder {
   list-style: none;
