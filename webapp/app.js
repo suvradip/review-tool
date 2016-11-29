@@ -83,6 +83,7 @@ app.controller('reviewSection', function($scope, $http){
     				review: ele.review,
     				time: d.toLocaleTimeString(),
     				date: d.toLocaleDateString(),
+    				ssid: ele.screenshots
     			};
     		});
     	});
@@ -100,18 +101,21 @@ app.controller('reviewSection', function($scope, $http){
 				name: 'anonymous', 
 				review: $scope.review,
 				avatar: '/images/avatar.png',
-				ss: '/screenshots/'+ssid
+				ssid: ssid
 			};
 
 		//to show new posts	
 		$scope.posts.push(data);
-		data.time = d.toLocaleTimeString();
-    	data.date = d.toLocaleDateString();
-    	data.ssid = ssid;
 		//cleanup textare
 		$scope.review = "";
-		//store data in database
+		
+		//this data saved to db
+		data.time = d.toLocaleTimeString();
+    	data.date = d.toLocaleDateString();
+    	data.chartdata = FusionCharts('mychart').getJSONData();
+		//create screenshots
 		createScreenshot(ssid);
+		//store data in database
 		sendData('/api/review', data, function(){});
 	};
 });

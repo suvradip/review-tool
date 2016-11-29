@@ -32,14 +32,13 @@
 					<section >
 						<div class="chart-wrapper" >
 							<fusioncharts
-								width="500"
-								height="300"
+								width="800"
+								height="440"
 								type="column2d"
 								dataformat="json"
 								chartid ="mychart"
 								datasource= {{data}}
 							></fusioncharts>
-							<input type="submit" ng-click=createScreenshot()>
 						</div>
 					</section>
 					<section >
@@ -59,10 +58,8 @@
 										<div class="review-date small">{{ unit.date }}</div>
 									</div>
 									<div class="review-info">{{ unit.review }}
-										
-										<div class="attachment">fileName.png</div>
+										<div class="attachment"><a style="text-decoration: none; color: #858585; font-size: 0.75rem; font-size: 12px; font-size: 0.75rem; color: #858585; opacity: 1; cursor: pointer;" href="/screenshots/{{ unit.ssid }}">screenshots.png</a></div>
 									</div>
-
 								</li>
 							</ul>
 						</div>

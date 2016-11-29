@@ -11,7 +11,8 @@ router.post('/', function(req, res, next) {  
             review: req.body.review,
             avatar: req.body.avatar,
             name: req.body.name || 'anonymous',
-            screenshots: req.body.ssid
+            screenshots: req.body.ssid,
+            chartjson: req.body.chartdata
         });
 
         promise = entry.save();
