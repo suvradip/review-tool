@@ -5,14 +5,13 @@ router.post('/', function(req, res, next) {  
     var entry,
         promise,
          timeNow = new Date().getTime();
-
-        console.log(req.body);
         
         entry = new review({
             username: 'pid' + timeNow,
             review: req.body.review,
             avatar: req.body.avatar,
-            name: req.body.name || 'anonymous'
+            name: req.body.name || 'anonymous',
+            screenshots: req.body.ssid
         });
 
         promise = entry.save();

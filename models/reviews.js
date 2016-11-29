@@ -8,7 +8,8 @@ review = db.model('reviews', {
 	avatar: {type: String, trim:true},
 	review: {type: String, trim: true},
 	name: {type: String, trim: true},
-	time: {type: Date, default:new Date()}
+	screenshots: {type: String, trim: true},
+	time: {type: Date, require: true,default: new Date().toGMTString() }
 });
 
 module.exports = review;
