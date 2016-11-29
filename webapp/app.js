@@ -23,7 +23,7 @@ app.controller('reviewSection', function($scope, $http){
 		sendData,
 		loadAllReviews;
 
-	$scope.posts = [{username: 'test user', avatar: '/images/avatar.png', review:'ok. cool!'}];
+	$scope.posts = [];
 
 	getData = function(url, callback){
         $http({
@@ -54,7 +54,8 @@ app.controller('reviewSection', function($scope, $http){
     			return {
     				name: ele.name,
     				avatar: ele.avatar,
-    				review: ele.review
+    				review: ele.review,
+    				date: ele.time 
     			};
     		});
     	});
