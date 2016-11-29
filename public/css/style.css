@@ -237,6 +237,10 @@ th {
 /*--------------------------------------------------------------
 # Layout
 --------------------------------------------------------------*/
+.chart-wrapper {
+  margin: 30px 0;
+  text-align: center; }
+
 footer {
   font-family: robotolight, Arial, sans-serif;
   letter-spacing: .10em;
