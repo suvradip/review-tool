@@ -16,7 +16,9 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "^1.5.9"
+    "angular": "^1.5.9",
+    "fusioncharts": "^3.11.3",
+    "fusioncharts-angular": "^1.0.0"
   },
   "devDependencies": {
     "angular": "~1.5.9"

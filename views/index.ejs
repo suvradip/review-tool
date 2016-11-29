@@ -4,6 +4,12 @@
 	<title></title>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+	<!-- installing fusioncharts  -->
+	<script type="text/javascript" src="bower_components/fusioncharts/fusioncharts.js"></script>
+	<!-- installing fusioncharts zune theme -->
+	<script type="text/javascript" src="bower_components/fusioncharts/themes/fusioncharts.theme.zune.js"></script>
+	<!-- installing fusioncharts angular plugin  -->
+	<script type="text/javascript" src="bower_components/fusioncharts-angular/angular-fusioncharts.js"></script>
 	<!-- a js file for angular operation -->
     <script type="text/javascript" src="webapp/app.js"></script>
 </head>
@@ -16,7 +22,15 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<section >
-						<div class="chart-wrapper"></div>
+						<div class="chart-wrapper" ng-controller='chartRender'>
+							<fusioncharts
+								width="500"
+								height="300"
+								type="column2d"
+								dataformat="json"
+								datasource= {{data}}
+							></fusioncharts>
+						</div>
 					</section>
 					<section ng-controller='reviewSection'>
 						<div class="review-section">
