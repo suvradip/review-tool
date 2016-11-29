@@ -72,6 +72,32 @@
 				  left: -15px;
 		 		}
 		 	}
+
+		 	.review-date  {
+		 		margin-top: 5px;
+		 		@include font-size(.75);
+		 		line-height: 1.2;
+		 		color: lighten($baseFontColor, 15%);
+		 	}
+
+		 	.attachment {
+		 		 @include font-size(.75);
+		 		 color: lighten($baseFontColor, 15%);
+		 		 margin-top: 5px;
+				 padding-left: 20px;
+		 		 background: url(../images/clip.png) no-repeat left 0;
+		 		 opacity: .8;
+		 		 cursor: pointer;
+		 		 &:hover {
+ 					opacity: 1;
+		 		 }
+		 	}
+		 }
+
+		 ul {
+		 	clear: both;
+		 	margin-top: 15px;
+		 	padding-left: 107px;
 		 }
 	}
 }
