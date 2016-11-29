@@ -238,9 +238,14 @@ th {
 # Layout
 --------------------------------------------------------------*/
 footer {
+  font-family: robotolight, Arial, sans-serif;
+  letter-spacing: .10em;
   width: 100%;
+  padding: 20px 0;
   background-color: #2b2243;
-  color: #fff; }
+  color: #fff;
+  font-size: 12.8px;
+  font-size: 0.8rem; }
 
 /*--------------------------------------------------------------
 # Forms
@@ -319,8 +324,11 @@ input[type="submit"] {
   background: #c1c1c1;
   font-size: 16px;
   font-size: 1rem;
+  font-family: robotolight, Arial, sans-serif;
   line-height: 1;
-  padding: 10px 15px; }
+  padding: 10px 15px;
+  text-transform: uppercase;
+  letter-spacing: .05em; }
   .btn:hover,
   button:hover,
   input[type="button"]:hover,
@@ -350,13 +358,22 @@ input[type="submit"] {
     background: #005c9f; }
 
 .btn.btn-large {
-  padding: 15px 20px;
-  font-size: 19.2px;
-  font-size: 1.2rem; }
+  padding: 12px 30px;
+  font-size: 17.6px;
+  font-size: 1.1rem; }
 
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
+.small {
+  font-family: robotolight, Arial, sans-serif;
+  font-size: 12.8px;
+  font-size: 0.8rem; }
+  .small span {
+    font-family: robotolight, Arial, sans-serif;
+    font-size: 12.8px;
+    font-size: 0.8rem; }
+
 .reviews {
   border-top: 1px solid #edeff0;
   margin-top: 40px; }
@@ -365,9 +382,7 @@ input[type="submit"] {
     margin: 40px 0;
     padding: 0; }
     .reviews ul li {
-      content: "";
-      display: table;
-      table-layout: fixed;
+      overflow: hidden;
       margin-top: 25px; }
       .reviews ul li:first-child {
         margin-top: 0; }
@@ -390,7 +405,8 @@ input[type="submit"] {
         padding: 10px;
         margin-left: 110px;
         min-height: 80px;
-        position: relative; }
+        position: relative;
+        width: auto; }
         .reviews ul li .review-info:after {
           content: "";
           display: block;
@@ -411,6 +427,40 @@ input[type="submit"] {
           position: absolute;
           top: 10px;
           left: -15px; }
+
+.social-icon-holder {
+  list-style: none;
+  margin: 0;
+  padding: 0; }
+  .social-icon-holder li {
+    margin-left: 8px;
+    margin-bottom: 0; }
+    .social-icon-holder li a {
+      display: block;
+      background: url(../images/fc-social-icons.png) no-repeat right -2px;
+      width: 48px;
+      height: 48px;
+      border-bottom: none; }
+      .social-icon-holder li a:hover {
+        text-decoration: none !important;
+        background-position: right -53px; }
+      .social-icon-holder li a span {
+        display: block;
+        text-indent: -9999px; }
+    .social-icon-holder li.fc-blog-icon {
+      margin-left: 0; }
+    .social-icon-holder li.fc-blog-icon a {
+      background-position: 0px -2px; }
+      .social-icon-holder li.fc-blog-icon a:hover {
+        background-position: 0px -53px; }
+    .social-icon-holder li.facebook-icon a {
+      background-position: -51px -2px; }
+      .social-icon-holder li.facebook-icon a:hover {
+        background-position: -51px -53px; }
+    .social-icon-holder li.twitter-icon a {
+      background-position: -102px -2px; }
+      .social-icon-holder li.twitter-icon a:hover {
+        background-position: -102px -53px; }
 
 /*--------------------------------------------------------------
 # Bootstrap Grid 

@@ -5,12 +5,13 @@ input[type="reset"],
 input[type="submit"] {
 	border: 1px solid $lightGray;
 	border-radius: 3px;
-	background: $lighterGray;
-	
+	background: $lighterGray;	
 	@include font-size(1);
+	font-family: $lightFontFamily;
 	line-height: 1;
 	padding:10px 15px;
-
+	text-transform: uppercase;
+	letter-spacing: .05em;
 	&:hover {
 		border-color: darken($lightGray, 10%);
 		
@@ -42,7 +43,7 @@ input[type="submit"] {
 	}
 
 	&.btn-large {
-		padding: 15px 20px;
-		@include font-size(1.2);
+		padding: 12px 30px;
+		@include font-size(1.1);
 	}
 }

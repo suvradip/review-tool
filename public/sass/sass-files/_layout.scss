@@ -2,7 +2,11 @@
 
 //Footer
 footer {
+	font-family: $lightFontFamily;
+	letter-spacing: .10em;
 	width: 100%;
+	padding: 20px 0;
 	background-color: $baseColor; 
 	color: $white; 
+	@include font-size(.8);
 }
