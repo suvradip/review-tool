@@ -6,6 +6,8 @@ app.controller('reviewSection', function($scope, $http){
 		loadAllReviews,
 		createScreenshot;
 
+    $scope.site_root = '';
+
 	getData = function(url, callback){
         $http({
             method: 'GET',
@@ -69,12 +71,13 @@ app.controller('reviewSection', function($scope, $http){
 
 		img.onload = function() {
 		    ctx.drawImage( img, 0, 0 );
-		    sendData('api/create-screenshot', {data: canvas.toDataURL("image/png"), name: name}, function(){});
+		    sendData($scope.site_root+'api/create-screenshot', {data: canvas.toDataURL("image/png"), name: name}, function(){});
 		};
   	};
 
-    loadAllReviews = function(){
-    	getData('api/review', function(response){
+    $scope.loadAllReviews = function(site_root){
+        $scope.site_root = site_root;
+    	getData($scope.site_root+'api/review', function(response){
     		$scope.posts = response.map(function(ele){
     			var d = new Date(ele.time);
     			return {
@@ -89,7 +92,7 @@ app.controller('reviewSection', function($scope, $http){
     	});
     };
 
-    loadAllReviews();
+    //loadAllReviews();
     //triiger on post button-click
 	$scope.postReview = function(){
 		var d,
@@ -116,6 +119,6 @@ app.controller('reviewSection', function($scope, $http){
 		//create screenshots
 		createScreenshot(ssid);
 		//store data in database
-		sendData('api/review', data, function(){});
+		sendData($scope.site_root+'api/review', data, function(){});
 	};
 });

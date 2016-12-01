@@ -3,9 +3,10 @@ var app = angular.module('reviewapp', ['ng-fusioncharts']);
 app.controller('reviewSection', function($scope, $http){
 	var getData,
 		sendData,
-		loadAllReviews,
 		createScreenshot;
 
+    $scope.site_root = '';
+   
 	getData = function(url, callback){
         $http({
             method: 'GET',
@@ -70,12 +71,13 @@ app.controller('reviewSection', function($scope, $http){
 
 		img.onload = function() {
 		    ctx.drawImage( img, 0, 0 );
-		    sendData('/review/api/create-screenshot', {data: canvas.toDataURL("image/png"), name: name}, function(){});
+		    sendData($scope.site_root+'api/create-screenshot', {data: canvas.toDataURL("image/png"), name: name}, function(){});
 		};
   	};
 
-    loadAllReviews = function(){
-    	getData('/review/api/privateReviews', function(response){
+    $scope.loadAllReviews = function(site_root){
+        $scope.site_root = site_root;
+    	getData($scope.site_root+'api/privateReviews', function(response){
             //initialize the username on first load
             $scope.username = response.username;
     		$scope.posts = response.data.map(function(ele){
@@ -92,7 +94,7 @@ app.controller('reviewSection', function($scope, $http){
     	});
     };
 
-    loadAllReviews();
+   // loadAllReviews();
     //triiger on post button-click
 	$scope.postReview = function(){
 		var d,
@@ -119,6 +121,6 @@ app.controller('reviewSection', function($scope, $http){
 		//create screenshots
 		createScreenshot(ssid);
 		//store data in database
-		sendData('/review/api/privateReviews', data, function(){});
+		sendData($scope.site_root+'api/privateReviews', data, function(){});
 	};
 });
