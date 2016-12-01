@@ -2,7 +2,7 @@ var mongoose;
 
 mongoose = require("mongoose");
 
-mongoose.connect("mongodb://localhost:27017/fc-review");
+mongoose.connect("mongodb://127.0.0.1:27017/fc-review");
 mongoose.Promise = global.Promise;
 
 mongoose.connection.on("error", function(){console.log("[dbconnection.js] Mongodb: ERROR.");});
