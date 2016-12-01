@@ -69,12 +69,12 @@ app.controller('reviewSection', function($scope, $http){
 
 		img.onload = function() {
 		    ctx.drawImage( img, 0, 0 );
-		    sendData('/api/create-screenshot', {data: canvas.toDataURL("image/png"), name: name}, function(){});
+		    sendData('api/create-screenshot', {data: canvas.toDataURL("image/png"), name: name}, function(){});
 		};
   	};
 
     loadAllReviews = function(){
-    	getData('/api/review', function(response){
+    	getData('api/review', function(response){
     		$scope.posts = response.map(function(ele){
     			var d = new Date(ele.time);
     			return {
@@ -100,7 +100,7 @@ app.controller('reviewSection', function($scope, $http){
 		data = {
 				name: 'anonymous', 
 				review: $scope.review,
-				avatar: '/images/avatar.png',
+				avatar: 'images/avatar.png',
 				ssid: ssid
 			};
 
@@ -116,6 +116,6 @@ app.controller('reviewSection', function($scope, $http){
 		//create screenshots
 		createScreenshot(ssid);
 		//store data in database
-		sendData('/api/review', data, function(){});
+		sendData('api/review', data, function(){});
 	};
 });
