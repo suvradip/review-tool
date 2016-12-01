@@ -15,6 +15,9 @@ app.set('view engine', 'ejs');
 
 app.use(bodyParser.json());
 app.use(express.static('public'));
+
+global.rootdir = __dirname;
+
 //bower components directory mapping
 app.use('/bower_components', express.static('bower_components'));
 //angular app directory mapping
@@ -24,8 +27,11 @@ app.use('/webapp', express.static('webapp'));
 app.use('/api/review', require(__dirname+'/controllers/api/reviews'));
 //show data page
 app.use('/api/showdata', require(__dirname+'/controllers/api/showdata'));
+
+
+app.use('/api/create-screenshot', require(__dirname+'/controllers/imageConstruct'));
 //if port number is changing, also change in gulpfile for browsersync proxy
-app.listen(3300, function(){ console.log('[server.js] Running on port :33000'); });
+app.listen(3300, function(){ console.log('[server.js] Running on port :3300'); });
 
 app.get('/', function(req, res){
 	res.render('index');
