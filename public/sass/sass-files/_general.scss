@@ -175,10 +175,15 @@
 }
 
 
+.data-wrapper {
+	overflow-x: scroll;
+	overflow-y: hidden;
+	margin: 30px 0;
+}
+
 .table {
 	border: 1px solid $lighterGray;
 	border-collapse: collapse;
-	margin: 30px 0;
 	td, th{
 		border: 1px solid $lighterGray;
 		width: auto;
@@ -205,15 +210,23 @@
 		vertical-align: top;
 		 color: $lightGray;
 		pre {
-			white-space: pre;
-		    word-spacing: normal;
-		    word-break: normal;
+			white-space: pre-wrap;
+		    white-space: -moz-pre-wrap;
+			white-space: -o-pre-wrap;
+			word-wrap: break-word;
 		    margin: 0;
 		    color: $lightGray;
 		    max-height: 150px;
 		    overflow: auto;
 		    padding: 10px;
 		    border: 1px dotted  $lighterGray;
+
+		    code {
+		    white-space: pre-wrap;
+		    white-space: -moz-pre-wrap;
+			white-space: -o-pre-wrap;
+			word-wrap: break-word;
+		    }
 		}
 	}
 

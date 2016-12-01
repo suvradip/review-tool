@@ -237,6 +237,9 @@ th {
 /*--------------------------------------------------------------
 # Layout
 --------------------------------------------------------------*/
+body {
+  background-color: #2b2243; }
+
 header .wrapper {
   width: 100%;
   padding: 15px 0 10px;
@@ -245,7 +248,8 @@ header .wrapper {
   z-index: 2000; }
 
 .content {
-  padding-top: 60px; }
+  padding-top: 60px;
+  background-color: #fff; }
 
 .chart-wrapper {
   margin: 30px 0;
@@ -517,10 +521,14 @@ input[type="submit"] {
       .social-icon-holder li.twitter-icon a:hover {
         background-position: -102px -53px; }
 
+.data-wrapper {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  margin: 30px 0; }
+
 .table {
   border: 1px solid #c1c1c1;
-  border-collapse: collapse;
-  margin: 30px 0; }
+  border-collapse: collapse; }
   .table td, .table th {
     border: 1px solid #c1c1c1;
     width: auto;
@@ -538,15 +546,21 @@ input[type="submit"] {
     vertical-align: top;
     color: #858585; }
     .table td pre {
-      white-space: pre;
-      word-spacing: normal;
-      word-break: normal;
+      white-space: pre-wrap;
+      white-space: -moz-pre-wrap;
+      white-space: -o-pre-wrap;
+      word-wrap: break-word;
       margin: 0;
       color: #858585;
       max-height: 150px;
       overflow: auto;
       padding: 10px;
       border: 1px dotted #c1c1c1; }
+      .table td pre code {
+        white-space: pre-wrap;
+        white-space: -moz-pre-wrap;
+        white-space: -o-pre-wrap;
+        word-wrap: break-word; }
   .table tr:nth-child(odd) td {
     background-color: white; }
 
