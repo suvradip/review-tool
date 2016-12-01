@@ -2,7 +2,8 @@ var express,
 	app,
 	path,
 	bodyParser,
-	session;
+	session,
+	ENV;
 
 express = require("express");
 path = require("path");
@@ -11,6 +12,9 @@ session = require('express-session');
 review = require("./models/reviews");
 
 app = express();
+
+if(process.argv[2] && typeof process.argv[2] !== 'undefined')
+	ENV = process.argv[2];
 
 //Here ‘secret‘ is used for cookie handling etc
 app.use(session({secret: 'r3v13w-ut1l1ty'}));
@@ -22,9 +26,15 @@ app.use(bodyParser.json());
 app.use(express.static('public'));
 
 global.rootdir = __dirname;
-global.site_root = '/review';
 
-app.use(require(__dirname+'/controllers/auth'));
+//environment setup
+if(ENV === '-prod'){
+	global.site_root = '/review/';
+	console.log('production environment set.');
+} else {
+	global.site_root = '/';
+	console.log('development environment set.');
+}
 
 //bower components directory mapping
 app.use('/bower_components', express.static('bower_components'));

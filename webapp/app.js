@@ -100,7 +100,7 @@ app.controller('reviewSection', function($scope, $http){
 		data = {
 				name: 'anonymous', 
 				review: $scope.review,
-				avatar: 'images/avatar.png',
+				avatar: 'avatar.png',
 				ssid: ssid
 			};
 
