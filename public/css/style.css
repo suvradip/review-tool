@@ -462,6 +462,13 @@ input[type="submit"] {
         cursor: pointer; }
         .reviews ul li .attachment:hover {
           opacity: 1; }
+        .reviews ul li .attachment a {
+          display: inline-block;
+          text-decoration: none;
+          color: #858585; }
+          .reviews ul li .attachment a:hover {
+            text-decoration: underline;
+            color: #6c6c6c; }
     .reviews ul ul {
       clear: both;
       margin-top: 15px;

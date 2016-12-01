@@ -91,6 +91,18 @@
 		 		 &:hover {
  					opacity: 1;
 		 		 }
+
+		 		 a {
+		 		 	display: inline-block;
+		 		 	text-decoration: none;
+		 		 	color: $lightGray;
+
+		 		 	&:hover {
+ 						text-decoration: underline;
+ 						color: darken($lightGray, 10%);
+		 		 	}
+
+		 		 }
 		 	}
 		 }
 
