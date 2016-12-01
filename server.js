@@ -25,8 +25,7 @@ app.use('/webapp', express.static('webapp'));
 
 //review page
 app.use('/api/review', require(__dirname+'/controllers/api/reviews'));
-//show data page
-app.use('/api/showdata', require(__dirname+'/controllers/api/showdata'));
+
 
 
 app.use('/api/create-screenshot', require(__dirname+'/controllers/imageConstruct'));

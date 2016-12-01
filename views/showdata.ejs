@@ -3,9 +3,146 @@
 <head>
 	<title></title>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
-	
+	<script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+	<!-- installing fusioncharts  -->
+	<script type="text/javascript" src="bower_components/fusioncharts/fusioncharts.js"></script>
+	<!-- installing fusioncharts zune theme -->
+	<script type="text/javascript" src="bower_components/fusioncharts/themes/fusioncharts.theme.zune.js"></script>
+	<!-- installing fusioncharts angular plugin  -->
+	<script type="text/javascript" src="bower_components/fusioncharts-angular/angular-fusioncharts.js"></script>
+	<!-- a js file for angular operation -->
+    <script type="text/javascript" src="webapp/app.js"></script>
 </head>
 <body>
-	show data page
+	<header>
+		<div class="wrapper">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<a href="/"><img src="images/logo-white.png" alt="FusionCharts - Data to delight... in minutes"/></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+	<div class="content" ng-app='' >
+		<div class="container" ng-controller=''>
+			<div class="row">
+				<div class="col-lg-12">
+					<section >
+						<div class="data-wrapper" >
+							<table class="table">
+								<thead>
+									<tr>
+										<th class="name">Name</th>
+										<th class="chart-type">Chart Type</th>
+										<th class="reviews">Review</th>
+										<th class="screenshot">Screenshot</th>
+										<th class="data">Data</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>Uttam Kr Thapa</td>
+										<td>Time Series</td>
+										<td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde pariatur omnis quo beatae, dolores, ad ex maiores. Sapiente asperiores earum similique molestias officiis perspiciatis illum iusto provident, autem debitis saepe.</td>
+										<td><div class="attachment"><a href="screenshots/ss1480596794529.png">screenshots.png</a></div></td>
+										<td>
+<pre><code>$("#chart-container").insertFusionCharts({
+	    type: "column2d",
+	    width: "400",
+	    height: "350",
+	    dataFormat: "json",
+	    dataSource: {
+	        chart: {
+	            caption: "Harry's SuperMart",
+	            subCaption: "Top 5 stores in last month by revenue",
+	            numberPrefix: "$",
+	            theme: "ocean"
+	        },
+	        data: [{
+	            label: "Bakersfield Central",
+	            value: "880000"
+	        }, {
+	            label: "Garden Groove harbour",
+	            value: "730000"
+	        }, {
+	            label: "Los Angeles Topanga",
+	            value: "590000"
+	        }, {
+	            label: "Compton-Rancho Dom",
+	            value: "520000"
+	        }, {
+	            label: "Daly City Serramonte",
+	            value: "330000"
+	        }]
+	    }
+	});</code></pre>
+										</td>
+									</tr>	
+
+									<tr>
+										<td>Uttam Kr Thapa</td>
+										<td>Time Series</td>
+										<td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde pariatur omnis quo beatae, dolores, ad ex maiores. Sapiente asperiores earum similique molestias officiis perspiciatis illum iusto provident, autem debitis saepe.</td>
+										<td><div class="attachment"><a href="screenshots/ss1480596794529.png">screenshots.png</a></div></td>
+										<td>
+<pre><code>$("#chart-container").insertFusionCharts({
+	    type: "column2d",
+	    width: "400",
+	    height: "350",
+	    dataFormat: "json",
+	    dataSource: {
+	        chart: {
+	            caption: "Harry's SuperMart",
+	            subCaption: "Top 5 stores in last month by revenue",
+	            numberPrefix: "$",
+	            theme: "ocean"
+	        },
+	        data: [{
+	            label: "Bakersfield Central",
+	            value: "880000"
+	        }, {
+	            label: "Garden Groove harbour",
+	            value: "730000"
+	        }, {
+	            label: "Los Angeles Topanga",
+	            value: "590000"
+	        }, {
+	            label: "Compton-Rancho Dom",
+	            value: "520000"
+	        }, {
+	            label: "Daly City Serramonte",
+	            value: "330000"
+	        }]
+	    }
+	});</code></pre>
+										</td>
+									</tr>								
+								</tbody>
+							</table>
+						</div>
+					</section>
+				
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8 col-lg-6"><p class="copyright small mt10">&copy; 2002-
+				2016 InfoSoft Global Private Limited. <span>All Rights Reserved.</span></p></div>
+				<div class="col-md-4  col-lg-6">
+				<ul class="social-icon-holder">
+					<li class="fc-blog-icon"><a data-analytics-event="Outgoing Links|Blog|Blog" class="trackEvent" href="http://www.fusioncharts.com/blog/" target="_blank" title="The FusionCharts Blog"><span>The FusionCharts Blog</span></a></li>
+					<li class="facebook-icon"><a data-analytics-event="Outgoing Links|Social Follows|FaceBook" class="trackEvent" href="https://www.facebook.com/FusionCharts" target="_blank" title="Like us on Facebook"><span>Like us on Facebook</span></a></li>
+					<li class="twitter-icon"><a data-analytics-event="Outgoing Links|Social Follows|Twitter" class="trackEvent" href="https://twitter.com/FusionCharts" target="_blank" title="Follow us on Twitter"><span>Follow FusionCharts on Twitter</span></a></li>
+					<li class="googleplus-icon"><a data-analytics-event="Outgoing Links|Social Follows|Google Plus" class="trackEvent" href="https://plus.google.com/+FusionCharts" target="_blank" title="Follow us on Google Plus"><span>Need Info</span></a></li>
+				</ul>
+				</div>
+			</div>
+		</div>
+	</footer>
 </body>
 </html>
