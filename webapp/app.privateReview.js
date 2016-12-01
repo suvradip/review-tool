@@ -123,4 +123,9 @@ app.controller('reviewSection', function($scope, $http){
 		//store data in database
 		sendData($scope.site_root+'api/privateReviews', data, function(){});
 	};
+
+    $scope.updateData = function() {
+        console.log('ok');
+        $scope.data = $scope.newdata;
+    };
 });
