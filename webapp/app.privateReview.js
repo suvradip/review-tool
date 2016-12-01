@@ -29,6 +29,7 @@ app.controller('reviewSection', function($scope, $http){
         }).success(callback);
     };	
 
+    $scope.username = '';
 	$scope.posts = [];
 	$scope.data =  {
         chart: {
@@ -74,11 +75,13 @@ app.controller('reviewSection', function($scope, $http){
   	};
 
     loadAllReviews = function(){
-    	getData('/review/api/setchart/suvradip', function(response){
-    		$scope.posts = response.map(function(ele){
+    	getData('/review/api/privateReviews', function(response){
+            //initialize the username on first load
+            $scope.username = response.username;
+    		$scope.posts = response.data.map(function(ele){
     			var d = new Date(ele.time);
     			return {
-    				name: ele.name,
+    				name: ele.username,
     				avatar: ele.avatar,
     				review: ele.review,
     				time: d.toLocaleTimeString(),
@@ -98,9 +101,9 @@ app.controller('reviewSection', function($scope, $http){
 		d = new Date();
 		ssid = 'ss'+d.getTime()+'.png';
 		data = {
-				name: 'anonymous', 
+				name: $scope.username, 
 				review: $scope.review,
-				avatar: '/review/images/avatar.png',
+				avatar: 'avatar.png',
 				ssid: ssid
 			};
 
@@ -116,6 +119,6 @@ app.controller('reviewSection', function($scope, $http){
 		//create screenshots
 		createScreenshot(ssid);
 		//store data in database
-		sendData('/review/api/review', data, function(){});
+		sendData('/review/api/privateReviews', data, function(){});
 	};
 });

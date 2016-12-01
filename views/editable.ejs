@@ -2,16 +2,16 @@
 <html>
 <head>
 	<title></title>
-	<link rel="stylesheet" type="text/css" href="/review/css/style.css">
-	<script type="text/javascript" src="/review/bower_components/angular/angular.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="<%= site_root%>/css/style.css">
+	<script type="text/javascript" src="<%= site_root%>/bower_components/angular/angular.min.js"></script>
 	<!-- installing fusioncharts  -->
-	<script type="text/javascript" src="/review/bower_components/fusioncharts/fusioncharts.js"></script>
+	<script type="text/javascript" src="<%= site_root%>/bower_components/fusioncharts/fusioncharts.js"></script>
 	<!-- installing fusioncharts zune theme -->
-	<script type="text/javascript" src="/review/bower_components/fusioncharts/themes/fusioncharts.theme.zune.js"></script>
+	<script type="text/javascript" src="<%= site_root%>/bower_components/fusioncharts/themes/fusioncharts.theme.zune.js"></script>
 	<!-- installing fusioncharts angular plugin  -->
-	<script type="text/javascript" src="/review/bower_components/fusioncharts-angular/angular-fusioncharts.js"></script>
+	<script type="text/javascript" src="<%= site_root%>/bower_components/fusioncharts-angular/angular-fusioncharts.js"></script>
 	<!-- a js file for angular operation -->
-    <script type="text/javascript" src="/review/webapp/app.setchart.js"></script>
+    <script type="text/javascript" src="<%= site_root%>/webapp/app.privateReview.js"></script>
 </head>
 <body>
 	<header>
@@ -19,7 +19,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-12">
-						<a href="/"><img src="/review/images/logo-white.png" alt="FusionCharts - Data to delight... in minutes"/></a>
+						<a href="/"><img src="<%= site_root%>/images/logo-white.png" alt="FusionCharts - Data to delight... in minutes"/></a>
 					</div>
 				</div>
 			</div>
@@ -52,13 +52,13 @@
 							<ul>
 								<li ng-repeat='unit in posts'>
 									<div class="reviewer">
-										<img src="" alt="" width="80" height="80" ng-src='/review/{{ unit.avatar }}' >
+										<img src="" alt="" width="80" height="80" ng-src='<%= site_root%>/images/{{ unit.avatar }}' >
 										<div class="reviewer-name">{{ unit.name }}</div>
 										<div class="review-date small">{{ unit.time }}</div>
 										<div class="review-date small">{{ unit.date }}</div>
 									</div>
 									<div class="review-info">{{ unit.review }}
-										<div class="attachment"><a  href="screenshots/{{ unit.ssid }}">screenshots.png</a></div>
+										<div class="attachment"><a  href="<%= site_root%>/screenshots/{{ unit.ssid }}">screenshots.png</a></div>
 									</div>
 								</li>
 							</ul>
@@ -75,10 +75,10 @@
 				2016 InfoSoft Global Private Limited. <span>All Rights Reserved.</span></p></div>
 				<div class="col-md-4  col-lg-6">
 				<ul class="social-icon-holder">
-					<li class="fc-blog-icon"><a data-analytics-event="Outgoing Links|Blog|Blog" class="trackEvent" href="http://www.fusioncharts.com/blog/" target="_blank" title="The FusionCharts Blog"><span>The FusionCharts Blog</span></a></li>
-					<li class="facebook-icon"><a data-analytics-event="Outgoing Links|Social Follows|FaceBook" class="trackEvent" href="https://www.facebook.com/FusionCharts" target="_blank" title="Like us on Facebook"><span>Like us on Facebook</span></a></li>
-					<li class="twitter-icon"><a data-analytics-event="Outgoing Links|Social Follows|Twitter" class="trackEvent" href="https://twitter.com/FusionCharts" target="_blank" title="Follow us on Twitter"><span>Follow FusionCharts on Twitter</span></a></li>
-					<li class="googleplus-icon"><a data-analytics-event="Outgoing Links|Social Follows|Google Plus" class="trackEvent" href="https://plus.google.com/+FusionCharts" target="_blank" title="Follow us on Google Plus"><span>Need Info</span></a></li>
+					<li class="fc-blog-icon"><a href="http://www.fusioncharts.com/blog/" target="_blank" title="The FusionCharts Blog"><span>The FusionCharts Blog</span></a></li>
+					<li class="facebook-icon"><a href="https://www.facebook.com/FusionCharts" target="_blank" title="Like us on Facebook"><span>Like us on Facebook</span></a></li>
+					<li class="twitter-icon"><a href="https://twitter.com/FusionCharts" target="_blank" title="Follow us on Twitter"><span>Follow FusionCharts on Twitter</span></a></li>
+					<li class="googleplus-icon"><a href="https://plus.google.com/+FusionCharts" target="_blank" title="Follow us on Google Plus"><span>Need Info</span></a></li>
 				</ul>
 				</div>
 			</div>
