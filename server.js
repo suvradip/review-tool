@@ -18,6 +18,8 @@ app.use(express.static('public'));
 
 global.rootdir = __dirname;
 
+app.use(require(__dirname+'/controllers/auth'));
+
 //bower components directory mapping
 app.use('/bower_components', express.static('bower_components'));
 //angular app directory mapping
@@ -25,9 +27,8 @@ app.use('/webapp', express.static('webapp'));
 
 //review page
 app.use('/api/review', require(__dirname+'/controllers/api/reviews'));
-//show data page
-app.use('/api/showdata', require(__dirname+'/controllers/api/showdata'));
 
+app.use('/api/setchart', require(__dirname+'/controllers/api/setchart'));
 
 app.use('/api/create-screenshot', require(__dirname+'/controllers/imageConstruct'));
 //if port number is changing, also change in gulpfile for browsersync proxy
@@ -39,5 +40,9 @@ app.get('/', function(req, res){
 
 app.get('/showdata', function(req, res){
 	res.render('showdata');
+});
+
+app.get('/users/:username', function(req, res){
+	res.render('editable');
 });
 
