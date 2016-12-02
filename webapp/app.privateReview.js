@@ -3,11 +3,10 @@ var app = angular.module('reviewapp', ['ng-fusioncharts']);
 app.controller('reviewSection', function($scope, $http){
 	var getData,
 		sendData,
-		loadAllReviews,
 		createScreenshot;
 
     $scope.site_root = '';
-
+   
 	getData = function(url, callback){
         $http({
             method: 'GET',
@@ -31,6 +30,7 @@ app.controller('reviewSection', function($scope, $http){
         }).success(callback);
     };	
 
+    $scope.username = '';
 	$scope.posts = [];
 	$scope.data =  {
         chart: {
@@ -77,11 +77,13 @@ app.controller('reviewSection', function($scope, $http){
 
     $scope.loadAllReviews = function(site_root){
         $scope.site_root = site_root;
-    	getData($scope.site_root+'api/review', function(response){
-    		$scope.posts = response.map(function(ele){
+    	getData($scope.site_root+'api/privateReviews', function(response){
+            //initialize the username on first load
+            $scope.username = response.username;
+    		$scope.posts = response.data.map(function(ele){
     			var d = new Date(ele.time);
     			return {
-    				name: ele.name,
+    				name: ele.username,
     				avatar: ele.avatar,
     				review: ele.review,
     				time: d.toLocaleTimeString(),
@@ -92,7 +94,7 @@ app.controller('reviewSection', function($scope, $http){
     	});
     };
 
-    //loadAllReviews();
+   // loadAllReviews();
     //triiger on post button-click
 	$scope.postReview = function(){
 		var d,
@@ -101,7 +103,7 @@ app.controller('reviewSection', function($scope, $http){
 		d = new Date();
 		ssid = 'ss'+d.getTime()+'.png';
 		data = {
-				name: 'anonymous', 
+				name: $scope.username, 
 				review: $scope.review,
 				avatar: 'avatar.png',
 				ssid: ssid
@@ -119,6 +121,11 @@ app.controller('reviewSection', function($scope, $http){
 		//create screenshots
 		createScreenshot(ssid);
 		//store data in database
-		sendData($scope.site_root+'api/review', data, function(){});
+		sendData($scope.site_root+'api/privateReviews', data, function(){});
 	};
+
+    $scope.updateData = function() {
+        console.log('ok');
+        $scope.data = $scope.newdata;
+    };
 });

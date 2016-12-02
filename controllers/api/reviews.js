@@ -7,10 +7,10 @@ router.post('/', function(req, res, next) {  
          timeNow = new Date().getTime();
         
         entry = new review({
-            username: 'pid' + timeNow,
+            username: 'anonymous',
             review: req.body.review,
             avatar: req.body.avatar,
-            name: req.body.name || 'anonymous',
+            name: req.body.name || 'anonymous name',
             screenshots: req.body.ssid,
             chartjson: req.body.chartdata
         });
@@ -29,22 +29,10 @@ router.post('/', function(req, res, next) {  
 
 router.get('/', function (req, res) {
     var entries,
-        i,
-        id = req.query.id,
-        keys = req.query.keys,
-        keyNames = keys && keys.split(','),
         projection = {},
         query = {};
 
-    if(id !== undefined)
-    	query.productId = id;
-    
-    if (keys !== undefined) {
-        for (i = 0; i < keyNames.length; i++) {
-            projection[keyNames[i]] = 1;
-        }
-    }
-
+    query = {username: 'anonymous'};    
     entries = review.find(query, projection);
 
     entries.then(function (result) {

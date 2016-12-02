@@ -11,7 +11,7 @@
 	<!-- installing fusioncharts angular plugin  -->
 	<script type="text/javascript" src="<%= site_root%>bower_components/fusioncharts-angular/angular-fusioncharts.js"></script>
 	<!-- a js file for angular operation -->
-    <script type="text/javascript" src="<%= site_root%>webapp/app.js"></script>
+  <script type="text/javascript" src="<%= site_root%>webapp/app.privateReview.js"></script>
 </head>
 <body>
 	<header>
@@ -39,6 +39,8 @@
 								chartid ="mychart"
 								datasource= {{data}}
 							></fusioncharts>
+							<input type="submit" value="Update Data" class="btn btn-info btn-small"  ng-click="updateData()">
+							<textarea name="" id="" cols="30" rows="5" ng-model='newdata' ng-bind="data | json"></textarea>
 						</div>
 					</section>
 					<section >
