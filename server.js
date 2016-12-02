@@ -1,11 +1,14 @@
 var express,
 	app,
+	config,
 	path,
 	bodyParser,
 	session,
 	mongoStore,
 	db;
 
+//load configuaration	
+config = require('./config');
 express = require("express");
 path = require("path");
 bodyParser = require('body-parser');
@@ -17,8 +20,9 @@ review = require("./models/reviews");
 
 app = express();
 
-if(process.argv[2] && typeof process.argv[2] !== 'undefined')
-	process.env.NODE_ENV = process.argv[2];
+//environment setup
+process.env.NODE_ENV = config.env;
+global.site_root = config.site_root;
 
 //Here ‘secret‘ is used for cookie handling etc
 app.use(session({
@@ -36,14 +40,11 @@ app.use(express.static('public'));
 
 global.rootdir = __dirname;
 
-//environment setup
-if(process.env.NODE_ENV === '-prod'){
-	global.site_root = '/review/';
+
+if(process.env.NODE_ENV === 'production')
 	console.log('production environment set.');
-} else {
-	global.site_root = '/';
+else
 	console.log('development environment set.');
-}
 
 //bower components directory mapping
 app.use('/bower_components', express.static('bower_components'));
