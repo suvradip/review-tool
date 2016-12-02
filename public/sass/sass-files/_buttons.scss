@@ -12,6 +12,7 @@ input[type="submit"] {
 	padding:10px 15px;
 	text-transform: uppercase;
 	letter-spacing: .05em;
+	outline: none;
 	&:hover {
 		border-color: darken($lightGray, 10%);
 		
@@ -42,8 +43,31 @@ input[type="submit"] {
 		}
 	}
 
+	&.btn-default {
+		border: 1px solid darken($lightGray, 5%);
+		background: $lightGray;
+		color: $white;
+
+		&:hover {
+		border-color: darken($lightGray, 10%);
+		background: darken($lightGray, 5%);
+		}
+
+		&:active,
+		&:focus {
+			border-color: darken($lightGray, 10%);
+			background: darken($lightGray, 5%);
+		}
+	}
+
+	&.btn-small {
+		padding: 10px 23px 8px;
+		@include font-size(.9);
+	}
+
 	&.btn-large {
-		padding: 12px 30px;
+		padding: 12px 30px 11px;
 		@include font-size(1.1);
 	}
+
 }

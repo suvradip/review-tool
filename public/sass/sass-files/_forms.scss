@@ -15,10 +15,10 @@ input[type="datetime-local"],
 input[type="color"],
 textarea {
 	color: $lightGray;
-	border: 1px solid darken($themeGray, 10%);
+	border: 2px solid darken($themeGray, 10%);
 	border-radius: 3px;
 	padding: 5px;
-
+	outline: none;
 	&:focus {
 		color: $lightGray;
 	}
@@ -47,6 +47,12 @@ input[type="color"] {
 }
 
 textarea {
-
 	width: 100%;
+
+	&.textarea-code {
+		border: 1px dashed $lighterGray;
+		padding: 10px;
+		outline: none;
+	}
 }
+
