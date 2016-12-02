@@ -77,3 +77,6 @@ app.get('/users/:username', function(req, res){
 	res.render('editable');
 });
 
+app.get('/marker', function(req, res){
+	res.render('marker');
+});
