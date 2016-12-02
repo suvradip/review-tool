@@ -33,8 +33,7 @@ app.controller('dataSection', function($scope, $http){
 
     $scope.showAllReviews = function(site_root){
         $scope.site_root = site_root;
-    	getData($scope.site_root+'api/review', function(response){
-    		console.log(response);
+    	getData($scope.site_root+'api/showdata', function(response){
     		$scope.reviews = response.map(function(ele){
     			var d = new Date(ele.time);
     			return {
