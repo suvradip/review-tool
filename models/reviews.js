@@ -17,6 +17,7 @@ review = db.model('reviews', {
 	review: {type: String, trim: true},
 	name: {type: String, trim: true},
 	screenshots: {type: String, trim: true},
+	chartType: {type: String, trim: true},
 	chartjson: {type: JSON},
 	comments: [commnent],
 	time: {type: Date, require: true,default: new Date().toGMTString()}

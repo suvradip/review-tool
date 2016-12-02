@@ -12,6 +12,7 @@ router.post('/', function(req, res, next) {  
             avatar: req.body.avatar,
             name: req.body.name || 'anonymous name',
             screenshots: req.body.ssid,
+            chartType: req.body.charttype,
             chartjson: req.body.chartdata
         });
 

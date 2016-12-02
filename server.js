@@ -56,6 +56,9 @@ app.use('/api/review', require(__dirname+'/controllers/api/reviews'));
 app.use('/api/privateReviews', require(__dirname+'/controllers/api/privateReviews'));
 //api for create screenshots
 app.use('/api/create-screenshot', require(__dirname+'/controllers/imageConstruct'));
+//api for showdata page
+app.use('/api/showdata', require(__dirname+'/controllers/api/showdata'));
+
 //if port number is changing, also change in gulpfile for browsersync proxy
 app.listen(3300, function(){ console.log('[server.js] Running on port :3300'); });
 

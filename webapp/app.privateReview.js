@@ -6,7 +6,7 @@ app.controller('reviewSection', function($scope, $http){
 		createScreenshot;
 
     $scope.site_root = '';
-   
+
 	getData = function(url, callback){
         $http({
             method: 'GET',
@@ -47,8 +47,10 @@ app.controller('reviewSection', function($scope, $http){
         	{label: "Daly City Serramonte", value: "330000"}
         ] 
     };
-
-  	createScreenshot = function(name){
+    //set data inside the textarea
+    $scope.newdata = JSON.stringify($scope.data, null, 4);
+  	
+    createScreenshot = function(name){
   		var svg,
   			svgData,
   			canvas,
@@ -94,7 +96,6 @@ app.controller('reviewSection', function($scope, $http){
     	});
     };
 
-   // loadAllReviews();
     //triiger on post button-click
 	$scope.postReview = function(){
 		var d,
@@ -124,8 +125,8 @@ app.controller('reviewSection', function($scope, $http){
 		sendData($scope.site_root+'api/privateReviews', data, function(){});
 	};
 
-    $scope.updateData = function() {
-        console.log('ok');
+    //update chart datasource
+    $scope.updateData = function() {       
         $scope.data = $scope.newdata;
     };
 });

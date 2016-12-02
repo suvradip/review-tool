@@ -7,7 +7,7 @@ app.controller('reviewSection', function($scope, $http){
 		createScreenshot;
 
     $scope.site_root = '';
-
+    $scope.charttype = 'column2d';
 	getData = function(url, callback){
         $http({
             method: 'GET',
@@ -116,6 +116,7 @@ app.controller('reviewSection', function($scope, $http){
 		data.time = d.toLocaleTimeString();
     	data.date = d.toLocaleDateString();
     	data.chartdata = FusionCharts('mychart').getJSONData();
+        data.charttype = FusionCharts('mychart').chartType();
 		//create screenshots
 		createScreenshot(ssid);
 		//store data in database

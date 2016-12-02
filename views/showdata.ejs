@@ -3,7 +3,10 @@
 <head>
 	<title></title>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
-	
+	<!-- angularjs install -->
+	<script type="text/javascript" src="<%= site_root%>bower_components/angular/angular.min.js"></script>
+	<!-- a js file for angular operation -->
+    <script type="text/javascript" src="<%= site_root%>webapp/app.showdata.js"></script>
 </head>
 <body>
 	<header>
@@ -11,14 +14,14 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-12">
-						<a href="/"><img src="images/logo-white.png" alt="FusionCharts - Data to delight... in minutes"/></a>
+						<a href="<%= site_root%>"><img src="<%= site_root%>images/logo-white.png" alt="FusionCharts - Data to delight... in minutes"/></a>
 					</div>
 				</div>
 			</div>
 		</div>
 	</header>
-	<div class="content" ng-app='' >
-		<div class="container" ng-controller=''>
+	<div class="content" ng-app='showdata' >
+		<div class="container" ng-controller='dataSection' ng-init='showAllReviews("<%= site_root%>")'>
 			<div class="row">
 				<div class="col-lg-12">
 					<section >
@@ -34,83 +37,13 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td>Uttam Kr Thapa</td>
-										<td>Time Series</td>
-										<td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde pariatur omnis quo beatae, dolores, ad ex maiores. Sapiente asperiores earum similique molestias officiis perspiciatis illum iusto provident, autem debitis saepe.</td>
-										<td><div class="attachment"><a href="screenshots/ss1480596794529.png">screenshots.png</a></div></td>
-										<td>
-<pre><code>$("#chart-container").insertFusionCharts({
-	    type: "column2d",
-	    width: "400",
-	    height: "350",
-	    dataFormat: "json",
-	    dataSource: {
-	        chart: {
-	            caption: "Harry's SuperMart",
-	            subCaption: "Top 5 stores in last month by revenue",
-	            numberPrefix: "$",
-	            theme: "ocean"
-	        },
-	        data: [{
-	            label: "Bakersfield Central",
-	            value: "880000"
-	        }, {
-	            label: "Garden Groove harbour",
-	            value: "730000"
-	        }, {
-	            label: "Los Angeles Topanga",
-	            value: "590000"
-	        }, {
-	            label: "Compton-Rancho Dom",
-	            value: "520000"
-	        }, {
-	            label: "Daly City Serramonte",
-	            value: "330000"
-	        }]
-	    }
-	});</code></pre>
-										</td>
-									</tr>	
-
-									<tr>
-										<td>Uttam Kr Thapa</td>
-										<td>Time Series</td>
-										<td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde pariatur omnis quo beatae, dolores, ad ex maiores. Sapiente asperiores earum similique molestias officiis perspiciatis illum iusto provident, autem debitis saepe.</td>
-										<td><div class="attachment"><a href="screenshots/ss1480596794529.png">screenshots.png</a></div></td>
-										<td>
-<pre><code>$("#chart-container").insertFusionCharts({
-	    type: "column2d",
-	    width: "400",
-	    height: "350",
-	    dataFormat: "json",
-	    dataSource: {
-	        chart: {
-	            caption: "Harry's SuperMart",
-	            subCaption: "Top 5 stores in last month by revenue",
-	            numberPrefix: "$",
-	            theme: "ocean"
-	        },
-	        data: [{
-	            label: "Bakersfield Central",
-	            value: "880000"
-	        }, {
-	            label: "Garden Groove harbour",
-	            value: "730000"
-	        }, {
-	            label: "Los Angeles Topanga",
-	            value: "590000"
-	        }, {
-	            label: "Compton-Rancho Dom",
-	            value: "520000"
-	        }, {
-	            label: "Daly City Serramonte",
-	            value: "330000"
-	        }]
-	    }
-	});</code></pre>
-										</td>
-									</tr>								
+									<tr ng-repeat="unit in reviews">
+										<td>{{ unit.name }}</td>
+										<td>{{ unit.type }}</td>
+										<td>{{ unit.review }}</td>
+										<td><div class="attachment"><a href="<%= site_root%>screenshots/{{ unit.ssid }}">screenshots.png</a></div></td>
+										<td><pre><code>{{ unit.data }}</code></pre></td>
+									</tr>										
 								</tbody>
 							</table>
 						</div>
