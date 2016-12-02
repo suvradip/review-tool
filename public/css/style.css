@@ -237,6 +237,9 @@ th {
 /*--------------------------------------------------------------
 # Layout
 --------------------------------------------------------------*/
+body {
+  background-color: #2b2243; }
+
 header .wrapper {
   width: 100%;
   padding: 15px 0 10px;
@@ -245,7 +248,8 @@ header .wrapper {
   z-index: 2000; }
 
 .content {
-  padding-top: 60px; }
+  padding-top: 60px;
+  background-color: #fff; }
 
 .chart-wrapper {
   margin: 30px 0;
@@ -451,28 +455,29 @@ input[type="submit"] {
         font-size: 0.75rem;
         line-height: 1.2;
         color: #858585; }
-      .reviews ul li .attachment {
-        font-size: 12px;
-        font-size: 0.75rem;
-        color: #858585;
-        margin-top: 5px;
-        padding-left: 20px;
-        background: url(../images/clip.png) no-repeat left 0;
-        opacity: .8;
-        cursor: pointer; }
-        .reviews ul li .attachment:hover {
-          opacity: 1; }
-        .reviews ul li .attachment a {
-          display: inline-block;
-          text-decoration: none;
-          color: #858585; }
-          .reviews ul li .attachment a:hover {
-            text-decoration: underline;
-            color: #6c6c6c; }
     .reviews ul ul {
       clear: both;
       margin-top: 15px;
       padding-left: 107px; }
+
+.attachment {
+  font-size: 12px;
+  font-size: 0.75rem;
+  color: #858585;
+  margin-top: 5px;
+  padding-left: 20px;
+  background: url(../images/clip.png) no-repeat left 0;
+  opacity: .8;
+  cursor: pointer; }
+  .attachment:hover {
+    opacity: 1; }
+  .attachment a {
+    display: inline-block;
+    text-decoration: none;
+    color: #858585; }
+    .attachment a:hover {
+      text-decoration: underline;
+      color: #6c6c6c; }
 
 .social-icon-holder {
   list-style: none;
@@ -515,6 +520,49 @@ input[type="submit"] {
       background-position: -102px -2px; }
       .social-icon-holder li.twitter-icon a:hover {
         background-position: -102px -53px; }
+
+.data-wrapper {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  margin: 30px 0; }
+
+.table {
+  border: 1px solid #c1c1c1;
+  border-collapse: collapse; }
+  .table td, .table th {
+    border: 1px solid #c1c1c1;
+    width: auto;
+    min-width: 100px;
+    box-sizing: border-box;
+    padding: 10px; }
+  .table th {
+    font-size: 17.6px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    background-color: #edeff0; }
+    .table th.reviews {
+      min-width: 200px; }
+  .table td {
+    vertical-align: top;
+    color: #858585; }
+    .table td pre {
+      white-space: pre-wrap;
+      white-space: -moz-pre-wrap;
+      white-space: -o-pre-wrap;
+      word-wrap: break-word;
+      margin: 0;
+      color: #858585;
+      max-height: 150px;
+      overflow: auto;
+      padding: 10px;
+      border: 1px dotted #c1c1c1; }
+      .table td pre code {
+        white-space: pre-wrap;
+        white-space: -moz-pre-wrap;
+        white-space: -o-pre-wrap;
+        word-wrap: break-word; }
+  .table tr:nth-child(odd) td {
+    background-color: white; }
 
 /*--------------------------------------------------------------
 # Bootstrap Grid 
