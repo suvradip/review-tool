@@ -3,21 +3,30 @@ var express,
 	path,
 	bodyParser,
 	session,
-	ENV;
+	mongoStore,
+	db;
 
 express = require("express");
 path = require("path");
 bodyParser = require('body-parser');
 session = require('express-session');
+mongoStore = require('connect-mongo')(session);
+
+db = require('./dbconnection');
 review = require("./models/reviews");
 
 app = express();
 
 if(process.argv[2] && typeof process.argv[2] !== 'undefined')
-	ENV = process.argv[2];
+	process.env.NODE_ENV = process.argv[2];
 
 //Here ‘secret‘ is used for cookie handling etc
-app.use(session({secret: 'r3v13w-ut1l1ty'}));
+app.use(session({
+	secret: 'r3v13w-ut1l1ty ',
+	resave: true,
+    saveUninitialized: true,
+  	store: new mongoStore({ mongooseConnection: db.connection })
+}));
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -28,7 +37,7 @@ app.use(express.static('public'));
 global.rootdir = __dirname;
 
 //environment setup
-if(ENV === '-prod'){
+if(process.env.NODE_ENV === '-prod'){
 	global.site_root = '/review/';
 	console.log('production environment set.');
 } else {
