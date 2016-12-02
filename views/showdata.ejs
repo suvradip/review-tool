@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title></title>
-	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="<%= site_root%>css/style.css">
 	<!-- angularjs install -->
 	<script type="text/javascript" src="<%= site_root%>bower_components/angular/angular.min.js"></script>
 	<!-- a js file for angular operation -->
@@ -30,7 +30,7 @@
 								<thead>
 									<tr>
 										<th class="name">Name</th>
-										<th class="chart-type">Chart Type</th>
+										<th class="chart-type">Information</th>
 										<th class="reviews">Review</th>
 										<th class="screenshot">Screenshot</th>
 										<th class="data">Data</th>
@@ -42,7 +42,11 @@
 								</tr>
 									<tr  ng-if="reviews.length > 0" ng-repeat="unit in reviews">
 										<td>{{ unit.name }}</td>
-										<td>{{ unit.type }}</td>
+										<td>
+											<div><strong>Width:</strong>{{ unit.width }}</div>
+											<div><strong>Height:</strong>{{ unit.height }}</div>
+											<div><strong>Build:</strong>{{ unit.build }}</div>
+										</td>
 										<td>{{ unit.review }}</td>
 										<td><div class="attachment"><a href="<%= site_root%>screenshots/{{ unit.ssid }}">screenshots.png</a></div></td>
 										<td><pre><code>{{ unit.data }}</code></pre></td>

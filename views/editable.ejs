@@ -42,10 +42,6 @@
 								chartid ="mychart"
 								datasource= {{data}}
 							></fusioncharts>
-							<div class="card">				
-							<textarea name="" id=""  class="textarea-code" cols="30" rows="5" ng-model="newdata" ng-bind="data | json"></textarea>
-							<div class="clearfix mt10 mb10"><input type="submit" value="Update Data" class="btn btn-default btn-small"  ng-click="updateData()"></div>
-							</div>
 						</div>
 					</section>
 					<section >
@@ -53,6 +49,10 @@
 							<div class="review-form">
 								<textarea name="" id="" cols="30" rows="5" ng-model="review"></textarea>
 								<input type="submit" value="Post" class="btn btn-info btn-large clearfix" ng-click="postReview()">
+							</div>
+							<div class="card">				
+							<textarea name="" id=""  class="textarea-code" cols="30" rows="5" ng-model="newdata" ng-bind="data | json"></textarea>
+							<div class="clearfix mt10 mb10"><input type="submit" value="Update Data" class="btn btn-default btn-small"  ng-click="updateData()"></div>
 							</div>
 						</div>
 						<div class="reviews">

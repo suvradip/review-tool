@@ -15,7 +15,13 @@ router.post('/', function(req, res, next) {  
             avatar: req.body.avatar,
             name: sess.username || 'anonymous name',
             screenshots: req.body.ssid,
-            chartjson: req.body.chartdata
+            chartjson: req.body.chartdata,
+            chartinfo: {
+                type: req.body.chartinfo.type,
+                width: req.body.chartinfo.width,
+                height: req.body.chartinfo.height,
+                buildno: req.body.chartinfo.build
+            }
         });
 
         promise = entry.save();

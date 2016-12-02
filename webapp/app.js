@@ -4,7 +4,8 @@ app.controller('reviewSection', function($scope, $http){
 	var getData,
 		sendData,
 		loadAllReviews,
-		createScreenshot;
+		createScreenshot,
+        chartref;
 
     $scope.site_root = '';
     $scope.charttype = 'column2d';
@@ -113,10 +114,16 @@ app.controller('reviewSection', function($scope, $http){
 		$scope.review = "";
 		
 		//this data saved to db
+        chartref = FusionCharts('mychart');
 		data.time = d.toLocaleTimeString();
     	data.date = d.toLocaleDateString();
-    	data.chartdata = FusionCharts('mychart').getJSONData();
-        data.charttype = FusionCharts('mychart').chartType();
+    	data.chartdata = chartref.getJSONData();
+        data.chartinfo = {
+            type: chartref.chartType(),
+            width: chartref.width,
+            height: chartref.height,
+            build: 'xx-xx'
+        };
 		//create screenshots
 		createScreenshot(ssid);
 		//store data in database
