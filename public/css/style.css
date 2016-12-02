@@ -289,9 +289,10 @@ input[type="datetime-local"],
 input[type="color"],
 textarea {
   color: #858585;
-  border: 1px solid #d1d6d9;
+  border: 2px solid #d1d6d9;
   border-radius: 3px;
-  padding: 5px; }
+  padding: 5px;
+  outline: none; }
   input[type="text"]:focus,
   input[type="email"]:focus,
   input[type="url"]:focus,
@@ -332,6 +333,10 @@ input[type="color"] {
 
 textarea {
   width: 100%; }
+  textarea.textarea-code {
+    border: 1px dashed #c1c1c1;
+    padding: 10px;
+    outline: none; }
 
 /*--------------------------------------------------------------
 # Buttons
@@ -350,7 +355,8 @@ input[type="submit"] {
   line-height: 1;
   padding: 10px 15px;
   text-transform: uppercase;
-  letter-spacing: .05em; }
+  letter-spacing: .05em;
+  outline: none; }
   .btn:hover,
   button:hover,
   input[type="button"]:hover,
@@ -379,8 +385,24 @@ input[type="submit"] {
     border-color: #004d85;
     background: #005c9f; }
 
+.btn.btn-default {
+  border: 1px solid #787878;
+  background: #858585;
+  color: #fff; }
+  .btn.btn-default:hover {
+    border-color: #6c6c6c;
+    background: #787878; }
+  .btn.btn-default:active, .btn.btn-default:focus {
+    border-color: #6c6c6c;
+    background: #787878; }
+
+.btn.btn-small {
+  padding: 10px 23px 8px;
+  font-size: 14.4px;
+  font-size: 0.9rem; }
+
 .btn.btn-large {
-  padding: 12px 30px;
+  padding: 12px 30px 11px;
   font-size: 17.6px;
   font-size: 1.1rem; }
 
@@ -563,6 +585,35 @@ input[type="submit"] {
         word-wrap: break-word; }
   .table tr:nth-child(odd) td {
     background-color: white; }
+
+.card {
+  margin: 20px 0;
+  padding: 10px;
+  background-color: #edeff0; }
+
+.mb10 {
+  margin-bottom: 10px; }
+
+.mb20 {
+  margin-bottom: 20px; }
+
+.mb30 {
+  margin-bottom: 30px; }
+
+.mb40 {
+  margin-bottom: 40px; }
+
+.mt10 {
+  margin-top: 10px; }
+
+.mt20 {
+  margin-top: 20px; }
+
+.mt30 {
+  margin-top: 30px; }
+
+.mt40 {
+  margin-top: 40px; }
 
 /*--------------------------------------------------------------
 # Bootstrap Grid 
