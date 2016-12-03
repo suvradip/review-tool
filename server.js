@@ -59,6 +59,8 @@ app.use('/api/privateReviews', require(__dirname+'/controllers/api/privateReview
 app.use('/api/create-screenshot', require(__dirname+'/controllers/imageConstruct'));
 //api for showdata page
 app.use('/api/showdata', require(__dirname+'/controllers/api/showdata'));
+//set chart data
+app.use('/api/users', require(__dirname+'/controllers/api/setchart'));
 
 //if port number is changing, also change in gulpfile for browsersync proxy
 app.listen(3300, function(){ console.log('[server.js] Running on port :3300'); });
@@ -77,3 +79,8 @@ app.get('/users/:username', function(req, res){
 	res.render('editable');
 });
 
+app.get('/users/:username/setchart', function(req, res){
+	var sess = req.session;
+	sess.username = req.params.username;
+	res.render('setchart');
+});
