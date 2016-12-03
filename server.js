@@ -5,7 +5,8 @@ var express,
 	bodyParser,
 	session,
 	mongoStore,
-	db;
+	db,
+	users = require('./models/users');
 
 //load configuaration	
 config = require('./config');
@@ -35,7 +36,9 @@ app.use(session({
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.use(bodyParser.json());
+//app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 app.use(express.static('public'));
 
 global.rootdir = __dirname;
@@ -59,7 +62,8 @@ app.use('/api/privateReviews', require(__dirname+'/controllers/api/privateReview
 app.use('/api/create-screenshot', require(__dirname+'/controllers/imageConstruct'));
 //api for showdata page
 app.use('/api/showdata', require(__dirname+'/controllers/api/showdata'));
-
+//api for users
+app.use('/api/user', require(__dirname+'/controllers/api/users'));
 //if port number is changing, also change in gulpfile for browsersync proxy
 app.listen(3300, function(){ console.log('[server.js] Running on port :3300'); });
 
@@ -74,6 +78,24 @@ app.get('/showdata', function(req, res){
 app.get('/users/:username', function(req, res){
 	var sess = req.session;
 	sess.username = req.params.username;
-	res.render('editable');
+	
+	var entries,
+        projection = {},
+        query = {};
+
+    query = {username: 'ssa'};    
+    entries = users.findOne(query, projection);
+
+    entries.then(function (result) {
+    	console.log(result);
+        console.log('[users.js] Retreived Successfully!');
+        res.render('editable', {'js_filename' : result.main});
+    })
+    .catch(function (err) {
+        console.log('[users.js] Retreive Failed!');
+        console.log(err);
+        res.status(404).end();
+    });
+
 });
 

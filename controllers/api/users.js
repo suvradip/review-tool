@@ -1,16 +1,18 @@
 var router = require('express').Router(),
-    review = require('../../models/users');
+    users = require('../../models/users');
 
 router.post('/', function(req, res, next) {  
     var entry,
         promise,
         timeNow = new Date().getTime();
         
-        entry = new review({
+        entry = new users({
             userid: 'pid' + timeNow,
             username: req.body.username,
             name: req.body.name,
-            avatar: req.body.avatar
+            avatar: req.body.avatar,
+            main: req.body.link.data,
+            links: req.body.link
         });
 
         promise = entry.save();
@@ -23,12 +25,32 @@ router.post('/', function(req, res, next) {  
             console.log(err);
             res.status(404).end();
         });
+
+  
+
+       // res.send('sss12');
 });
 
-router.get('/:username', function (req, res) {
-    require('./auth');
-    res.send(req.params.username);
+router.get('/', function (req, res) {
+    
+   var entries,
+        projection = {},
+        query = {};
 
+    query = {username: 'ssa'};    
+    entries = users.find(query, projection);
+
+    entries.then(function (result) {
+        console.log('[users.js] Retreived Successfully!');
+        console.log(result);
+        res.status(200).send(result).end();
+    })
+    .catch(function (err) {
+        console.log('[users.js] Retreive Failed!');
+        console.log(err);
+        res.status(404).end();
+    });
+   //res.send('sss');
 });
 
 module.exports = router;
