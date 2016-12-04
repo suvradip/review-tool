@@ -39,7 +39,9 @@ app.controller('dataSection', function($scope, $http){
     			return {
     				name: ele.username,
     				review: ele.review,
-    				type: ele.chartType,
+    				width: ele.chartinfo.width,
+                    height: ele.chartinfo.height,
+                    build: ele.chartinfo.buildno,
     				data: JSON.stringify(ele.chartjson, null, 4),
     				ssid: ele.screenshots,
     				date: d.toLocaleDateString(),

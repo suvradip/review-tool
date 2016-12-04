@@ -3,7 +3,8 @@ var app = angular.module('reviewapp', ['ng-fusioncharts']);
 app.controller('reviewSection', function($scope, $http){
 	var getData,
 		sendData,
-		createScreenshot;
+		createScreenshot,
+        chartref;
 
     $scope.site_root = '';
 
@@ -116,9 +117,16 @@ app.controller('reviewSection', function($scope, $http){
 		$scope.review = "";
 		
 		//this data saved to db
+        chartref = FusionCharts('mychart');
 		data.time = d.toLocaleTimeString();
     	data.date = d.toLocaleDateString();
     	data.chartdata = FusionCharts('mychart').getJSONData();
+        data.chartinfo = {
+            type: chartref.chartType(),
+            width: chartref.width,
+            height: chartref.height,
+            build: 'xx-xx'
+        };
 		//create screenshots
 		createScreenshot(ssid);
 		//store data in database
