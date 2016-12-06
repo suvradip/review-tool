@@ -22,6 +22,7 @@ router.get('/users', function(req, res){
 });
 
 router.get('/users/:username', function(req, res){
+	req.session.secusername = req.params.username;
 	res.render('maincharts', {susername: req.params.username, fname: '' });
 });
 
@@ -30,7 +31,8 @@ router.get('/users/:username', function(req, res){
 //api for login page
 router.use('/api/login/', require(global.rootdir+'/controllers/api/login'));
 
-
+//review page api
+router.use('/api/review', require(global.rootdir+'/controllers/api/reviews'));
 
 
 //=== router middleware to protect this api ====
@@ -58,8 +60,8 @@ router.get('/users/:username/setchart', function(req, res){
 //	API Links register
 //====================
 
-//review page api
-router.use('/api/review', require(global.rootdir+'/controllers/api/reviews'));
+// //review page api
+// router.use('/api/review', require(global.rootdir+'/controllers/api/reviews'));
 //private review page api
 router.use('/api/privateReviews', require(global.rootdir+'/controllers/api/privateReviews'));
 //api for create screenshots

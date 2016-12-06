@@ -13,7 +13,7 @@ router.post('/validate', function(req, res, next) {  
     password = req.body.password;
 
     user.findOne({username: username})
-        .select({'password': 1, _id: 0})
+        .select({'password': 1, avatar: 1, name: 1, _id: 0})
         .exec(function (err, result) {
             if  (err) { return next(err); }
             if  (!result) { return  res.send(401); }
@@ -21,7 +21,7 @@ router.post('/validate', function(req, res, next) {  
                 if(err) { return  next(err); }
                 if(!valid) { return res.send(401); }
 
-                token = jwt.encode({username: username}, config.secretKey);
+                token = jwt.encode({username: username, avatar: result.avatar, name: result.name}, config.secretKey);
                 req.session.token = token;
                 res.type("html");
                 res.status(200).redirect('/users/'+username);

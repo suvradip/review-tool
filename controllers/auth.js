@@ -1,7 +1,6 @@
 var auth,
 	jwt = require('jwt-simple'),
-    bcrypt = require('bcrypt'),
-    config = require(global.rootdir+'/config');
+  config = require(global.rootdir+'/config');
 
 auth = function(req, res, next){
 	var sess = req.session,

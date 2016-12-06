@@ -77,12 +77,12 @@ app.controller('mainchartctrl', function($scope, $http){
   	};
 
     $scope.loadAllReviews = function(obj){
-        console.log(obj);
+        
         $scope.site_root = obj.site_root;
     	getData($scope.site_root+'api/review/'+obj.susername, function(response){
-            
-            if(response.success){
-        		$scope.posts = response.result.map(function(ele){
+           
+            if(response.success && typeof response.result !== 'undefined'){
+        		$scope.posts = response.result.reviews.map(function(ele){
         			var d = new Date(ele.time);
         			return {
         				name: ele.name,
@@ -104,33 +104,30 @@ app.controller('mainchartctrl', function($scope, $http){
 			data,
 			ssid;
 		d = new Date();
-		ssid = 'ss'+d.getTime()+'.png';
-		data = {
-				name: 'anonymous', 
-				review: $scope.review,
-				avatar: 'avatar.png',
-				ssid: ssid
-			};
+        ssid = 'ss'+d.getTime()+'.png';
+       // chartref = FusionCharts('mychart');
+        //this data saved to db
+        data = {
+                review: $scope.review,
+                ssid: ssid,
+                chartinfo : {
+                    type: 'timeseries',//chartref.chartType(),
+                    width: "500",//chartref.width,
+                    height: "400",//chartref.height,
+                    datasource : {chart: "sss"},//chartref.getJSONData(),
+                    build: 'xx-xx'
+                }
+            };    
+        
 
-		//to show new posts	
-		$scope.posts.push(data);
-		//cleanup textare
-		$scope.review = "";
-		
-		//this data saved to db
-        chartref = FusionCharts('mychart');
-		data.time = d.toLocaleTimeString();
-    	data.date = d.toLocaleDateString();
-    	data.chartdata = chartref.getJSONData();
-        data.chartinfo = {
-            type: chartref.chartType(),
-            width: chartref.width,
-            height: chartref.height,
-            build: 'xx-xx'
-        };
 		//create screenshots
-		createScreenshot(ssid);
+		//createScreenshot(ssid);
 		//store data in database
-		sendData($scope.site_root+'api/review', data, function(){});
+		sendData($scope.site_root+'api/review', data, function(response){
+            //to show new posts 
+            $scope.posts.push(response.obj);
+            //cleanup textare
+            $scope.review = "";
+        });
 	};
 });

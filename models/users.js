@@ -15,9 +15,9 @@ review = {
 		width: {type: String, trim: true},
 		height: {type: String, trim: true},
 		type: {type: String, trim: true},
-		buildno: {type: String, trim: true}
+		buildno: {type: String, trim: true},
+		datasource: {type: JSON}
 	},
-	chartjson: {type: JSON},
 	time: {type: Date, require: true,default: new Date().toGMTString()}
 };
 

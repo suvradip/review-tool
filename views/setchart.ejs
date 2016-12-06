@@ -11,78 +11,38 @@
 	<!-- installing fusioncharts angular plugin  -->
 	<script type="text/javascript" src="<%= site_root%>bower_components/fusioncharts-angular/angular-fusioncharts.js"></script>
 	<!-- a js file for angular operation -->
-    <script type="text/javascript" src="<%= site_root%>webapp/app.js"></script>
+  <script type="text/javascript" src="<%= site_root%>webapp/app.chartsetup.js"></script>
 </head>
 <body>
-	<header>
-		<div class="wrapper">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-12">
-						<a href="/"><img src="<%= site_root%>images/logo-white.png" alt="FusionCharts - Data to delight... in minutes"/></a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</header>
-	<div class="content" ng-app='reviewapp' >
-		<div class="container" ng-controller='reviewSection' ng-init="loadAllReviews('<%= site_root%>')">
+	<!-- header template include -->
+	<% include layouts/header.ejs %>
+	<div class="content" ng-app='chartsetup' >
+		<div class="container" ng-controller='chartsetupctrl' ng-init="register({site_root:'<%= site_root%>'})">
 			<div class="row">
 				<div class="col-lg-12">
 					<section >
-						<div class="chart-wrapper" >
-							<fusioncharts
-								width="800"
-								height="440"
-								type="column2d"
-								dataformat="json"
-								chartid ="mychart"
-								datasource= {{data}}
-							></fusioncharts>
-						</div>
-					</section>
-					<section >
-						<div class="review-section">
-							<div class="review-form">
-								<textarea name="" id="" cols="30" rows="5" ng-model="review"></textarea>
-								<input type="submit" value="Post" class="btn btn-info btn-large clearfix" ng-click="postReview()">
-							</div>
-						</div>
-						<div class="reviews">
-							<ul>
-								<li ng-repeat='unit in posts'>
-									<div class="reviewer">
-										<img src="" alt="" width="80" height="80" ng-src='<%= site_root%>images/{{ unit.avatar }}' >
-										<div class="reviewer-name">{{ unit.name }}</div>
-										<div class="review-date small">{{ unit.time }}</div>
-										<div class="review-date small">{{ unit.date }}</div>
-									</div>
-									<div class="review-info">{{ unit.review }}
-										<div class="attachment"><a  href="<%= site_root%>screenshots/{{ unit.ssid }}">screenshots.png</a></div>
-									</div>
-								</li>
-							</ul>
-						</div>
-					</section>
+								<div>
+									<label>Link name</label>
+									<input type="text"  ng-model="link_name">
+								</div>
+							</section>
+							<section >
+								<div>
+									<label>Content</label>
+									<textarea  cols="30" rows="5" ng-model="bodyfile"></textarea>
+								</div>
+							</section>
+							<section >
+								<div>
+									<input type="submit" >
+									<input type="reset" ng-clik="setchart()">
+								</div>
+							</section>
 				</div>
 			</div>
 		</div>
 	</div>
-	<footer>
-		<div class="container">
-			<div class="row">
-				<div class="col-md-8 col-lg-6"><p class="copyright small mt10">&copy; 2002-
-				2016 InfoSoft Global Private Limited. <span>All Rights Reserved.</span></p></div>
-				<div class="col-md-4  col-lg-6">
-				<ul class="social-icon-holder">
-					<li class="fc-blog-icon"><a href="http://www.fusioncharts.com/blog/" target="_blank" title="The FusionCharts Blog"><span>The FusionCharts Blog</span></a></li>
-					<li class="facebook-icon"><a href="https://www.facebook.com/FusionCharts" target="_blank" title="Like us on Facebook"><span>Like us on Facebook</span></a></li>
-					<li class="twitter-icon"><a href="https://twitter.com/FusionCharts" target="_blank" title="Follow us on Twitter"><span>Follow FusionCharts on Twitter</span></a></li>
-					<li class="googleplus-icon"><a href="https://plus.google.com/+FusionCharts" target="_blank" title="Follow us on Google Plus"><span>Need Info</span></a></li>
-				</ul>
-				</div>
-			</div>
-		</div>
-	</footer>
+	<!-- footer template include -->
+	<% include layouts/footer.ejs %>
 </body>
 </html>
