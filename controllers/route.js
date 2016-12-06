@@ -1,4 +1,5 @@
-var router = require('express').Router();
+var router = require('express').Router(),
+	auth = require(global.rootdir+'/controllers/token');
 
 //=======================
 //page routing design url
@@ -9,17 +10,19 @@ router.get('/', function(req, res){
 	res.render('index');
 });
 
-
-router.get('/users/:username', function(req, res){
-	var sess = req.session;
-	sess.username = req.params.username;
-	res.render('editable');
-});
-
 //login page
 router.get('/login', function(req, res){
 	delete req.session.token;
 	res.render('login');
+});
+
+//personal review page
+router.get('/users', function(req, res){
+	res.redirect('/users/'+auth.decode(req.session.token).auth.username);
+});
+
+router.get('/users/:username', function(req, res){
+	res.render('maincharts', {susername: req.params.username, fname: '' });
 });
 
 //==========page routing design url=============
@@ -44,11 +47,9 @@ router.get('/showdata', function(req, res){
 	res.render('showdata');
 });
 
-// router.get('/users/:username/setchart', function(req, res){
-// 	var sess = req.session;
-// 	sess.username = req.params.username;
-// 	res.render('setchart');
-// });
+router.get('/users/:username/setchart', function(req, res){
+	res.render('setchart');
+});
 
 //==== register page after middleware
 

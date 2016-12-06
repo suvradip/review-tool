@@ -1,11 +1,18 @@
 var router = require('express').Router(),
-    review = require('../../models/reviews');
+    users = require(global.rootdir+'/models/users'),
+    _ = require('lodash'),
+    findresult;
+
+findresult = function(collection, obj){
+    return _.find(collection, obj);
+};
 
 router.post('/', function(req, res, next) {  
     var entry,
         promise,
          timeNow = new Date().getTime();
         
+        // need edit    
         entry = new review({
             username: 'anonymous',
             review: req.body.review,
@@ -21,7 +28,10 @@ router.post('/', function(req, res, next) {  
             chartjson: req.body.chartdata
         });
 
-        promise = entry.save();
+        
+        promise = users.update({username: 'ssa', 'links.name': 'demo-12'}, 
+                        {$push: {'links.$.reviews':  {review: 'grt cool'}}});
+        //end edit need
         promise.then(function() {
             console.log('[review.js] Inserted Successfully!');
             res.status(200).end();
@@ -33,23 +43,41 @@ router.post('/', function(req, res, next) {  
         });
 });
 
-router.get('/', function (req, res) {
+router.get('/:username', function (req, res) {
     var entries,
-        projection = {},
-        query = {};
+        username,
+        projection,
+        query;
+    
+    username = req.params.username;
+    query = {username: username};    
+    projection = {};
+    //entries = review.find(query, projection);
 
-    query = {username: 'anonymous'};    
-    entries = review.find(query, projection);
+    users.findOne(query)
+        .select({main: 1, links: 1, _id: 0})
+        .exec(function(err, result) {
+            if(result) {
+                
+                var reviews;   
+                if(err) console.log(err);
+                result = findresult(result.links, {"name": result.main});
+                res.status(200).json({success: true, result: result.reviews}).end();
+            } else {
 
-    entries.then(function (result) {
-        console.log('[review.js] Retreived Successfully!');
-        res.status(200).json(result).end();
-    })
-    .catch(function (err) {
-        console.log('[review.js] Retreive Failed!');
-        console.log(err);
-        res.status(404).end();
-    });
+                res.status(200).json({success: false, message: 'no users found.'}).end();
+            }    
+        });
+
+    // entries.then(function (result) {
+    //     console.log('[review.js] Retreived Successfully!');
+    //     res.status(200).json(result).end();
+    // })
+    // .catch(function (err) {
+    //     console.log('[review.js] Retreive Failed!');
+    //     console.log(err);
+    //     res.status(404).end();
+    // });
 });
 
 module.exports = router;

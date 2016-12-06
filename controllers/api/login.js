@@ -24,7 +24,7 @@ router.post('/validate', function(req, res, next) {  
                 token = jwt.encode({username: username}, config.secretKey);
                 req.session.token = token;
                 res.type("html");
-                res.status(200).redirect('/showdata');
+                res.status(200).redirect('/users/'+username);
             });
         });
 });
