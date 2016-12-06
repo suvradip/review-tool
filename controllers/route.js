@@ -44,6 +44,12 @@ router.get('/showdata', function(req, res){
 	res.render('showdata');
 });
 
+// router.get('/users/:username/setchart', function(req, res){
+// 	var sess = req.session;
+// 	sess.username = req.params.username;
+// 	res.render('setchart');
+// });
+
 //==== register page after middleware
 
 
@@ -61,6 +67,8 @@ router.use('/api/create-screenshot', require(global.rootdir+'/controllers/imageC
 router.use('/api/showdata', require(global.rootdir+'/controllers/api/showdata'));
 //api for showdata page
 router.use('/api/showdata', require(global.rootdir+'/controllers/api/showdata'));
+//api for chart setup
+router.use('/api/chartsetup', require(global.rootdir+'/controllers/api/chartsetup'));
 
 //==========API Links register END==============
 
