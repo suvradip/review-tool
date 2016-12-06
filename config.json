@@ -1,4 +1,5 @@
 {
 	"env" : "production",
-	"site_root" : "/"
+	"site_root" : "/",
+	"secretKey" : "supersecretkey"
 }

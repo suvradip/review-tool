@@ -1,5 +1,6 @@
 var express,
 	app,
+	helmet,
 	config,
 	path,
 	bodyParser,
@@ -10,6 +11,7 @@ var express,
 //load configuaration	
 config = require('./config');
 express = require("express");
+helmet = require('helmet');
 path = require("path");
 bodyParser = require('body-parser');
 session = require('express-session');
@@ -19,7 +21,8 @@ db = require('./dbconnection');
 review = require("./models/reviews");
 
 app = express();
-
+app.use(helmet());
+app.disable('x-powered-by');
 //environment setup
 process.env.NODE_ENV = config.env;
 global.site_root = config.site_root;
@@ -36,6 +39,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static('public'));
 
 global.rootdir = __dirname;
@@ -51,29 +55,8 @@ app.use('/bower_components', express.static('bower_components'));
 //angular app directory mapping
 app.use('/webapp', express.static('webapp'));
 
-//review page api
-app.use('/api/review', require(__dirname+'/controllers/api/reviews'));
-//private review page api
-app.use('/api/privateReviews', require(__dirname+'/controllers/api/privateReviews'));
-//api for create screenshots
-app.use('/api/create-screenshot', require(__dirname+'/controllers/imageConstruct'));
-//api for showdata page
-app.use('/api/showdata', require(__dirname+'/controllers/api/showdata'));
+//all routes request pass here
+app.use('/', require(__dirname+'/controllers/route'));
 
 //if port number is changing, also change in gulpfile for browsersync proxy
 app.listen(3300, function(){ console.log('[server.js] Running on port :3300'); });
-
-app.get('/', function(req, res){
-	res.render('index');
-});
-
-app.get('/showdata', function(req, res){
-	res.render('showdata');
-});
-
-app.get('/users/:username', function(req, res){
-	var sess = req.session;
-	sess.username = req.params.username;
-	res.render('editable');
-});
-

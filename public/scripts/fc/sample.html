@@ -1,0 +1,178 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitieal//EN">
+<html>
+
+<head>
+    <title>Time Series Chart test</title>
+    <script type="text/javascript" src='./fusioncharts.js'></script>
+
+    <!-- extension files -->
+    <script type="text/javascript" src="./extensions/growth-analyser-es6.min.js"></script>
+    <script type="text/javascript" src="./extensions/fcts-ext-dataaggregator-es6.js"></script>
+    <script type="text/javascript" src="./extensions/standard-period-selector-es6.min.js"></script>
+    <script type="text/javascript" src="./extensions/fcts-ext-daterange-es6.min.js"></script>
+</head>
+<style>
+    @font-face {
+        font-family: "MyriadPro";
+        src: url('../MyriadPro.ttf') format("truetype");
+    }
+</style>
+
+<body>
+
+    <div id='chart-container'></div>
+    <div id="container"></div>
+
+    <script type="text/javascript">
+        var tsChart;
+
+        function getRandomDates(len) {
+            var day = 1,
+                months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                year = 2015,
+                month = 0,
+                arr = [];
+
+            for (i = 0; i < len; i++) {
+                if (month === 11 && day === 31) {
+                    year++;
+                    month = 0;
+                }
+                if (day > 30 || (month === 1 && day === 28)) {
+                    day = 1;
+                    month++;
+                }
+                if (month > 11) {
+                    month = 0;
+                }
+
+
+
+                dateStr = day + '-' + months[month] + '-' + year;
+                arr.push(dateStr);
+                day++;
+            }
+            return arr;
+        }
+
+        function getRandomSeries(len) {
+            var arr = [];
+
+            for (i = 0; i < len; i++) {
+                arr.push(Math.floor(Math.random() * 10));
+            }
+            return arr;
+        }
+
+        function getRandomCandleSeries(len) {
+            var arr = [],
+                open,
+                high,
+                low,
+                close;
+
+            for (i = 0; i < len; i++) {
+                open = Math.floor(Math.random() * 1000);
+                close = Math.floor(Math.random() * 1000);
+                high = Math.floor(Math.random() * 1000);
+                low = Math.floor(Math.random() * 1000);
+
+                arr.push([open, high, low, close]);
+            }
+
+            return arr;
+        }
+        var data1;
+
+        var tsChart,
+            width = 1200,
+            height = 600;
+        FusionCharts.ready(function() {
+            tsChart = new FusionCharts({
+                type: 'timeseries',
+                plottype: 'line',
+                renderAt: 'chart-container',
+                width: width,
+                height: height,
+                dataFormat: 'json',
+                dataSource: {
+                    chart: {
+                        axes: [{
+                            uid: 'aa',
+                            x: {},
+                            y: {}
+                        }, {
+                            uid: 'bb',
+                            x: function(store) {
+                                return store.getAxesByIndex(0).x;
+                            },
+                            y: {}
+                        }],
+                        datasets: [{
+                            category: {
+                                dateformat: "%e-%b-%Y",
+                                data: getRandomDates(2000)
+                            },
+                            dataset: [{
+                                uid: 'ds-1',
+                                series: [{
+                                        plot: {
+                                            type: 'line'
+                                        },
+                                        name: "California",
+                                        data: getRandomSeries(2000)
+                                    },
+                                    {
+                                        plot: {
+                                            type: 'line'
+                                        },
+                                        name: "Arizona",
+                                        data: getRandomSeries(2000)
+                                    }
+                                ]
+                            }]
+                        }],
+                        caption: [{
+                            title: {
+                                text: 'Business in USA',
+                                style: {
+                                    'font-size': 35,
+                                    'font-family': 'MyriadPro',
+                                    'fill': '#545454'
+                                }
+                            },
+                            subtitle: {
+                                text: 'State wise sales (USD in million)',
+                                style: {
+                                    'font-size': 25,
+                                    'font-family': 'MyriadPro',
+                                    'font-weight': 'Semibold',
+                                    'fill': '#7B7B7B'
+                                }
+                            }
+                        }],
+                        legend: [{
+                            preDrawHook: function() {},
+                            layout: function (obj) {
+                                return obj.inline;
+                            }
+                        }],
+                        canvas: [{
+                            uid: 'canvas-1',
+                            axes: function(store) {
+                                return store.getAxesByIndex(0);
+                            },
+                            dataset: function(store) {
+                                return store.getDatasetsByIndex(0);
+                            }
+                        }]
+                    }
+                }
+
+            })
+            .render();
+        });
+    </script>
+</body>
+
+</html>

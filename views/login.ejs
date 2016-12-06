@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Loging panel: Fusioncharts - Review</title>
+	<!-- head template inlude -->
+	<% include layouts/head.ejs %>
+	<script type="text/javascript" src="<%= site_root%>webapp/app.login.js"></script>
+</head>
+<body>
+	<!-- header template include -->
+	<% include layouts/header.ejs %>
+	<div class="content" ng-app='loginapp' >
+		<div class="container" ng-controller='loginctrl' ng-init="register({siteRoot:'<%= site_root%>'})">
+				<div class="row">
+					<div class="col-lg-12">
+						<form action="<%= site_root%>api/login/validate/" method='POST'>
+							<section >
+								<div>
+									<label>Username</label>
+									<input type="text" name="username" ng-model="username">
+								</div>
+							</section>
+							<section >
+								<div>
+									<label>Password</label>
+									<input type="password" name="password" ng-model="password">
+								</div>
+							</section>
+							<section >
+								<div>
+									<input type="submit" >
+									<input type="reset" ng-clik="clear()">
+								</div>
+							</section>
+						</form>
+					</div>
+				</div>
+		</div>
+	</div>
+	
+	<!-- footer template include -->
+	<% include layouts/footer.ejs %>
+</body>
+</html>
