@@ -19,25 +19,37 @@
 	<div class="content" ng-app='chartsetup' >
 		<div class="container" ng-controller='chartsetupctrl' ng-init="register({site_root:'<%= site_root%>'})">
 			<div class="row">
-				<div class="col-lg-12">
+				<div class="col-lg-2">
+					<section>
+						<span>Other links</span>
+						<div>
+							<ul>
+								<li ng-repeat='link in links'>
+									<a href="<%= site_root%>users/<%= pusername%>/{{ link.name }}">{{ link.name }}</a>	
+								</li>
+							</ul>
+						</div>
+					</section>
+				</div>
+				<div class="col-lg-10">
 					<section >
-								<div>
-									<label>Link name</label>
-									<input type="text"  ng-model="link_name">
-								</div>
-							</section>
-							<section >
-								<div>
-									<label>Content</label>
-									<textarea  cols="30" rows="5" ng-model="bodyfile"></textarea>
-								</div>
-							</section>
-							<section >
-								<div>
-									<input type="submit" ng-click="setchart()">
-									<input type="reset" >
-								</div>
-							</section>
+						<div>
+							<label>Link name</label>
+							<input type="text"  ng-model="link_name">
+						</div>
+					</section>
+					<section >
+						<div>
+							<label>Content</label>
+							<textarea  cols="30" rows="5" ng-model="bodyfile"></textarea>
+						</div>
+					</section>
+					<section >
+						<div>
+							<input type="submit" ng-click="setchart()">
+							<input type="reset" >
+						</div>
+					</section>
 				</div>
 			</div>
 		</div>

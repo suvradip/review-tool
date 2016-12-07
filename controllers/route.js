@@ -10,17 +10,18 @@ var router = require('express').Router(),
 router.get('/', function(req, res){
 	var pusername = '',
 		pname = '',
-		avatar,
+		avatar='',
 		sess,
 		userdata;
 
 	sess = req.session;	
 	
-	userdata = auth.decode(sess.token).auth;
-	pusername = userdata.username;
-	pname = userdata.name;
-	avatar = userdata.avatar;
-	
+	if(sess.token && typeof sess.token !== 'undefined'){
+		userdata = auth.decode(sess.token).auth;
+		pusername = userdata.username;
+		pname = userdata.name;
+		avatar = userdata.avatar;
+	}
 
 	susername = req.params.username;
 	res.render('index', {pusername: pusername, pname: pname, avatar: avatar});

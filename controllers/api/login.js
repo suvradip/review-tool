@@ -17,7 +17,7 @@ router.post('/validate', function(req, res, next) {  
         .exec(function (err, result) {
             if  (err) { return next(err); }
             if  (!result) { return  res.send(401); }
-            console.log(password, result.password);
+            
             bcrypt.compare(password, result.password, function (err, valid) {
                 if(err) { return  next(err); }
                 if(!valid) { return res.send(401); }
