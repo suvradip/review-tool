@@ -24,16 +24,21 @@ router.get('/users', function(req, res){
 
 router.get('/users/:username', function(req, res){
 	//need to work here, temp codes
-	var username = req.params.username;
-	req.session.secusername = username;
-	users.findOne({'username': username})
+	var susername,
+		pusername;
+
+	pusername = auth.decode(req.session.token).auth.username;
+	susername = req.params.username;
+
+	req.session.secusername = susername;
+	users.findOne({'username': susername})
 		.select("main")
 		.exec(function(err, result){
 			if(err) {
 				console.log('[router.js] :'+ err);
-				res.render('maincharts', {susername: username, fname: '' });		
+				res.render('maincharts', {susername: susername, fname: '', pusername:  pusername});		
 			}
-			res.render('maincharts', {susername: username, fname: result.main });						
+			res.render('maincharts', {susername: susername, fname: result.main, pusername:  pusername });						
 		}); 	
 });
 
@@ -61,7 +66,9 @@ router.get('/showdata', function(req, res){
 });
 
 router.get('/users/:username/setchart', function(req, res){
-	res.render('setchart');
+	var pusername;
+	pusername = auth.decode(req.session.token).auth.username;
+	res.render('setchart', {pusername: pusername});
 });
 
 //==== register page after middleware

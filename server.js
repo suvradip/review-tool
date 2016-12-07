@@ -25,8 +25,8 @@ app.use(helmet());
 app.disable('x-powered-by');
 //environment setup
 process.env.NODE_ENV = config.env;
-global.site_root = config.site_root;
-
+global.site_root = config.host + ':'+ config.port + config.site_root;
+console.log(global.site_root);
 //Here ‘secret‘ is used for cookie handling etc
 app.use(session({
 	secret: 'r3v13w-ut1l1ty ',
@@ -59,4 +59,4 @@ app.use('/webapp', express.static('webapp'));
 app.use('/', require(__dirname+'/controllers/route'));
 
 //if port numbr is changing, also change in gulpfile for browsersync proxy
-app.listen(3300, function(){ console.log('[server.js] Running on port :3300'); });
+app.listen(config.port, function(){ console.log('[server.js] Running on port :'+config.port); });

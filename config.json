@@ -1,5 +1,7 @@
 {
-	"env" : "production",
+	"env" : "development",
+	"host": "http://localhost",
+	"port": 3300,
 	"site_root" : "/",
 	"secretKey" : "supersecretkey"
 }

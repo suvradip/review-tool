@@ -2,8 +2,12 @@
 	<div class="wrapper">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-12">
-					<a href="<%= site_root%>"><img src="<%= site_root%>images/logo-white.png" alt="FusionCharts - Data to delight... in minutes"/></a>
+				<div class="col-lg-8">
+					<a href="<%- site_root%>"><img src="<%- site_root%>images/logo-white.png" alt="FusionCharts - Data to delight... in minutes"/></a>
+				</div>
+				<div class="col-lg-4">
+					<a href="<%- site_root%>login">logout</a>
+					<a href="<%- site_root%>users/<%- pusername%>/setchart">setchart</a>
 				</div>
 			</div>
 		</div>
