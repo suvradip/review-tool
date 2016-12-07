@@ -52,6 +52,9 @@
 	</div>
 	<!-- footer template include -->
 	<% include layouts/footer.ejs %>
-<!-- 	<script type="text/javascript" src="<%= site_root%>files/<%= fname%>"></script> -->
+
+	<% if(fname !== '') {%>
+		<script type="text/javascript" src="<%= site_root%>fc.charts.resource/<%= fname%>"></script>
+	<% } %>	
 </body>
 </html>

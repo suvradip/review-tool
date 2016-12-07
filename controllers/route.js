@@ -1,5 +1,6 @@
 var router = require('express').Router(),
-	auth = require(global.rootdir+'/controllers/token');
+	auth = require(global.rootdir+'/controllers/token'),
+	users = require(global.rootdir+'/models/users');
 
 //=======================
 //page routing design url
@@ -22,8 +23,18 @@ router.get('/users', function(req, res){
 });
 
 router.get('/users/:username', function(req, res){
-	req.session.secusername = req.params.username;
-	res.render('maincharts', {susername: req.params.username, fname: '' });
+	//need to work here, temp codes
+	var username = req.params.username;
+	req.session.secusername = username;
+	users.findOne({'username': username})
+		.select("main")
+		.exec(function(err, result){
+			if(err) {
+				console.log('[router.js] :'+ err);
+				res.render('maincharts', {susername: username, fname: '' });		
+			}
+			res.render('maincharts', {susername: username, fname: result.main });						
+		}); 	
 });
 
 //==========page routing design url=============

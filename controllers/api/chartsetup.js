@@ -1,4 +1,5 @@
 var router = require('express').Router(),
+    fs = require('fs'),
     users = require(global.rootdir+'/models/users'),
     auth = require(global.rootdir+'/controllers/token'),
     _ = require('lodash'),
@@ -24,34 +25,51 @@ router.post('/', function(req, res, next) {  
         promise.then(function(r) {
                 var link_data,
                     promise2,
-                    linkdata;
+                    linkdata,
+                    codeblock;
 
                 link_data = {   
                     name: req.body.name, 
                     fname: req.body.fname,
-                    type: req.body.type,
-                    main: req.body.main
+                    type: req.body.type
                 };
+
+                codeblock = req.body.main;
+                codeblock = codeblock.replace(/[\n]/i, '');
+                codeblock = codeblock.replace(/[\']/i, '\'');
+                codeblock = codeblock.replace(/[\"]/i, '"');
+
+                fs.writeFile(global.rootdir+'/public/fc.charts.resource/'+link_data.fname, codeblock, 'utf-8', function(){
+                    console.log('[chartsetup.js] file writing doene.');
+                });
+             
+                if(r.links.length > 0) {
+                    linkdata = findLink(r.links, link_data.name);
+                    if(linkdata && typeof linkdata !== 'undefined'){
+                       return res.status(200).send({success: false, message: 'Link alredy exists', linkdata: linkdata}).end();
+                    }                        
+                }  
                 
-                linkdata = findLink(r.links, link_data.name);
-                if(linkdata && typeof linkdata === 'undefined'){
-                    promise2 = users.update(
-                        { username: r.username }, 
-                        { $push: { links: link_data }}
-                    );
-                     
-                    promise2.then(function() {
-                        console.log('[chartsetup.js] updated successfully!');
-                        res.status(200).send({success: true, message: 'data update.'}).end();
-                    })
-                    .catch(function (err) {
-                        console.log('[chartsetup.js] failed updation!');
-                        console.log(err);
-                        res.status(404).end();
-                    });
-                } else {
-                    res.status(200).send({success: false, message: 'Link alredy exists', linkdata: linkdata}).end();
-                }    
+                promise2 = users.update(
+                    { username: r.username }, 
+                    { 
+                        $push: { links: link_data },
+                        $set: { main: link_data.fname} 
+                    }
+                );
+                
+                users.update({username: r.username}, {$set: {main: link_data.fname}});
+
+                promise2.then(function() {
+                    console.log('[chartsetup.js] updated successfully!');
+                    res.status(200).send({success: true, message: 'data update.'}).end();
+                })
+                .catch(function (err) {
+                    console.log('[chartsetup.js] failed updation!');
+                    console.log(err);
+                    res.status(404).end();
+                });
+                  
         })
         .catch(function (err) {
             console.log('[chartsetup.js] failed lookup!');

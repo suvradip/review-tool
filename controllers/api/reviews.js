@@ -57,7 +57,7 @@ router.post('/', function(req, res, next) {  
             .exec(function(err, result){
                 if(err) console.log(err);
                 if(result){
-                    promise = users.update({username: result.username, 'links.name': result.main}, 
+                    promise = users.update({username: result.username, 'links.fname': result.main}, 
                         {$push: {'links.$.reviews':  review }});
 
                     promise.then(function() {
@@ -105,7 +105,7 @@ router.get('/:username', function (req, res) {
                 
                 var reviews;   
                 if(err) console.log(err);
-                result = findresult(result.links, {"name": result.main});
+                result = findresult(result.links, {"fname": result.main});
                 res.status(200).json({success: true, result: result}).end();
             } else {
 

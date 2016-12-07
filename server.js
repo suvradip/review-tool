@@ -59,4 +59,4 @@ app.use('/webapp', express.static('webapp'));
 app.use('/', require(__dirname+'/controllers/route'));
 
 //if port numbr is changing, also change in gulpfile for browsersync proxy
-app.listen(3233, function(){ console.log('[server.js] Running on port :3233'); });
+app.listen(3300, function(){ console.log('[server.js] Running on port :3300'); });

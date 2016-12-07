@@ -30,9 +30,6 @@ app.controller('chartsetupctrl', function($scope, $http){
         }).success(callback);
     };  
 
-
-  	
-
     $scope.register = function(obj){
         $scope.site_root = obj.site_root;
     };
@@ -53,7 +50,9 @@ app.controller('chartsetupctrl', function($scope, $http){
                 type: '',
                 main: $scope.bodyfile
             };    
-        
-		sendData($scope.site_root+'api/chartsetup', data, function(){});
+        console.log(data);
+		sendData($scope.site_root+'api/chartsetup', data, function(response){
+            console.log(response);
+        });
 	};
 });
