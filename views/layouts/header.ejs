@@ -5,12 +5,23 @@
 				<div class="col-lg-8">
 					<a href="<%- site_root%>"><img src="<%- site_root%>images/logo-white.png" alt="FusionCharts - Data to delight... in minutes"/></a>
 				</div>
-				<% if(pusername !== '') { %>
-					<span>Hello! <%- pname%></span>
-					<img width="40" height="40" src="<%- site_root%>images/<%- avatar%>" alt="avatar"/>
-					<div class="col-lg-4">
-						<a href="<%- site_root%>api/login/logout">logout</a>
-						<a href="<%- site_root%>users/<%- pusername%>/setchart">setchart</a>
+				<% if(pusername !== '') { %>					
+					<div class="col-lg-4 user-block">
+						<div class="user">
+							<span>Hello! <%- pname%></span>
+							<div class="user-avatar">
+								<img width="30" height="30" src="<%- site_root%>images/<%- avatar%>" alt="avatar"/>
+								<ul class="user-menu">
+									<li>
+										<a href="<%- site_root%>api/login/logout">logout</a>
+									</li>
+									<li>
+										<a href="<%- site_root%>users/<%- pusername%>/setchart">setchart</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+						
 					</div>
 				<% } %>	
 			</div>

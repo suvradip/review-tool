@@ -247,6 +247,75 @@ header .wrapper {
   position: fixed;
   z-index: 2000; }
 
+header .user-block {
+  position: relative; }
+
+header .user {
+  color: #fbfbfc;
+  text-align: right; }
+  header .user span, header .user .user-avatar {
+    display: inline-block;
+    *zoom: 1;
+    *display: inline;
+    vertical-align: middle; }
+  header .user .user-avatar {
+    margin-left: 5px;
+    cursor: pointer; }
+    header .user .user-avatar:hover .user-menu {
+      display: inline-block;
+      *zoom: 1;
+      *display: inline; }
+    header .user .user-avatar img {
+      border: 1px solid #edeff0;
+      padding: 2px; }
+
+header .user-menu {
+  display: none;
+  position: absolute;
+  z-index: 10;
+  right: 0;
+  max-width: 150px;
+  list-style: none;
+  margin: 0;
+  padding: 5px 10px;
+  background-color: #413365; }
+  header .user-menu li {
+    display: inline-block;
+    *zoom: 1;
+    *display: inline;
+    line-height: 1.2; }
+    header .user-menu li:first-child {
+      border: none; }
+      header .user-menu li:first-child a {
+        border-left: none;
+        padding: 0;
+        margin-left: 0;
+        cursor: pointer; }
+    header .user-menu li a {
+      font-size: 12px;
+      line-height: 1.2;
+      display: block;
+      text-decoration: none;
+      color: #8977ba;
+      padding: 0 0 0 10px;
+      margin-left: 10px;
+      text-transform: capitalize;
+      border-left: 1px solid #564487; }
+      header .user-menu li a:hover, header .user-menu li a:active {
+        color: #9888c3; }
+      header .user-menu li a:visited, header .user-menu li a:focus {
+        color: #8977ba; }
+  header .user-menu:before {
+    content: "";
+    width: 0;
+    height: 0;
+    position: absolute;
+    margin-top: -15px;
+    right: 15px;
+    border-bottom: 15px solid #413365;
+    border-right: 15px solid transparent;
+    border-left: 15px solid transparent; }
+
 .content {
   padding-top: 60px;
   background-color: #fff; }
