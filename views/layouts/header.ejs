@@ -5,10 +5,12 @@
 				<div class="col-lg-8">
 					<a href="<%- site_root%>"><img src="<%- site_root%>images/logo-white.png" alt="FusionCharts - Data to delight... in minutes"/></a>
 				</div>
-				<div class="col-lg-4">
-					<a href="<%- site_root%>login">logout</a>
-					<a href="<%- site_root%>users/<%- pusername%>/setchart">setchart</a>
-				</div>
+				<% if(pusername !== '') { %>
+					<div class="col-lg-4">
+						<a href="<%- site_root%>api/login/logout">logout</a>
+						<a href="<%- site_root%>users/<%- pusername%>/setchart">setchart</a>
+					</div>
+				<% } %>	
 			</div>
 		</div>
 	</div>

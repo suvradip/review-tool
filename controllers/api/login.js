@@ -95,4 +95,9 @@ router.post('/createuser', function (req, res, next) {
     });
 });
 
+router.get('/logout', function(req, res){
+    delete req.session;
+    res.redirect('/login');
+});
+
 module.exports = router;

@@ -8,14 +8,42 @@ var router = require('express').Router(),
 
 //revirew page global
 router.get('/', function(req, res){
-	res.render('index');
+	var pusername = '',
+		sess;
+
+	sess = req.session;	
+	if(sess.token && typeof sess.token !== 'undefined')
+		pusername = auth.decode(sess.token).auth.username;
+
+	susername = req.params.username;
+	res.render('index', {pusername: pusername});
 });
 
 //login page
 router.get('/login', function(req, res){
 	delete req.session.token;
-	res.render('login');
+	res.render('login', {pusername: ''});
 });
+
+
+
+//==========page routing design url=============
+
+//api for login page
+router.use('/api/login/', require(global.rootdir+'/controllers/api/login'));
+
+//review page api
+router.use('/api/review', require(global.rootdir+'/controllers/api/reviews'));
+
+
+//=== router middleware to protect this api ====
+router.use(require(global.rootdir+'/controllers/auth'));
+//=== router middleware END ====
+
+
+
+
+//==== register page after middleware
 
 //personal review page
 router.get('/users', function(req, res){
@@ -42,23 +70,6 @@ router.get('/users/:username', function(req, res){
 		}); 	
 });
 
-//==========page routing design url=============
-
-//api for login page
-router.use('/api/login/', require(global.rootdir+'/controllers/api/login'));
-
-//review page api
-router.use('/api/review', require(global.rootdir+'/controllers/api/reviews'));
-
-
-//=== router middleware to protect this api ====
-router.use(require(global.rootdir+'/controllers/auth'));
-//=== router middleware END ====
-
-
-
-
-//==== register page after middleware
 
 //showdata page
 router.get('/showdata', function(req, res){
