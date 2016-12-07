@@ -6,6 +6,8 @@
 					<a href="<%- site_root%>"><img src="<%- site_root%>images/logo-white.png" alt="FusionCharts - Data to delight... in minutes"/></a>
 				</div>
 				<% if(pusername !== '') { %>
+					<span>Hello! <%- pname%></span>
+					<img width="40" height="40" src="<%- site_root%>images/<%- avatar%>" alt="avatar"/>
 					<div class="col-lg-4">
 						<a href="<%- site_root%>api/login/logout">logout</a>
 						<a href="<%- site_root%>users/<%- pusername%>/setchart">setchart</a>

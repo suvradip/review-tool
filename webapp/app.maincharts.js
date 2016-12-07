@@ -7,8 +7,6 @@ app.controller('mainchartctrl', function($scope, $http){
 		createScreenshot,
         chartref;
 
-    //$scope.site_root = '';
-    //$scope.charttype = 'column2d';
 	$scope.posts = [];
     getData = function(url, callback){
         $http({
@@ -32,22 +30,6 @@ app.controller('mainchartctrl', function($scope, $http){
             }
         }).success(callback);
     };  
-
-	// $scope.data =  {
- //        chart: {
- //            caption: "Harry's SuperMart",
- //            subCaption: "Top 5 stores in last month by revenue",
- //            numberPrefix: "$",
- //            theme: "zune"
- //        },
- //        data:[
- //        	{label: "Bakersfield Central", value: "880000"}, 
- //        	{label: "Garden Groove harbour", value: "730000"}, 
- //        	{label: "Los Angeles Topanga", value: "590000"}, 
- //        	{label: "Compton-Rancho Dom", value: "520000"}, 
- //        	{label: "Daly City Serramonte", value: "330000"}
- //        ] 
- //    };
 
   	createScreenshot = function(name){
   		var svg,
@@ -97,7 +79,6 @@ app.controller('mainchartctrl', function($scope, $http){
     	});
     };
 
-    //loadAllReviews();
     //triiger on post button-click
 	$scope.postReview = function(){
 		var d,
@@ -105,23 +86,23 @@ app.controller('mainchartctrl', function($scope, $http){
 			ssid;
 		d = new Date();
         ssid = 'ss'+d.getTime()+'.png';
-       // chartref = FusionCharts('mychart');
+        chartref = FusionCharts('chartobject-1');
         //this data saved to db
         data = {
                 review: $scope.review,
                 ssid: ssid,
                 chartinfo : {
-                    type: 'timeseries',//chartref.chartType(),
-                    width: "500",//chartref.width,
-                    height: "400",//chartref.height,
-                    datasource : {chart: "sss"},//chartref.getJSONData(),
+                    type: chartref.chartType(),
+                    width: chartref.width,
+                    height: chartref.height,
+                    datasource : chartref.getJSONData(),
                     build: 'xx-xx'
                 }
             };    
         
 
 		//create screenshots
-		//createScreenshot(ssid);
+		createScreenshot(ssid);
 		//store data in database
 		sendData($scope.site_root+'api/review', data, function(response){
             //to show new posts 

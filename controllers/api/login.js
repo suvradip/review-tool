@@ -55,29 +55,31 @@ router.get('/user', function (req, res){
 
 
 router.post('/createuser', function (req, res, next) {
-    var username,
-        password,
+    var password,
         key,
-        avatar,
-        name,
         promise,
-        entry;
+        entry,
+        data,
+        timeNow = new Date().getTime();
     
-    username = req.body.username;
-    password = req.body.password;
     key = req.body.key;
 
     if(key && key !== 's1u@#44#')
         return res.status(401).send('supekey missmatch').end();
 
-    name = req.body.name || '';
-    avatar = req.body.avatar || 'avatar.png';
-    
-    entry = new user({
-        username: username,
-        name: name,
-        avatar: avatar
-        });
+    console.log(typeof req.body.password);
+    if(typeof req.body.username === "undefined" || typeof req.body.password === "undefined" )
+        return res.status(401).send('username/password is missing.').end();
+
+    data = {
+        username: req.body.username,
+        name: req.body.name || '',
+        avatar: req.body.avatar || 'avatar.png',
+        userid: 'p'+timeNow
+    };
+
+    password = req.body.password;
+    entry = new user(data);
 
     bcrypt.hash(password, 10, function (err, hash) {
         entry.password = hash;
@@ -85,12 +87,13 @@ router.post('/createuser', function (req, res, next) {
         promise = entry.save();
         promise.then(function() {
             console.log('[login.js] Inserted Successfully!');
-            res.status(200).end();
+            data.password = password;
+            res.status(404).json({success: true, message: 'user created', data: data }).end();
         })
         .catch(function (err) {
             console.log('[login.js] Failed Insertion!');
             console.log(err);
-            res.status(404).end();
+            res.status(404).json({success: false, message: 'Error'}).end();
         });
     });
 });
