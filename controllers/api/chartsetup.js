@@ -98,4 +98,32 @@ router.get('/', function (req, res) {
     }    
 });
 
+router.get('/getlinks', function(req, res){
+    var promise,
+        token,
+        link_name,
+        query,
+        select;
+
+    token = auth.decode(req.session.token).auth;
+    query = {username: token.username };
+    select = {links: 1, _id: 0 }; 
+
+    if(req.query.link_name && typeof req.query.link_name !== 'undefined'){
+        query["links.name"] = req.query.link_name;        
+    }
+    
+    users.findOne(query)
+        .select(select)
+        .exec(function(err, result){
+            if(err) console.log('[chartsetup.js] : error:'+err);
+            if(result) {
+                res.status(200).send({success: true, result: result}).end();
+            } else {
+                res.status(200).send({success: false, message: 'no data found'}).end();
+            }
+        });
+    
+});
+
 module.exports = router;

@@ -25,7 +25,7 @@
 						<div>
 							<ul>
 								<li ng-repeat='link in links'>
-									<a href="<%= site_root%>users/<%= pusername%>/{{ link.name }}">{{ link.name }}</a>	
+									<label ng-click=test($event) data-attr="cool">{{ link.name }}</label>	
 								</li>
 							</ul>
 						</div>

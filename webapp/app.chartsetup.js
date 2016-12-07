@@ -5,7 +5,8 @@ app.controller('chartsetupctrl', function($scope, $http){
 		sendData,
 		loadAllReviews,
 		createScreenshot,
-        chartref;
+        chartref,
+        getlinks;
 
     getData = function(url, callback){
         $http({
@@ -30,11 +31,18 @@ app.controller('chartsetupctrl', function($scope, $http){
         }).success(callback);
     };  
 
-    $scope.register = function(obj){
-        $scope.site_root = obj.site_root;
+    getlinks = function() {
+        getData($scope.site_root+'api/chartsetup/getlinks', function(response){
+            console.log(response);
+            $scope.links = response.result.links;
+        });    
     };
 
-    //loadAllReviews();
+    $scope.register = function(obj){
+        $scope.site_root = obj.site_root;
+        getlinks();
+    };
+
     //triiger on post button-click
 	$scope.setchart = function(){
 		var d,
@@ -55,4 +63,8 @@ app.controller('chartsetupctrl', function($scope, $http){
             console.log(response);
         });
 	};
+
+    $scope.test = function(e) {
+        var target = e.target;
+    };
 });
