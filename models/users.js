@@ -18,13 +18,15 @@ review = {
 		buildno: {type: String, trim: true},
 		datasource: {type: JSON}
 	},
-	time: {type: Date, require: true,default: new Date().toGMTString()}
+	time: {type: Date, require: true, default: new Date().toGMTString()}
 };
 
 link = {
+	linkid: {type: String, require: true, trim: true, default:"L-"+new Date().getTime()},
     name: {type: String, require: true, trim: true},
     type: {type: String, require: true, trim: true},
     fname: {type: String, require: true, trim: true},
+    description: {type: String, require: true, trim: true},
     reviews: [review]
 };
 

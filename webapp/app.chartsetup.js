@@ -8,6 +8,7 @@ app.controller('chartsetupctrl', function($scope, $http){
         chartref,
         getlinks;
 
+    $scope.link_check = false;    
     getData = function(url, callback){
         $http({
             method: 'GET',
@@ -33,6 +34,7 @@ app.controller('chartsetupctrl', function($scope, $http){
 
     getlinks = function() {
         getData($scope.site_root+'api/chartsetup/getlinks', function(response){
+            console.log(response);
             $scope.links = response.result.links;
         });    
     };
@@ -56,9 +58,12 @@ app.controller('chartsetupctrl', function($scope, $http){
                 description: $scope.link_description,
                 type: $scope.link_type,
                 fname: fname,
-                main: $scope.link_content
+                filecontents: $scope.link_content,
+                update: $scope.link_check
             };    
 
+         console.log('setchart');
+         console.log(data);
 		sendData($scope.site_root+'api/chartsetup', data, function(response){
             console.log(response);
         });
@@ -72,8 +77,9 @@ app.controller('chartsetupctrl', function($scope, $http){
         linkid = target.attributes["data-linkid"].value;
 
         $scope.btn_action = true;
-
-        getData($scope.site_root+'api/chartsetup/getlinks?_id='+linkid, function(response){
+        $scope.linkid = linkid;
+        $scope.link_check = false;
+        getData($scope.site_root+'api/chartsetup/getlinks?linkid='+linkid, function(response){
             var data = response.result.links[0];
             $scope.link_name = data.name;
             $scope.link_description = data.description || '';
@@ -84,10 +90,31 @@ app.controller('chartsetupctrl', function($scope, $http){
         });
     };
 
+    $scope.updatedata = function(){
+        var data;
+        data = {
+            name: $scope.link_name, 
+            description: $scope.link_description,
+            type: $scope.link_type,
+            filecontents: $scope.link_content,
+            linkid: $scope.linkid,
+            update: $scope.link_check
+        }; 
+
+        console.log('update chart');
+        console.log(data);
+        sendData($scope.site_root+'api/chartsetup/updatelinks', data, function(response){
+            console.log(response);
+        });
+    };
+
     $scope.reset = function() {
         $scope.link_name = "";
         $scope.link_description = "";
         $scope.link_type = "";
         $scope.link_content = "";
+        console.log($scope.link_check);
+
     };
+
 });

@@ -32,7 +32,7 @@
 						<div>
 							<ul>
 								<li ng-repeat='link in links'>
-									<label ng-click=linkDetails($event) data-linkid="{{ link._id }}">{{ link.name }}</label>	
+									<label ng-click=linkDetails($event) data-linkid="{{ link.linkid }}">{{ link.name }}</label>	
 								</li>
 							</ul>
 						</div>
@@ -64,7 +64,7 @@
 					<section >
 						<div>
 							<input type="submit" value="submit" ng-hide="btn_action" ng-click="setchart()">
-							<input type="submit" value="update" ng-show="btn_action" ng-click="">
+							<input type="submit" value="update" ng-show="btn_action" ng-click="updatedata()">
 							<input type="reset" ng-click="reset()">
 						</div>
 					</section>

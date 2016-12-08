@@ -31,10 +31,12 @@ router.post('/', function(req, res, next) {  
                 link_data = {   
                     name: req.body.name, 
                     fname: req.body.fname,
-                    type: req.body.type
+                    type: req.body.type,
+                    description: req.body.description,
+                    update: req.body.update
                 };
 
-                codeblock = req.body.main;
+                codeblock = req.body.filecontents;
                 codeblock = codeblock.replace(/[\n]/i, '');
                 codeblock = codeblock.replace(/[\']/i, '\'');
                 codeblock = codeblock.replace(/[\"]/i, '"');
@@ -50,15 +52,13 @@ router.post('/', function(req, res, next) {  
                     }                        
                 }  
                 
-                promise2 = users.update(
-                    { username: r.username }, 
-                    { 
-                        $push: { links: link_data },
-                        $set: { main: link_data.fname} 
-                    }
-                );
-                
-                users.update({username: r.username}, {$set: {main: link_data.fname}});
+                promise2 = users.update({ username: r.username }, {$push: { links: link_data } });
+
+                console.log('set-chart');
+                console.log(link_data);
+                if(link_data.update){
+                    users.update({username: r.username}, {$set: {main: link_data.fname}});
+                }
 
                 promise2.then(function() {
                     console.log('[chartsetup.js] updated successfully!');
@@ -107,7 +107,7 @@ router.get('/getlinks', function(req, res){
 
     token = auth.decode(req.session.token).auth;
     query = {username: token.username };
-    select = { _id:0, "links._id": 1, "links.name": 1, "links.fname": 1}; 
+    select = { _id:0, "links.linkid": 1, "links.name": 1, "links.fname": 1}; 
 
     if(Object.keys(req.query).length > 0){
         for(var _key in req.query) {
@@ -134,20 +134,17 @@ router.post('/updatelinks', function(req, res){
         promise,
         username,
         linkid,
-        link_data,
-        promise2,
         linkdata,
         codeblock;
 
     token = auth.decode(req.session.token);
-    linkid = req.body.linkid;    
-    username = token.auth.username;
+    linkid = req.body.linkid;
 
-
-    link_data = {   
+    linkdata = {   
         name: req.body.name, 
         type: req.body.type,
-        description: req.body.description
+        description: req.body.description,
+        update: req.body.update
     };
 
     codeblock = req.body.filecontents;
@@ -155,43 +152,56 @@ router.post('/updatelinks', function(req, res){
     codeblock = codeblock.replace(/[\']/i, '\'');
     codeblock = codeblock.replace(/[\"]/i, '"');
 
-    fs.writeFile(global.rootdir+'/public/fc.charts.resource/'+link_data.fname, codeblock, 'utf-8', function(){
-        console.log('[chartsetup.js] file writing doene.');
-    });
- 
-    if(r.links.length > 0) {
-        linkdata = findLink(r.links, link_data.name);
-        if(linkdata && typeof linkdata !== 'undefined'){
-           return res.status(200).send({success: false, message: 'Link alredy exists', linkdata: linkdata}).end();
-        }                        
-    }  
+    username = token.auth.username;
     
-    //promise = users.update({'username':username, 'links._id': linkid});
-    promise2 = users.update(
-        { username: r.username }, 
-        { 
-            $push: { links: link_data },
-            $set: { main: link_data.fname} 
-        }
-    );
-    
-    users.update({username: r.username}, {$set: {main: link_data.fname}});
+    users.findOne({'username':username, 'links.linkid': linkid}, {"links.$.likid": linkid})
+        .select({"links.fname" : 1, main:1, "links.linkid":1})
+        .exec(function(err, result){
+            var fname;
+            if(err) {console.log(err); return;}
 
-    promise2.then(function() {
-        console.log('[chartsetup.js] updated successfully!');
-        res.status(200).send({success: true, message: 'data update.'}).end();
-    })
-    .catch(function (err) {
-        console.log('[chartsetup.js] failed updation!');
-        console.log(err);
-        res.status(404).end();
-    });
-              
-  
+            fname = result.links[0].fname;
+            
+            console.log('update-chart');
+            console.log(result.links.length);
+            console.log(fname);
+            console.log(linkdata);
 
+            fs.writeFile(global.rootdir+'/public/fc.charts.resource/'+fname, codeblock, 'utf-8', function(){
+                console.log('[chartsetup.js] file writing done.');
+            });
+         
+            if(linkdata.update) {
+                console.log('--->');
+                var p = users.update({'username':username, 'links.linkid': linkid},{
+                    $set: {main: fname }
+                });
+
+                p.then(function(){
+                    console.log("success");
+                })
+                .catch(function(err){
+                    console.log(err);
+                });
+            }
+
+            promise = users.update({'username':username, 'links.linkid': linkid}, { 
+                $set: { 
+                    "links.$.name": linkdata.name,
+                    "links.$.type": linkdata.type,
+                    "links.$.description": linkdata.description
+                }
+            });
+            
+            promise.then(function() {
+                console.log('[chartsetup.js] updated successfully!');
+                res.status(200).send({success: true, message: 'data update.'}).end();
+            })
+            .catch(function (err) {
+                console.log('[chartsetup.js] failed updation!');
+                console.log(err);
+                res.status(404).end();
+            });
+        });   
 });
 module.exports = router;
-
-
-
-//{"username": "admin", "links.name": "demo-2"}, {_id:0, links: {$elemMatch: {name: "demo-2"}}}
