@@ -12,23 +12,21 @@
 	<div class="content" ng-app='loginapp' >
 		<div class="container" ng-controller='loginctrl' ng-init="register({siteRoot:'<%= site_root%>'})">
 				<div class="row">
-					<div class="col-lg-12">
+					<div class="col-lg-12 block-wrapper">
 						<form action="<%= site_root%>api/login/validate/" method='POST'>
 							<section >
-								<div>
+								<div class="fgroup">
 									<label>Username</label>
 									<input type="text" name="username" ng-model="username">
 								</div>
-							</section>
-							<section >
-								<div>
+							
+								<div class="fgroup">
 									<label>Password</label>
 									<input type="password" name="password" ng-model="password">
 								</div>
-							</section>
-							<section >
-								<div>
-									<input type="submit" >
+							
+								<div class="fgroup">
+									<input type="submit" class="btn btn-info">
 									<input type="reset" ng-clik="clear()">
 								</div>
 							</section>

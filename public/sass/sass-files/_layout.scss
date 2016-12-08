@@ -102,10 +102,22 @@ header {
 .content {
 	padding-top: 60px;
 	background-color: $white; 
+	min-height: 300px;   
 }
 .chart-wrapper {
 	margin: 30px 0;
 	text-align: center;
+}
+
+.block-wrapper {
+	text-align: center;
+	form {
+		display: inline-block;
+		padding: 20px;
+		margin: 60px 0;
+		background-color: $themeGray;
+		border: 1px solid $lighterGray
+	}
 }
 
 //Footer
