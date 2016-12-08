@@ -463,7 +463,7 @@ textarea {
     vertical-align: top;
     color: #5f5f5f; }
   .fgroup input[type="text"], .fgroup input[type="password"], .fgroup textarea {
-    width: 250px;
+    width: 300px;
     margin-left: 0; }
   .fgroup input[type="submit"], .fgroup input[type="reset"] {
     margin-left: 10px; }
