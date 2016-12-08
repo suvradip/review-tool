@@ -27,53 +27,51 @@
 			</div>
 			<div class="row">
 				<div class="col-lg-2">
-					<section>
-						<span>Other links</span>
-						<div>
+					<nav>
+						<h2>Other links</h2>
 							<ul>
 								<li ng-repeat='link in links'>
-									<label ng-click=linkDetails($event) data-linkid="{{ link.linkid }}">{{ link.name }}</label>	
+									<label  ng-click=linkDetails($event) data-linkid="{{ link.linkid }}">{{ link.name }}</label>	
 								</li>
 							</ul>
-						</div>
-					</section>
+					</nav>
 				</div>
-				<div class="col-lg-8">
-					<section >
-						<div>
+				<div class="col-lg-7">
+					<section class="form-holder">
+						<div class="fgroup">
 							<label>Link name</label>
 							<input type="text"  ng-model="link_name">
 						</div>
-						<div>
+						<div class="fgroup">
 							<label>Description</label>
-							<input type="text"  ng-model="link_description">
+							<textarea  cols="25" rows="2" ng-model="link_description"></textarea>
 						</div>
-						<div>
+						<div class="fgroup">
 							<label>Chart type</label>
 							<input type="text"  ng-model="link_type">
 						</div>
-						<div>
+						<div class="fgroup">
 							<label>Content</label>
-							<textarea  cols="25" rows="5" ng-model="link_content"></textarea>
+							<textarea  cols="25" rows="10" ng-model="link_content"></textarea>
 						</div>
-						<div>
+						<div class="fgroup">
 							<label>Make it final</label>
 							<input type="checkbox"  ng-model="link_check">
-						</div>
-					</section>
-					<section >
-						<div>
-							<input type="submit" value="submit" ng-hide="btn_action" ng-click="setchart()">
-							<input type="submit" value="update" ng-show="btn_action" ng-click="updatedata()">
+						</div>	
+						<div class="fgroup">
+							<input type="submit" value="submit" ng-hide="btn_action" ng-click="setchart()"  class="btn btn-info">
+							<input type="submit" value="update" ng-show="btn_action" ng-click="updatedata()"  class="btn btn-info">
 							<input type="reset" ng-click="reset()">
 						</div>
 					</section>
 				</div>
-				<div class="col-lg-2">
-					<ul>
-						<li>Chartid must be `sampleChart`</li>
-						<li>Chart container id/renderat must be `chart-container`</li>
-					</ul>
+				<div class="col-lg-3">
+					<aside>
+						<ul class="info-list">
+							<li>Chartid must be `sampleChart`</li>
+							<li>Chart container id/renderat must be `chart-container`</li>
+						</ul>
+					</aside>
 				</div>
 			</div>
 		</div>

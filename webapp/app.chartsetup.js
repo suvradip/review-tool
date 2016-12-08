@@ -8,7 +8,8 @@ app.controller('chartsetupctrl', function($scope, $http){
         chartref,
         getlinks;
 
-    $scope.link_check = false;    
+    $scope.link_check = false;
+
     getData = function(url, callback){
         $http({
             method: 'GET',
