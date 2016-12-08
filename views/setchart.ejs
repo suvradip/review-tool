@@ -19,37 +19,61 @@
 	<div class="content" ng-app='chartsetup' >
 		<div class="container" ng-controller='chartsetupctrl' ng-init="register({site_root:'<%= site_root%>'})">
 			<div class="row">
+				<section >
+					<div class="chart-wrapper" >
+						<div id="chart-container"></div>
+					</div>
+				</section>
+			</div>
+			<div class="row">
 				<div class="col-lg-2">
 					<section>
 						<span>Other links</span>
 						<div>
 							<ul>
 								<li ng-repeat='link in links'>
-									<label ng-click=test($event) data-attr="cool">{{ link.name }}</label>	
+									<label ng-click=linkDetails($event) data-linkid="{{ link._id }}">{{ link.name }}</label>	
 								</li>
 							</ul>
 						</div>
 					</section>
 				</div>
-				<div class="col-lg-10">
+				<div class="col-lg-8">
 					<section >
 						<div>
 							<label>Link name</label>
 							<input type="text"  ng-model="link_name">
 						</div>
-					</section>
-					<section >
+						<div>
+							<label>Description</label>
+							<input type="text"  ng-model="link_description">
+						</div>
+						<div>
+							<label>Chart type</label>
+							<input type="text"  ng-model="link_type">
+						</div>
 						<div>
 							<label>Content</label>
-							<textarea  cols="30" rows="5" ng-model="bodyfile"></textarea>
+							<textarea  cols="25" rows="5" ng-model="link_content"></textarea>
+						</div>
+						<div>
+							<label>Make it final</label>
+							<input type="checkbox"  ng-model="link_check">
 						</div>
 					</section>
 					<section >
 						<div>
-							<input type="submit" ng-click="setchart()">
-							<input type="reset" >
+							<input type="submit" value="submit" ng-hide="btn_action" ng-click="setchart()">
+							<input type="submit" value="update" ng-show="btn_action" ng-click="">
+							<input type="reset" ng-click="reset()">
 						</div>
 					</section>
+				</div>
+				<div class="col-lg-2">
+					<ul>
+						<li>Chartid must be `sampleChart`</li>
+						<li>Chart container id/renderat must be `chart-container`</li>
+					</ul>
 				</div>
 			</div>
 		</div>

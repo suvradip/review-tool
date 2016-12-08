@@ -107,23 +107,91 @@ router.get('/getlinks', function(req, res){
 
     token = auth.decode(req.session.token).auth;
     query = {username: token.username };
-    select = {links: 1, _id: 0 }; 
+    select = { _id:0, "links._id": 1, "links.name": 1, "links.fname": 1}; 
 
-    if(req.query.link_name && typeof req.query.link_name !== 'undefined'){
-        query["links.name"] = req.query.link_name;        
+    if(Object.keys(req.query).length > 0){
+        for(var _key in req.query) {
+            query["links."+_key] = req.query[_key];
+        }
+        //query["links.name"] = req.query.link_name;
+        select = { _id:0, reviews:0, time:0, "links.reviews":0, links: { $elemMatch: req.query }}; 
     }
-    
-    users.findOne(query)
-        .select(select)
-        .exec(function(err, result){
-            if(err) console.log('[chartsetup.js] : error:'+err);
-            if(result) {
-                res.status(200).send({success: true, result: result}).end();
-            } else {
-                res.status(200).send({success: false, message: 'no data found'}).end();
-            }
-        });
-    
+   
+    promise = users.findOne(query, select);
+    promise.then(function(result) {
+        console.log('[chartsetup.js] retrived successfully!');
+        res.status(200).send({success: true, result: result}).end();
+    })
+    .catch(function (err) {
+        console.log('[chartsetup.js] failed data retrived!');
+        console.log(err);
+        res.status(404).end();
+    });
 });
 
+router.post('/updatelinks', function(req, res){
+    var token,
+        promise,
+        username,
+        linkid,
+        link_data,
+        promise2,
+        linkdata,
+        codeblock;
+
+    token = auth.decode(req.session.token);
+    linkid = req.body.linkid;    
+    username = token.auth.username;
+
+
+    link_data = {   
+        name: req.body.name, 
+        type: req.body.type,
+        description: req.body.description
+    };
+
+    codeblock = req.body.filecontents;
+    codeblock = codeblock.replace(/[\n]/i, '');
+    codeblock = codeblock.replace(/[\']/i, '\'');
+    codeblock = codeblock.replace(/[\"]/i, '"');
+
+    fs.writeFile(global.rootdir+'/public/fc.charts.resource/'+link_data.fname, codeblock, 'utf-8', function(){
+        console.log('[chartsetup.js] file writing doene.');
+    });
+ 
+    if(r.links.length > 0) {
+        linkdata = findLink(r.links, link_data.name);
+        if(linkdata && typeof linkdata !== 'undefined'){
+           return res.status(200).send({success: false, message: 'Link alredy exists', linkdata: linkdata}).end();
+        }                        
+    }  
+    
+    //promise = users.update({'username':username, 'links._id': linkid});
+    promise2 = users.update(
+        { username: r.username }, 
+        { 
+            $push: { links: link_data },
+            $set: { main: link_data.fname} 
+        }
+    );
+    
+    users.update({username: r.username}, {$set: {main: link_data.fname}});
+
+    promise2.then(function() {
+        console.log('[chartsetup.js] updated successfully!');
+        res.status(200).send({success: true, message: 'data update.'}).end();
+    })
+    .catch(function (err) {
+        console.log('[chartsetup.js] failed updation!');
+        console.log(err);
+        res.status(404).end();
+    });
+              
+  
+
+});
 module.exports = router;
+
+
+
+//{"username": "admin", "links.name": "demo-2"}, {_id:0, links: {$elemMatch: {name: "demo-2"}}}

@@ -33,7 +33,6 @@ app.controller('chartsetupctrl', function($scope, $http){
 
     getlinks = function() {
         getData($scope.site_root+'api/chartsetup/getlinks', function(response){
-            console.log(response);
             $scope.links = response.result.links;
         });    
     };
@@ -54,17 +53,41 @@ app.controller('chartsetupctrl', function($scope, $http){
         //this data saved to db
         data = {
                 name: $scope.link_name, 
+                description: $scope.link_description,
+                type: $scope.link_type,
                 fname: fname,
-                type: '',
-                main: $scope.bodyfile
+                main: $scope.link_content
             };    
-        console.log(data);
+
 		sendData($scope.site_root+'api/chartsetup', data, function(response){
             console.log(response);
         });
 	};
 
-    $scope.test = function(e) {
-        var target = e.target;
+    $scope.linkDetails = function(e) {
+        var target,
+            linkid;
+
+        target = e.target;
+        linkid = target.attributes["data-linkid"].value;
+
+        $scope.btn_action = true;
+
+        getData($scope.site_root+'api/chartsetup/getlinks?_id='+linkid, function(response){
+            var data = response.result.links[0];
+            $scope.link_name = data.name;
+            $scope.link_description = data.description || '';
+            $scope.link_type = data.type || '';
+            getData($scope.site_root+'fc.charts.resource/'+data.fname, function(file_data){
+                $scope.link_content = file_data;
+            });
+        });
+    };
+
+    $scope.reset = function() {
+        $scope.link_name = "";
+        $scope.link_description = "";
+        $scope.link_type = "";
+        $scope.link_content = "";
     };
 });
