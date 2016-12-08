@@ -316,6 +316,23 @@ header .user-menu {
     border-right: 15px solid transparent;
     border-left: 15px solid transparent; }
 
+nav h2 {
+  font-size: 20px;
+  color: #5f5f5f; }
+
+nav ul {
+  margin-left: 0;
+  padding-left: 20px; }
+  nav ul li {
+    margin-bottom: 5px;
+    border-bottom: 1px solid #ccc; }
+    nav ul li label {
+      display: block;
+      padding: 5px 0;
+      cursor: pointer; }
+      nav ul li label:hover {
+        color: #5f5f5f; }
+
 .content {
   padding-top: 60px;
   background-color: #fff;
@@ -333,6 +350,21 @@ header .user-menu {
     margin: 60px 0;
     background-color: #edeff0;
     border: 1px solid #c1c1c1; }
+
+.form-holder {
+  margin: 20px 30px 30px; }
+
+aside {
+  background-color: #edeff0;
+  border: 1px solid #dfe3e4;
+  padding: 15px; }
+  aside ul {
+    margin: 0;
+    padding-left: 20px; }
+    aside ul li {
+      margin-bottom: 10px;
+      color: #858585;
+      font-style: italic; }
 
 footer {
   font-family: robotolight, Arial, sans-serif;
@@ -427,13 +459,16 @@ textarea {
     display: inline-block;
     *zoom: 1;
     *display: inline;
-    margin-right: 10px; }
-  .fgroup input[type="text"], .fgroup input[type="password"] {
-    width: 200px; }
-  .fgroup input {
+    margin-right: 10px;
+    vertical-align: top;
+    color: #5f5f5f; }
+  .fgroup input[type="text"], .fgroup input[type="password"], .fgroup textarea {
+    width: 250px;
+    margin-left: 0; }
+  .fgroup input[type="submit"], .fgroup input[type="reset"] {
     margin-left: 10px; }
-    .fgroup input:first-child {
-      margin-left: 101px; }
+  .fgroup input[type="submit"] {
+    margin-left: 91px; }
 
 /*--------------------------------------------------------------
 # Buttons
