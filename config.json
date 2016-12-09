@@ -6,8 +6,8 @@
 	"secretKey" : "r3v13w-ut1l1ty",
 	"mongodb": {
 		"constr" : "127.0.0.1:27017/fc-review",
-		"usr": "",
-		"pwd": "",
+		"usr": "FC_Review",
+		"pwd": "r3v13w",
 		"auth" : {
 			"authdb": "admin"
 		}

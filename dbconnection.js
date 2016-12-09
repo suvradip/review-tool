@@ -5,7 +5,6 @@ var mongoose,
 mongoose = require("mongoose");
 
 mongo = config.mongodb;
-console.log("mongodb://" + (mongo.usr ? mongo.usr + ':'+mongo.pwd : '') + mongo.constr);
 mongoose.connect("mongodb://" + (mongo.usr ? mongo.usr + ':'+mongo.pwd : '') + mongo.constr);
 mongoose.Promise = global.Promise;
 
