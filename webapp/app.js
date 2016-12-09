@@ -78,18 +78,21 @@ app.controller('reviewSection', function($scope, $http){
 
     $scope.loadAllReviews = function(site_root){
         $scope.site_root = site_root;
-    	getData($scope.site_root+'api/review', function(response){
-    		$scope.posts = response.map(function(ele){
-    			var d = new Date(ele.time);
-    			return {
-    				name: ele.name,
-    				avatar: ele.avatar,
-    				review: ele.review,
-    				time: d.toLocaleTimeString(),
-    				date: d.toLocaleDateString(),
-    				ssid: ele.screenshots
-    			};
-    		});
+    	getData($scope.site_root+'api/review/global', function(response){
+            
+            if(response.result.length > 0){
+        		$scope.posts = response.result.map(function(ele){
+        			var d = new Date(ele.time);
+        			return {
+        				name: ele.name,
+        				avatar: ele.avatar,
+        				review: ele.review,
+        				time: d.toLocaleTimeString(),
+        				date: d.toLocaleDateString(),
+        				ssid: ele.screenshots
+        			};
+        		});
+            }
     	});
     };
 
@@ -98,35 +101,39 @@ app.controller('reviewSection', function($scope, $http){
 	$scope.postReview = function(){
 		var d,
 			data,
-			ssid;
-		d = new Date();
-		ssid = 'ss'+d.getTime()+'.png';
-		data = {
-				name: 'anonymous', 
-				review: $scope.review,
-				avatar: 'avatar.png',
-				ssid: ssid
-			};
+            chartinfo,
+            chartref,
+            ssid;
 
-		//to show new posts	
-		$scope.posts.push(data);
-		//cleanup textare
-		$scope.review = "";
-		
-		//this data saved to db
-        chartref = FusionCharts('mychart');
-		data.time = d.toLocaleTimeString();
-    	data.date = d.toLocaleDateString();
-    	data.chartdata = chartref.getJSONData();
-        data.chartinfo = {
+		d = new Date();
+        ssid = 'ss'+d.getTime()+'.png';
+		//create screenshots
+		createScreenshot(ssid);
+
+        data = {
+            name: 'anonymous user', 
+            review: $scope.review,
+            avatar: 'avatar.png',
+            ssid: ssid,
+            time: d.toLocaleTimeString(),
+            date: d.toLocaleDateString()
+        };
+
+        chartref = FusionCharts('simpleChart');
+        chartinfo = {
             type: chartref.chartType(),
             width: chartref.width,
             height: chartref.height,
+            datasource: chartref.getJSONData(),
             build: 'xx-xx'
         };
-		//create screenshots
-		createScreenshot(ssid);
+       
+        //to show new posts 
+        $scope.posts.push(data);
+        //cleanup textare
+        $scope.review = "";
+        data.chartinfo = chartinfo; 
 		//store data in database
-		sendData($scope.site_root+'api/review', data, function(){});
+		sendData($scope.site_root+'api/review/global', data, function(){});
 	};
 });

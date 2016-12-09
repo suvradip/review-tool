@@ -27,7 +27,8 @@ app.disable('x-powered-by');
 process.env.NODE_ENV = config.env;
 global.site_root = config.host + ':'+ config.port + config.site_root;
 //global.site_root = config.site_root;
-console.log(global.site_root);
+
+console.log('site_root :'+ global.site_root);
 //Here ‘secret‘ is used for cookie handling etc
 app.use(session({
 	secret: 'r3v13w-ut1l1ty ',

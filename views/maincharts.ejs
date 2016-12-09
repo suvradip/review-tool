@@ -49,11 +49,11 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div>s
 	<!-- footer template include -->
 	<% include layouts/footer.ejs %>
-
-	<% if(jsfname !== '') {%>
+	ss <%= jsfname %>
+	<% if(jsfname !== '' ) {%>
 		<script type="text/javascript" src="<%= site_root%>fc.charts.resource/<%= jsfname%>"></script>
 	<% } %>	
 </body>

@@ -1,5 +1,6 @@
 var router = require('express').Router(),
     users = require(global.rootdir+'/models/users'),
+    reviews = require(global.rootdir+'/models/reviews'),
     auth = require(global.rootdir+'/controllers/token'),
     config = require(global.rootdir+'/config'),
     _ = require('lodash'),
@@ -87,7 +88,7 @@ router.post('/', function(req, res, next) {  
         
 });
 
-router.get('/:username', function (req, res) {
+router.get('/users/:username', function (req, res) {
     var entries,
         username,
         projection,
@@ -122,6 +123,72 @@ router.get('/:username', function (req, res) {
     //     console.log(err);
     //     res.status(404).end();
     // });
+});
+
+//global user
+
+router.post('/global', function(req, res){
+    var entry,
+        promise,
+        timeNow = new Date().getTime(),
+        username,
+        review,
+        token = {},
+        sess;
+        
+        sess = req.session;
+
+        if(typeof sess.token !== "undefined" && sess.token) {
+            token = auth.decode(req.session.token).auth;
+            username = token.username;
+        } else {
+            username = "anonymous";
+        }
+
+        review = {
+            username: username,
+            name: token.name || req.body.name,
+            avatar: token.avatar || req.body.avatar,
+            review: req.body.review,
+            screenshots: req.body.ssid,
+            chartinfo: {
+                type: req.body.chartinfo.type,
+                width: req.body.chartinfo.width,
+                height: req.body.chartinfo.height,
+                buildno: req.body.chartinfo.build,
+                data: req.body.chartinfo.datasource
+            },
+        };
+
+        entry = new reviews(review);
+        promise = entry.save();
+
+        promise.then(function(){
+            res.status(200).json({success: true, message: 'data inserted.'}).end();
+        })
+        .catch(function(){
+
+        });
+});
+
+router.get('/global', function(req, res){
+    var projection,
+        promise,
+        query;
+
+    username = req.params.username;
+    query = {};    
+    projection = {};
+    //entries = review.find(query, projection);
+
+    promise = reviews.find(query);
+        
+    promise.then(function(result) {
+        res.status(200).json({success: true, result: result}).end();
+    })
+    .catch(function(err){
+        console.log(err);
+    });
 });
 
 module.exports = router;

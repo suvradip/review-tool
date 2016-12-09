@@ -61,7 +61,7 @@ app.controller('mainchartctrl', function($scope, $http){
     $scope.loadAllReviews = function(obj){
         
         $scope.site_root = obj.site_root;
-    	getData($scope.site_root+'api/review/'+obj.susername, function(response){
+    	getData($scope.site_root+'api/review/users/'+obj.susername, function(response){
            
             if(response.success && typeof response.result !== 'undefined'){
         		$scope.posts = response.result.reviews.map(function(ele){
