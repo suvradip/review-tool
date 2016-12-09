@@ -31,7 +31,7 @@
 						<h2>Other links</h2>
 							<ul>
 								<li ng-repeat='link in links'>
-									<label  ng-click=linkDetails($event) data-linkid="{{ link.linkid }}">{{ link.name }}</label>	
+									<label   ng-class="{'nav-active': $index === selectedIndex}" ng-click="linkDetails($index, $event)" data-linkid="{{ link.linkid }}">{{ link.name }}</label>	
 								</li>
 							</ul>
 					</nav>
@@ -67,8 +67,11 @@
 				</div>
 				<div class="col-lg-3">
 					<aside>
+						<div>
+							<div id="chart-container"></div>
+						</div>
 						<ul class="info-list">
-							<li>Chartid must be `sampleChart`</li>
+							<!-- <li>Chartid must be `sampleChart`</li> -->
 							<li>Chart container id/renderat must be `chart-container`</li>
 						</ul>
 					</aside>

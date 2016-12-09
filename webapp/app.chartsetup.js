@@ -8,7 +8,10 @@ app.controller('chartsetupctrl', function($scope, $http){
         chartref,
         getlinks;
 
+    //for checkbox    
     $scope.link_check = false;
+    //for li item active class
+    $scope.selectedIndex = -1;
 
     getData = function(url, callback){
         $http({
@@ -35,7 +38,6 @@ app.controller('chartsetupctrl', function($scope, $http){
 
     getlinks = function() {
         getData($scope.site_root+'api/chartsetup/getlinks', function(response){
-            console.log(response);
             $scope.links = response.result.links;
         });    
     };
@@ -70,13 +72,14 @@ app.controller('chartsetupctrl', function($scope, $http){
         });
 	};
 
-    $scope.linkDetails = function(e) {
+    $scope.linkDetails = function(index, e) {
         var target,
             linkid;
 
         target = e.target;
         linkid = target.attributes["data-linkid"].value;
 
+        $scope.selectedIndex = index;
         $scope.btn_action = true;
         $scope.linkid = linkid;
         $scope.link_check = false;
@@ -114,8 +117,6 @@ app.controller('chartsetupctrl', function($scope, $http){
         $scope.link_description = "";
         $scope.link_type = "";
         $scope.link_content = "";
-        console.log($scope.link_check);
-
     };
 
 });
