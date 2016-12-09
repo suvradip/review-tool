@@ -3,5 +3,9 @@
 	"host": "http://localhost",
 	"port": 3300,
 	"site_root" : "/",
-	"secretKey" : "supersecretkey"
+	"secretKey" : "r3v13w-ut1l1ty",
+	"directory" : {
+		"fc.charts.resource" : "/public/fc.charts.resource",
+		"screenshots" : "/public/screenshots" 
+	}
 }

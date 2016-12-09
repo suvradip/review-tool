@@ -64,10 +64,9 @@ router.post('/createuser', function (req, res, next) {
     
     key = req.body.key;
 
-    if(key && key !== 's1u@#44#')
+    if(key && key !== config.secretKey)
         return res.status(401).send('supekey missmatch').end();
 
-    console.log(typeof req.body.password);
     if(typeof req.body.username === "undefined" || typeof req.body.password === "undefined" )
         return res.status(401).send('username/password is missing.').end();
 
