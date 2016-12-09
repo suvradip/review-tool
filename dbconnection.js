@@ -1,8 +1,12 @@
-var mongoose;
+var mongoose,
+	config = require(__dirname+"/config"),
+	mongo;
 
 mongoose = require("mongoose");
 
-mongoose.connect("mongodb://127.0.0.1:27017/fc-review");
+mongo = config.mongodb;
+console.log("mongodb://" + (mongo.usr ? mongo.usr + ':'+mongo.pwd : '') + mongo.constr);
+mongoose.connect("mongodb://" + (mongo.usr ? mongo.usr + ':'+mongo.pwd : '') + mongo.constr);
 mongoose.Promise = global.Promise;
 
 mongoose.connection.on("error", function(){console.log("[dbconnection.js] Mongodb: ERROR.");});

@@ -4,6 +4,14 @@
 	"port": 3300,
 	"site_root" : "/",
 	"secretKey" : "r3v13w-ut1l1ty",
+	"mongodb": {
+		"constr" : "127.0.0.1:27017/fc-review",
+		"usr": "",
+		"pwd": "",
+		"auth" : {
+			"authdb": "admin"
+		}
+	},
 	"directory" : {
 		"fc.charts.resource" : "/public/fc.charts.resource",
 		"screenshots" : "/public/screenshots" 
