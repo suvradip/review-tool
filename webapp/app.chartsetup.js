@@ -6,7 +6,10 @@ app.controller('chartsetupctrl', function($scope, $http){
 		loadAllReviews,
 		createScreenshot,
         chartref,
-        getlinks;
+        getlinks,
+        showoutput,
+        selector,
+        finalHTMLContent;
 
     //for checkbox    
     $scope.link_check = false;
@@ -40,6 +43,26 @@ app.controller('chartsetupctrl', function($scope, $http){
         getData($scope.site_root+'api/chartsetup/getlinks', function(response){
             $scope.links = response.result.links;
         });    
+    };
+
+    selector = {
+        container : document.getElementById("output")
+    };
+
+    finalHTMLContent = function(data) {
+        var content = '<!DOCTYPE html><html><head>';
+        content += '<script type="text/javascript" src="'+ $scope.site_root + 'bower_components/fusioncharts/fusioncharts.js"></script>';
+        content += "</head><body>";
+       // content += '<script type="text/javascript" src="http://static.fusioncharts.com/code/latest/fusioncharts.js"></script>';
+        content += '<script type="text/javascript">'+ data +'</script>';
+        content += '<div id="chart-container"></div>';
+        content += "</body></html>";
+
+        return content;
+    };
+
+    showoutput = function(fname){
+        selector.container.setAttribute('data',"data:text/html;charset=utf-8,"+escape(finalHTMLContent(fname)));
     };
 
     $scope.register = function(obj){
@@ -89,7 +112,8 @@ app.controller('chartsetupctrl', function($scope, $http){
             $scope.link_description = data.description || '';
             $scope.link_type = data.type || '';
             getData($scope.site_root+'fc.charts.resource/'+data.fname, function(file_data){
-                $scope.link_content = file_data;
+                showoutput(file_data);
+                $scope.link_content = file_data;//.replace(/\s\s\s?\s?/i, '\n');
             });
         });
     };
@@ -105,11 +129,12 @@ app.controller('chartsetupctrl', function($scope, $http){
             update: $scope.link_check
         }; 
 
-        console.log('update chart');
-        console.log(data);
         sendData($scope.site_root+'api/chartsetup/updatelinks', data, function(response){
-            console.log(response);
+            setTimeout(function(){
+                showoutput(data.filecontents);
+            }, 1000);
         });
+
     };
 
     $scope.reset = function() {

@@ -1,4 +1,5 @@
-FusionCharts.ready(function () {    var salesChart = new FusionCharts({
+FusionCharts.ready(function () {    
+        var salesChart = new FusionCharts({
         type: 'area2d',
         renderAt: 'chart-container',
         width: '400',
