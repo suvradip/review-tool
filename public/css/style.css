@@ -228,7 +228,7 @@ th {
   font-weight: normal;
   font-style: normal; }
 
-* {
+html {
   font-family: robotoregular, Arial, sans-serif;
   font-size: 14px;
   line-height: 20px;
@@ -237,6 +237,9 @@ th {
 /*--------------------------------------------------------------
 # Layout
 --------------------------------------------------------------*/
+.row [class*="col"] {
+  box-sizing: border-box; }
+
 body {
   background-color: #2b2243; }
 
@@ -322,16 +325,30 @@ nav h2 {
 
 nav ul {
   margin-left: 0;
-  padding-left: 20px; }
-  nav ul li {
-    margin-bottom: 5px;
-    border-bottom: 1px solid #ccc; }
-    nav ul li label {
-      display: block;
-      padding: 5px 0;
-      cursor: pointer; }
-      nav ul li label:hover {
-        color: #5f5f5f; }
+  padding-left: 0;
+  list-style: none; }
+  nav ul li:hover {
+    color: #5f5f5f; }
+  nav ul li label {
+    display: block;
+    padding: 5px;
+    cursor: pointer;
+    position: relative;
+    border-top: 1px solid #edeff0; }
+    nav ul li label.nav-active {
+      border-top: 1px solid #edeff0; }
+      nav ul li label.nav-active:after {
+        content: "";
+        width: 0;
+        height: 0;
+        border-left: 16px solid #edeff0;
+        border-top: 16px solid transparent;
+        border-bottom: 16px solid transparent;
+        position: absolute;
+        right: -16px;
+        top: -1px; }
+  nav ul li:first-child label {
+    border-top: none; }
 
 .content {
   padding-top: 60px;
@@ -447,7 +464,8 @@ input[type="color"] {
   padding: 5px; }
 
 textarea {
-  width: 100%; }
+  width: 100%;
+  resize: vertical; }
   textarea.textarea-code {
     border: 1px dashed #c1c1c1;
     padding: 10px;

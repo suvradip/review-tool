@@ -48,7 +48,7 @@ input[type="color"] {
 
 textarea {
 	width: 100%;
-
+	resize: vertical;
 	&.textarea-code {
 		border: 1px dashed $lighterGray;
 		padding: 10px;
