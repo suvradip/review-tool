@@ -1,6 +1,6 @@
  var router = require('express').Router(),
     jwt = require('jwt-simple'),
-    bcrypt = require('bcrypt'),
+    bcrypt = require('bcrypt-nodejs'),
     config = require(global.rootdir+'/config'),
     user = require(global.rootdir+'/models/users');
 
@@ -60,11 +60,11 @@ router.post('/createuser', function (req, res, next) {
         promise,
         entry,
         data,
+        salt,
         timeNow = new Date().getTime();
     
     key = req.body.key;
-
-    if(key && key !== config.secretKey)
+    if(!key || key !== config.secretKey || key == '')
         return res.status(401).send('supekey missmatch').end();
 
     if(typeof req.body.username === "undefined" || typeof req.body.password === "undefined" )
@@ -79,8 +79,8 @@ router.post('/createuser', function (req, res, next) {
 
     password = req.body.password;
     entry = new user(data);
-
-    bcrypt.hash(password, 10, function (err, hash) {
+    salt = bcrypt.genSaltSync(10);
+    bcrypt.hash(password, salt, null, function (err, hash) {
         entry.password = hash;
         
         promise = entry.save();
@@ -91,8 +91,8 @@ router.post('/createuser', function (req, res, next) {
         })
         .catch(function (err) {
             console.log('[login.js] Failed Insertion!');
-            console.log(err);
-            res.status(404).json({success: false, message: 'Error'}).end();
+            //console.log(err);
+            res.status(404).json({success: false, message: 'user name exist.'}).end();
         });
     });
 });
