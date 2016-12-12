@@ -80,5 +80,5 @@ gulp.task('watch', function() {
 
 
 
-gulp.task('dev', ['watch:server', 'watch', 'browserSync']);
-//gulp.task('dev', ['watch:server']);
+//gulp.task('dev', ['watch:server', 'watch', 'browserSync']);
+gulp.task('dev', ['watch:server']);
