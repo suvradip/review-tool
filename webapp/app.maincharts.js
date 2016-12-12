@@ -111,6 +111,19 @@ app.controller('mainchartctrl', function($scope, $http){
             $scope.posts.push(response.obj);
             //cleanup textare
             $scope.review = "";
+
+            window.marking.deletMarker();
         });
 	};
+
+    $scope.startMarking = function(e){
+        var target = e.target;
+        if(target.value === 'stop'){
+           window.marking.deletMarker(); 
+           e.target.setAttribute("value", "Start marking");
+       } else {
+            window.marking.createMarker();
+            e.target.setAttribute("value", "stop");
+        }
+    };
 });
