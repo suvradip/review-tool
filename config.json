@@ -1,15 +1,15 @@
 {
 	"env" : "development",
-	"host": "http://192.168.0.226",
+	"host": "http://3.4.web.fusioncharts.net",
 	"port": 3300,
-	"site_root" : "/",
+	"site_root" : "http://3.4.web.fusioncharts.net/review/",
 	"secretKey" : "r3v13w-ut1l1ty",
 	"mongodb": {
 		"constr" : "127.0.0.1:27017/fc-review",
-		"usr": "FC_Review",
-		"pwd": "r3v13w",
-		"auth" : {
-			"authdb": "admin"
+		"usr": "root",
+		"pwd": "NewRoot",
+		"options" : {
+			"auth": { "authdb": "admin" }
 		}
 	},
 	"directory" : {

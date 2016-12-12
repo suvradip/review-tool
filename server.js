@@ -28,8 +28,8 @@ app.use(helmet());
 app.disable('x-powered-by');
 
 //global site root setup from config file
-global.site_root = config.host + ':'+ config.port + config.site_root;
-//global.site_root = config.site_root;
+//global.site_root = config.host + ':'+ config.port + config.site_root;
+global.site_root = config.site_root;
 console.log('site_root :'+ global.site_root);
 
 //Here ‘secret‘ is used for cookie handling etc
