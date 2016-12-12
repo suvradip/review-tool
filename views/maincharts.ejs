@@ -10,6 +10,8 @@
 	<!-- <script type="text/javascript" src="<%= site_root%>bower_components/fusioncharts-angular/angular-fusioncharts.js"></script> -->
 	<!-- a js file for angular operation -->
  	<script type="text/javascript" src="<%= site_root%>webapp/app.maincharts.js"></script>
+ 	<script type="text/javascript" src="<%= site_root%>lib/raphael-min.js"></script>
+ 	
 </head>
 <body>
 	<!-- header template include -->
@@ -21,6 +23,7 @@
 					<section >
 						<div class="chart-wrapper" >
 							<div id="chart-container"></div>
+							<input type="submit" value="Start Marking" class="btn btn-default btn-large clearfix" ng-click="startMarking($event)">
 						</div>
 					</section>
 					<section >
@@ -55,5 +58,7 @@
 	<% if(jsfname !== '' ) {%>
 		<script type="text/javascript" src="<%= site_root%>fc.charts.resource/<%= jsfname%>"></script>
 	<% } %>	
+
+	<script type="text/javascript" src="<%= site_root%>lib/marker.js"></script>
 </body>
 </html>

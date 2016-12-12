@@ -10,9 +10,9 @@ auth = function(req, res, next){
 	if(token && typeof token !== 'undefined') {
         try {
             auth = jwt.decode(token, config.secretKey);
-            res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+       /*     res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
     		res.header('Expires', '-1');
-    		res.header('Pragma', 'no-cache');
+    		res.header('Pragma', 'no-cache');*/
             next();
         } catch(err) {
             if(err) { return  res.status(401).send('authentication: invalid signature.' + err).end(); }
