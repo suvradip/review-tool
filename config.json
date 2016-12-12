@@ -8,9 +8,9 @@
 		"constr" : "127.0.0.1:27017/fc-review",
 		"usr": "",
 		"pwd": "",
-		"auth" : {
-			"authdb": "admin"
-		}
+		"options" : {
+            "auth": { "authdb": "admin" }
+        }
 	},
 	"directory" : {
 		"fc.charts.resource" : "/public/fc.charts.resource",
