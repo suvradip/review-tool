@@ -33,7 +33,7 @@ router.post('/', function(req, res, next) {  
                 width: req.body.chartinfo.width,
                 height: req.body.chartinfo.height,
                 buildno: req.body.chartinfo.build,
-                data: req.body.chartinfo.datasource
+                datasource: req.body.chartinfo.datasource
             },
         };
 

@@ -1,6 +1,6 @@
 {
 	"env" : "development",
-	"host": "http://localhost",
+	"host": "http://192.168.0.226",
 	"port": 3300,
 	"site_root" : "/",
 	"secretKey" : "r3v13w-ut1l1ty",

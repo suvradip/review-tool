@@ -2,14 +2,10 @@
 <html>
 <head>
 	<title></title>
-	<link rel="stylesheet" type="text/css" href="<%= site_root%>css/style.css">
-	<script type="text/javascript" src="<%= site_root%>bower_components/angular/angular.min.js"></script>
+	<!-- head template inlude -->
+	<% include layouts/head.ejs %>
 	<!-- installing fusioncharts  -->
-	<script type="text/javascript" src="<%= site_root%>bower_components/fusioncharts/fusioncharts.js"></script>
-	<!-- installing fusioncharts zune theme -->
-	<script type="text/javascript" src="<%= site_root%>bower_components/fusioncharts/themes/fusioncharts.theme.zune.js"></script>
-	<!-- installing fusioncharts angular plugin  -->
-	<script type="text/javascript" src="<%= site_root%>bower_components/fusioncharts-angular/angular-fusioncharts.js"></script>
+	<% include layouts/fusioncharts.ejs %>
 	<!-- a js file for angular operation -->
   <script type="text/javascript" src="<%= site_root%>webapp/app.chartsetup.js"></script>
 </head>
@@ -27,6 +23,7 @@
 			</div>
 			<div class="row">
 				<div class="col-lg-2">
+					<a href="<%= site_root%>users/<%- pusername%>/setchart">create a new</a>
 					<nav>
 						<h2>Other links</h2>
 							<ul>
@@ -39,7 +36,7 @@
 				<div class="col-lg-5">
 					<section class="form-holder">
 						<div class="fgroup">
-							<label>Link name</label>
+							<label>Link name*</label>
 							<input type="text"  ng-model="link_name" >
 						</div>
 						<div class="fgroup">
@@ -51,8 +48,8 @@
 							<input type="text"  ng-model="link_type">
 						</div>
 						<div class="fgroup">
-							<label>Content</label>
-							<textarea  cols="25" rows="10" ng-model="link_content"></textarea>
+							<label>Content*</label>
+							<textarea  cols="25" rows="12" ng-model="link_content"></textarea>
 						</div>
 						<div class="fgroup">
 							<label>Make it final</label>
@@ -66,6 +63,7 @@
 					</section>
 				</div>
 				<div class="col-lg-5">
+					<div style="min-height:30px">{{ msg }}</div>
 					<div >
 						<object type="text/html" style="width:100%; min-height: 400px" src="" data="" id="output"></object>
 					</div>

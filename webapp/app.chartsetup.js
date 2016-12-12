@@ -1,6 +1,6 @@
 var app = angular.module('chartsetup', []);
 
-app.controller('chartsetupctrl', function($scope, $http){
+app.controller('chartsetupctrl', function($scope, $http, $timeout){
 	var getData,
 		sendData,
 		loadAllReviews,
@@ -9,7 +9,8 @@ app.controller('chartsetupctrl', function($scope, $http){
         getlinks,
         showoutput,
         selector,
-        finalHTMLContent;
+        finalHTMLContent,
+        showMsg;
 
     //for checkbox    
     $scope.link_check = false;
@@ -65,6 +66,13 @@ app.controller('chartsetupctrl', function($scope, $http){
         selector.container.setAttribute('data',"data:text/html;charset=utf-8,"+escape(finalHTMLContent(fname)));
     };
 
+    showMsg = function(msg) {
+        $scope.msg = msg;
+        $timeout(function(){
+         $scope.msg = "";   
+        }, 2500);
+    };
+    
     $scope.register = function(obj){
         $scope.site_root = obj.site_root;
         getlinks();
@@ -88,10 +96,10 @@ app.controller('chartsetupctrl', function($scope, $http){
                 update: $scope.link_check
             };    
 
-         console.log('setchart');
-         console.log(data);
 		sendData($scope.site_root+'api/chartsetup', data, function(response){
-            console.log(response);
+            $scope.reset();
+            $timeout(getlinks, 1100); 
+            showMsg("New chart setup done.", "s");
         });
 	};
 
@@ -130,7 +138,8 @@ app.controller('chartsetupctrl', function($scope, $http){
         }; 
 
         sendData($scope.site_root+'api/chartsetup/updatelinks', data, function(response){
-            setTimeout(function(){
+            $timeout(function(){
+                showMsg("Content updated.", "s");
                 showoutput(data.filecontents);
             }, 1000);
         });

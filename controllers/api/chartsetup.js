@@ -54,27 +54,25 @@ router.post('/', function(req, res, next) {  
                 
                 promise2 = users.update({ username: r.username }, {$push: { links: link_data } });
 
-                console.log('set-chart');
-                console.log(link_data);
                 if(link_data.update){
                     users.update({username: r.username}, {$set: {main: link_data.fname}});
                 }
 
                 promise2.then(function() {
-                    console.log('[chartsetup.js] updated successfully!');
+                    console.log('[chartsetup.js] new links created successfully!');
                     res.status(200).send({success: true, message: 'data update.'}).end();
                 })
                 .catch(function (err) {
-                    console.log('[chartsetup.js] failed updation!');
-                    console.log(err);
-                    res.status(404).end();
+                    console.log('[chartsetup.js] failed link creation!');
+                    //console.log(err);
+                    res.status(500).send({success: false, message: 'error'}).end();
                 });
                   
         })
         .catch(function (err) {
             console.log('[chartsetup.js] failed lookup!');
-            console.log(err);
-            res.status(404).end();
+            //console.log(err);
+            res.status(500).send({success: false, message: 'error'}).end();
         });
     }    
 });
@@ -92,6 +90,13 @@ router.get('/', function (req, res) {
         users.findOne({username: username})
             .select({'links': 1, _id: 0 })
             .exec(function (err, result) {
+                if(err){
+                    console.log("[chartsetup.js] retrived failed!");
+                    //console.log(err);
+                    res.status(500).send({success: false, message: 'error'}).end();
+                }
+
+                console.log("[chartsetup.js] retrived successfully!");
                 res.status(200).send(result).end();
             });
 
@@ -124,8 +129,8 @@ router.get('/getlinks', function(req, res){
     })
     .catch(function (err) {
         console.log('[chartsetup.js] failed data retrived!');
-        console.log(err);
-        res.status(404).end();
+        //console.log(err);
+        res.status(500).send({success: false, message: 'erro'}).end();
     });
 });
 
@@ -162,26 +167,22 @@ router.post('/updatelinks', function(req, res){
 
             fname = result.links[0].fname;
             
-            console.log('update-chart');
-            console.log(result.links.length);
-            console.log(fname);
-            console.log(linkdata);
-
             fs.writeFile(global.rootdir+'/public/fc.charts.resource/'+fname, codeblock, 'utf-8', function(){
                 console.log('[chartsetup.js] file writing done.');
             });
          
             if(linkdata.update) {
-                console.log('--->');
+               
                 var p = users.update({'username':username, 'links.linkid': linkid},{
                     $set: {main: fname }
                 });
 
                 p.then(function(){
-                    console.log("success");
+                    console.log('[chartsetup.js] linkdata updated successfully!');
                 })
                 .catch(function(err){
-                    console.log(err);
+                    //console.log(err);
+                    res.status(500).send({success: false, message: 'erro'}).end();
                 });
             }
 
@@ -199,8 +200,8 @@ router.post('/updatelinks', function(req, res){
             })
             .catch(function (err) {
                 console.log('[chartsetup.js] failed updation!');
-                console.log(err);
-                res.status(404).end();
+                //console.log(err);
+                res.status(500).send({success: false, message: 'erro'}).end();
             });
         });   
 });

@@ -4,8 +4,7 @@ app.controller('mainchartctrl', function($scope, $http){
 	var getData,
 		sendData,
 		loadAllReviews,
-		createScreenshot,
-        chartref;
+		createScreenshot;
 
 	$scope.posts = [];
     getData = function(url, callback){
@@ -86,7 +85,10 @@ app.controller('mainchartctrl', function($scope, $http){
 			ssid;
 		d = new Date();
         ssid = 'ss'+d.getTime()+'.png';
-        chartref = FusionCharts('chartobject-1');
+
+        for(var ii in FusionCharts.items)
+            chartref = FusionCharts.items[ii];
+            
         //this data saved to db
         data = {
                 review: $scope.review,
