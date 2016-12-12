@@ -57,7 +57,7 @@ router.use(require(global.rootdir+'/controllers/auth'));
 
 //personal review page
 router.get('/users', function(req, res){
-	res.redirect('/users/'+auth.decode(req.session.token).auth.username);
+	res.redirect(config.site_root+'/users/'+auth.decode(req.session.token).auth.username);
 });
 
 router.get('/users/:username', function(req, res){

@@ -1,6 +1,6 @@
 var mongoose,
-	config = require(__dirname+"/config"),
-	mongo;
+    config = require(__dirname+"/config"),
+    mongo;
 
 mongoose = require("mongoose");
 
