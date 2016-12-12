@@ -25,7 +25,7 @@ router.post('/validate', function(req, res, next) {  
                 token = jwt.encode({username: username, avatar: result.avatar, name: result.name}, config.secretKey);
                 req.session.token = token;
                 res.type("html");
-                res.status(200).redirect(config.site_root+'/users/'+username);
+                res.status(200).redirect(config.site_root+'users/'+username);
             });
         });
 });
@@ -99,7 +99,7 @@ router.post('/createuser', function (req, res, next) {
 
 router.get('/logout', function(req, res){
     delete req.session;
-    res.redirect(config.site_root+'/login');
+    res.redirect(config.site_root+'login');
 });
 
 module.exports = router;
