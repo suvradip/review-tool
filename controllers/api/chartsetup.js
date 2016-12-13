@@ -37,9 +37,9 @@ router.post('/', function(req, res, next) {  
                 };
 
                 codeblock = req.body.filecontents;
-                codeblock = codeblock.replace(/[\n]/i, '');
-                codeblock = codeblock.replace(/[\']/i, '\'');
-                codeblock = codeblock.replace(/[\"]/i, '"');
+                // codeblock = codeblock.replace(/[\n]/i, ' ');
+                // codeblock = codeblock.replace(/[\']/i, '\'');
+                // codeblock = codeblock.replace(/[\"]/i, '"');
 
                 fs.writeFile(global.rootdir+'/public/fc.charts.resource/'+link_data.fname, codeblock, 'utf-8', function(){
                     console.log('[chartsetup.js] file writing doene.');
@@ -153,9 +153,9 @@ router.post('/updatelinks', function(req, res){
     };
 
     codeblock = req.body.filecontents;
-    codeblock = codeblock.replace(/[\n]/i, '');
-    codeblock = codeblock.replace(/[\']/i, '\'');
-    codeblock = codeblock.replace(/[\"]/i, '"');
+    // codeblock = codeblock.replace(/[\n]/i, ' ');
+    // codeblock = codeblock.replace(/[\']/i, '\'');
+    // codeblock = codeblock.replace(/[\"]/i, '"');
 
     username = token.auth.username;
     

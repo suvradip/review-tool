@@ -6,7 +6,13 @@ app.controller('mainchartctrl', function($scope, $http){
 		loadAllReviews,
 		createScreenshot;
 
+    //angular variable delarations & definations    
 	$scope.posts = [];
+    $scope.colorBtn = false; 
+    $scope.color = "#000000";
+    $scope.selectEle = "rect";
+    $scope.textBox = false;
+
     getData = function(url, callback){
         $http({
             method: 'GET',
@@ -104,6 +110,7 @@ app.controller('mainchartctrl', function($scope, $http){
         
 
 		//create screenshots
+        window.marking.deleteBG();
 		createScreenshot(ssid);
 		//store data in database
 		sendData($scope.site_root+'api/review', data, function(response){
@@ -112,18 +119,29 @@ app.controller('mainchartctrl', function($scope, $http){
             //cleanup textare
             $scope.review = "";
 
-            window.marking.deletMarker();
+            window.marking.deletMarkers();
         });
 	};
 
     $scope.startMarking = function(e){
         var target = e.target;
         if(target.value === 'stop'){
-           window.marking.deletMarker(); 
+           window.marking.deletMarkers();
+           $scope.colorBtn = false; 
            e.target.setAttribute("value", "Start marking");
        } else {
             window.marking.createMarker();
+            $scope.colorBtn = true;
             e.target.setAttribute("value", "stop");
         }
+    };
+
+    $scope.setConf = function(){
+        if($scope.selectEle === "text"){
+            $scope.textBox = true;
+        } else {
+            $scope.textBox = false;
+        }
+        window.marking.setConfig({ color: $scope.color, ele: $scope.selectEle, text: $scope.text });
     };
 });

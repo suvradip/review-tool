@@ -23,7 +23,14 @@
 					<section >
 						<div class="chart-wrapper" >
 							<div id="chart-container"></div>
-							<input type="submit" value="Start Marking" class="btn btn-default btn-large clearfix" ng-click="startMarking($event)">
+							<input type="submit" value="Start Marking"  class="btn btn-default btn-large clearfix" ng-click="startMarking($event)">
+							<select ng-model="selectEle" ng-show="colorBtn" ng-click="setConf()">
+								<option value="rect">rect</option>
+								<option value="text">text</option>
+								<option value="path">path</option>
+							</select>
+							<input type="color" value="#000000" ng-model="color" ng-show="colorBtn" ng-change="setConf()">
+							<input type="text" value="" ng-model="text" ng-change="setConf()" ng-show="textBox"/>
 						</div>
 					</section>
 					<section >
@@ -37,7 +44,7 @@
 							<ul>
 								<li ng-repeat='unit in posts'>
 									<div class="reviewer">
-										<img src="" alt="" width="80" height="80" ng-src='<%= site_root%>images/{{ unit.avatar }}' >
+										<img src="" alt="" width="80" height="80" ng-src='<%= site_root%>images/avatar/{{ unit.avatar }}' >
 										<div class="reviewer-name">{{ unit.name }}</div>
 										<div class="review-date small">{{ unit.time }}</div>
 										<div class="review-date small">{{ unit.date }}</div>

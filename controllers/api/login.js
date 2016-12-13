@@ -16,16 +16,16 @@ router.post('/validate', function(req, res, next) {  
         .select({'password': 1, avatar: 1, name: 1, main: 1, _id: 0})
         .exec(function (err, result) {
             if  (err) { return next(err); }
-            if  (!result) { return  res.send(401); }
+            if  (!result) { return  res.sendStatus(401); }
             
             bcrypt.compare(password, result.password, function (err, valid) {
                 if(err) { return  next(err); }
-                if(!valid) { return res.send(401); }
+                if(!valid) { return res.sendStatus(401); }
 
                 token = jwt.encode({username: username, avatar: result.avatar, name: result.name}, config.secretKey);
                 req.session.token = token;
                 res.type("html");
-                res.status(200).redirect('/users/'+username);
+                res.status(200).redirect(config.site_root+'users/'+username);
             });
         });
 });
@@ -64,7 +64,7 @@ router.post('/createuser', function (req, res, next) {
         timeNow = new Date().getTime();
     
     key = req.body.key;
-    if(!key || key !== config.secretKey || key == '')
+    if(!key || key !== config.secretKey || key === '')
         return res.status(401).send('supekey missmatch').end();
 
     if(typeof req.body.username === "undefined" || typeof req.body.password === "undefined" )
@@ -99,7 +99,7 @@ router.post('/createuser', function (req, res, next) {
 
 router.get('/logout', function(req, res){
     delete req.session;
-    res.redirect('/login');
+    res.redirect(config.site_root+'login');
 });
 
 module.exports = router;
