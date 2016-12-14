@@ -23,7 +23,8 @@
 					<section >
 						<div class="chart-wrapper" >
 							<div id="chart-container"></div>
-							<input type="submit" value="Start Marking"  class="btn btn-default btn-large clearfix" ng-click="startMarking($event)">
+							<input type="submit" value="Start Annotate"  class="btn btn-default btn-large clearfix" ng-click="startMarking($event)">
+							<input type="submit" value="Clear Annotate" ng-show="resetBtn"  class="btn btn-default btn-large clearfix" ng-click="resetMarking()">
 							<select ng-model="selectEle" ng-show="colorBtn" ng-click="setConf()">
 								<option value="rect">rect</option>
 								<option value="text">text</option>

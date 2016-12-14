@@ -117,7 +117,6 @@ app.controller('mainchartctrl', function($scope, $http, $timeout){
             };    
         
 
-        window.marking.deleteBG();
         //create screenshots
 		createScreenshot(ssid);
 		//store data in database
@@ -126,8 +125,6 @@ app.controller('mainchartctrl', function($scope, $http, $timeout){
             $scope.posts.push(response.obj);
             //cleanup textare
             $scope.review = "";
-
-            window.marking.deletMarkers();
         });
 	};
 
@@ -143,14 +140,28 @@ app.controller('mainchartctrl', function($scope, $http, $timeout){
     $scope.startMarking = function(e){
         var target = e.target;
         if(target.value === 'stop'){
-           window.marking.deletMarkers();
-           $scope.colorBtn = false; 
-           e.target.setAttribute("value", "Start marking");
+           window.marking.deletMarkers(true);
+            $scope.colorBtn = false; 
+            $scope.textBox = false;
+            
+            if(window.marking.markersLength() === 0){
+                $scope.resetBtn = false;
+            }
+
+            e.target.setAttribute("value", "Start marking");
+
        } else {
             window.marking.createMarker();
             $scope.colorBtn = true;
+            $scope.resetBtn = true;
             e.target.setAttribute("value", "stop");
         }
+    };
+
+    $scope.resetMarking = function(){
+        window.marking.deletMarkers();
+        if(!$scope.colorBtn)
+            $scope.resetBtn = false;
     };
 
     $scope.setConf = function(){

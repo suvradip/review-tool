@@ -13,18 +13,21 @@
     function create(){
         fc = FusionCharts('chartobject-1');
         paper = fc.jsVars.instanceAPI.components.paper;
+    
         mat = paper.rect(0, 0, paper.width, paper.height).attr({ fill: "#c7c7c7", opacity:".2"});
-        set.push(mat);
         mat.drag(dragmove, dragstart, dragend);
     }
 
-    function deleteMarker(){
-        for(var k in set)
-            set[k].remove();
-    }
-
-    function deleteBG(){
-        mat.remove();
+    function deleteMarker(isMat){
+        
+        if(isMat){
+            mat.remove();
+        } else {
+            for(var k in set)
+                set[k].remove();
+            
+            set.length = 0;
+        }
     }
 
     function setConfig(obj){
@@ -80,14 +83,18 @@
       set.push(element);  
     }
 
+    function getTotalMarkers(){
+        return set.length;
+    }
+
 
     //mat.drag(dragmove, dragstart, dragend);
 
     window.marking = {
         createMarker : create,
-        deleteBG : deleteBG,
         deletMarkers : deleteMarker,
-        setConfig: setConfig
+        setConfig: setConfig,
+        markersLength: getTotalMarkers
     };
 
 })();
