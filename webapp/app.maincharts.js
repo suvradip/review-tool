@@ -1,6 +1,6 @@
 var app = angular.module('mainchart', []);
 
-app.controller('mainchartctrl', function($scope, $http){
+app.controller('mainchartctrl', function($scope, $http, $timeout){
 	var getData,
 		sendData,
 		loadAllReviews,
@@ -64,8 +64,16 @@ app.controller('mainchartctrl', function($scope, $http){
   	};
 
     $scope.loadAllReviews = function(obj){
-        
+        var chartref;
+
         $scope.site_root = obj.site_root;
+
+        $timeout(function() {
+            for(var ii in FusionCharts.items)
+            chartref = FusionCharts.items[ii];
+            $scope.data = chartref.getJSONData();
+        }, 1500);
+
     	getData($scope.site_root+'api/review/users/'+obj.susername, function(response){
            
             if(response.success && typeof response.result !== 'undefined'){
@@ -109,8 +117,8 @@ app.controller('mainchartctrl', function($scope, $http){
             };    
         
 
-		//create screenshots
         window.marking.deleteBG();
+        //create screenshots
 		createScreenshot(ssid);
 		//store data in database
 		sendData($scope.site_root+'api/review', data, function(response){
@@ -122,6 +130,15 @@ app.controller('mainchartctrl', function($scope, $http){
             window.marking.deletMarkers();
         });
 	};
+
+    $scope.updateData = function(){
+        var chartref;
+        for(var ii in FusionCharts.items)
+            chartref = FusionCharts.items[ii];
+        
+        chartref.setJSONData($scope.newdata);
+        //$scope.newdata = chartref.getJSONData();
+    };
 
     $scope.startMarking = function(e){
         var target = e.target;

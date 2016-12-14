@@ -2,8 +2,6 @@
     var paper,
     mat,
     set = [],
-    box,
-    line,
     temp,
     selections,
     rectColor,
@@ -41,7 +39,7 @@
         if(selections === "path"){     
             //for path draw
             temp = "M "+ event.layerX + " " + event.layerY ;
-            line = paper.path(temp);
+            element = paper.path(temp).attr({stroke: rectColor || "#000"});
         } else if(selections === "rect") {
             //for box draw
             element = paper.rect(event.layerX, event.layerY, 0, 0).attr("stroke", rectColor || "#000");
@@ -67,7 +65,7 @@
         if(selections === "path"){ 
             //for path operations
             temp += "L "+ event.layerX + " " + event.layerY;
-            line.attr("path", temp);  
+            element.attr("path", temp);  
         } else if(selections === "rect") {   
             //for box operations
             element.transform("T" + xoffset + "," + yoffset);
