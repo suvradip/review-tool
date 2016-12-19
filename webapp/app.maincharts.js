@@ -1,12 +1,18 @@
 var app = angular.module('mainchart', []);
 
-app.controller('mainchartctrl', function($scope, $http){
+app.controller('mainchartctrl', function($scope, $http, $timeout){
 	var getData,
 		sendData,
 		loadAllReviews,
 		createScreenshot;
 
+    //angular variable delarations & definations    
 	$scope.posts = [];
+    $scope.colorBtn = false; 
+    $scope.color = "#000000";
+    $scope.selectEle = "rect";
+    $scope.textBox = false;
+
     getData = function(url, callback){
         $http({
             method: 'GET',
@@ -58,8 +64,16 @@ app.controller('mainchartctrl', function($scope, $http){
   	};
 
     $scope.loadAllReviews = function(obj){
-        
+        var chartref;
+
         $scope.site_root = obj.site_root;
+
+        $timeout(function() {
+            for(var ii in FusionCharts.items)
+            chartref = FusionCharts.items[ii];
+            $scope.data = chartref.getJSONData();
+        }, 1500);
+
     	getData($scope.site_root+'api/review/users/'+obj.susername, function(response){
            
             if(response.success && typeof response.result !== 'undefined'){
@@ -103,7 +117,7 @@ app.controller('mainchartctrl', function($scope, $http){
             };    
         
 
-		//create screenshots
+        //create screenshots
 		createScreenshot(ssid);
 		//store data in database
 		sendData($scope.site_root+'api/review', data, function(response){
@@ -111,19 +125,51 @@ app.controller('mainchartctrl', function($scope, $http){
             $scope.posts.push(response.obj);
             //cleanup textare
             $scope.review = "";
-
-            window.marking.deletMarker();
         });
 	};
+
+    $scope.updateData = function(){
+        var chartref;
+        for(var ii in FusionCharts.items)
+            chartref = FusionCharts.items[ii];
+        
+        chartref.setJSONData($scope.newdata);
+        //$scope.newdata = chartref.getJSONData();
+    };
 
     $scope.startMarking = function(e){
         var target = e.target;
         if(target.value === 'stop'){
-           window.marking.deletMarker(); 
-           e.target.setAttribute("value", "Start marking");
+           window.marking.deletMarkers(true);
+            $scope.colorBtn = false; 
+            $scope.textBox = false;
+            
+            if(window.marking.markersLength() === 0){
+                $scope.resetBtn = false;
+            }
+
+            e.target.setAttribute("value", "Start marking");
+
        } else {
             window.marking.createMarker();
+            $scope.colorBtn = true;
+            $scope.resetBtn = true;
             e.target.setAttribute("value", "stop");
         }
+    };
+
+    $scope.resetMarking = function(){
+        window.marking.deletMarkers();
+        if(!$scope.colorBtn)
+            $scope.resetBtn = false;
+    };
+
+    $scope.setConf = function(){
+        if($scope.selectEle === "text"){
+            $scope.textBox = true;
+        } else {
+            $scope.textBox = false;
+        }
+        window.marking.setConfig({ color: $scope.color, ele: $scope.selectEle, text: $scope.text });
     };
 });
