@@ -1,6 +1,7 @@
 var router = require('express').Router(),
 	auth = require(global.rootdir+'/controllers/token'),
-	users = require(global.rootdir+'/models/users');
+	users = require(global.rootdir+'/models/users'),
+	config = require(global.rootdir+'/config');
 
 //=======================
 //page routing design url
