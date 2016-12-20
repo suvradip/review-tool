@@ -42,7 +42,9 @@ app.controller('chartsetupctrl', function($scope, $http, $timeout){
 
     getlinks = function() {
         getData($scope.site_root+'api/chartsetup/getlinks', function(response){
-            $scope.links = response.result.links;
+            $scope.links = {};
+            $scope.links.data = response.result.links;
+            $scope.links.defltValue = response.result.main;
         });    
     };
 

@@ -27,8 +27,8 @@
 					<nav>
 						<h2>Other links</h2>
 							<ul>
-								<li ng-repeat='link in links'>
-									<label   ng-class="{'nav-active': $index === selectedIndex}" ng-click="linkDetails($index, $event)" data-linkid="{{ link.linkid }}">{{ link.name }}</label>	
+								<li ng-repeat='link in links.data'>
+									<label ng-class="{'nav-active': $index === selectedIndex, 'nav-setdf': links.defltValue === link.fname }" ng-click="linkDetails($index, $event)" data-linkid="{{ link.linkid }}">{{ link.name }}</label>	
 								</li>
 							</ul>
 					</nav>

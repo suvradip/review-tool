@@ -347,6 +347,12 @@ nav ul {
         position: absolute;
         right: -16px;
         top: -1px; }
+    nav ul li label.nav-setdf {
+      content: "";
+      border-left: 5px solid #edeff0;
+      border-top: 5px solid transparent;
+      border-bottom: 5px solid transparent;
+    }
   nav ul li:first-child label {
     border-top: none; }
 
