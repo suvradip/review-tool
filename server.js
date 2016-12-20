@@ -35,7 +35,7 @@ console.log('site_root :'+ global.site_root);
 //Here ‘secret‘ is used for cookie handling etc
 app.use(session({
 	secret: config.secretKey, //'r3v13w-ut1l1ty',
-	cookie: { maxAge: 60000 * 1 }, // 60 minute
+	//cookie: { maxAge: 60000 * 1 }, // 60 minute
 	resave: true,
     saveUninitialized: true,
   	store: new mongoStore({ mongooseConnection: db.connection })
