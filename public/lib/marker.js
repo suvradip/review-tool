@@ -12,8 +12,12 @@
 
     function create(){
         fc = FusionCharts('chartobject-1');
-        paper = fc.jsVars.instanceAPI.components.paper;
-    
+        //paper = fc.jsVars.instanceAPI.components.paper;
+        if(typeof fc.jsVars.instanceAPI !== "undefined"){
+            paper = fc.jsVars.instanceAPI.components.paper;
+        } else {
+            paper = fc.jsVars.fcObj.apiInstance._paper;
+        }
         mat = paper.rect(0, 0, paper.width, paper.height).attr({ fill: "#c7c7c7", opacity:".2"});
         mat.drag(dragmove, dragstart, dragend);
     }
