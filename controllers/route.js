@@ -1,7 +1,14 @@
 var router = require('express').Router(),
 	auth = require(global.rootdir+'/controllers/token'),
 	users = require(global.rootdir+'/models/users'),
-	config = require(global.rootdir+'/config');
+	config = require(global.rootdir+'/config'),
+	_ = require("lodash"),
+	findLink;
+
+	findLink = function(links, name){
+	    return _.find(links, {fname: name});
+	};
+
 
 //=======================
 //page routing design url
@@ -80,11 +87,13 @@ router.get('/users/:username', function(req, res){
 	susername = req.params.username;
 	req.session.secusername = susername;
 	users.findOne({'username': susername})
-		.select("main")
+		.select({main:1, links:1, _id:0})
 		.exec(function(err, result){
 			if(err) console.log('[router.js] :'+ err);
-			if(result)
-				res.render('maincharts', {susername: susername, jsfname: result.main || '', pusername: pusername, pname: pname, avatar: avatar});
+			if(result){
+				//console.log(result);
+				res.render('maincharts', {ctype: findLink(result.links, result.main).type, susername: susername, jsfname: result.main || '', pusername: pusername, pname: pname, avatar: avatar});
+			}
 			else 
 				res.render('maincharts', {susername: susername, jsfname: '', pusername: pusername, pname: pname, avatar: avatar});		
 
@@ -113,7 +122,7 @@ router.get('/users/:username/setchart', function(req, res){
 	pname = userdata.name;
 	avatar = userdata.avatar;
 
-	res.render('setchart', {pusername: pusername, pname: pname, avatar: avatar});
+	res.render('setchart', {ctype:"", pusername: pusername, pname: pname, avatar: avatar});
 });
 
 //==== register page after middleware

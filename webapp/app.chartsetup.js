@@ -42,7 +42,9 @@ app.controller('chartsetupctrl', function($scope, $http, $timeout){
 
     getlinks = function() {
         getData($scope.site_root+'api/chartsetup/getlinks', function(response){
-            $scope.links = response.result.links;
+            $scope.links = {};
+            $scope.links.data = response.result.links;
+            $scope.links.defltValue = response.result.main;
         });    
     };
 
@@ -50,9 +52,17 @@ app.controller('chartsetupctrl', function($scope, $http, $timeout){
         container : document.getElementById("output")
     };
 
-    finalHTMLContent = function(data) {
+    finalHTMLContent = function(data, isTimes) {
         var content = '<!DOCTYPE html><html><head>';
-        content += '<script type="text/javascript" src="'+ $scope.site_root + 'bower_components/fusioncharts/fusioncharts.js"></script>';
+        if(!isTimes){
+            content += '<script type="text/javascript" src="'+ $scope.site_root + 'bower_components/fusioncharts/fusioncharts.js"></script>';
+        } else {
+            content +='<script type="text/javascript" src="'+ $scope.site_root + 'temp/assets/fusioncharts.js"></script>';
+            content += '<script type="text/javascript" src="'+ $scope.site_root + 'temp/assets/extensions/growth-analyser-es5.js"></script>';
+            content += '<script type="text/javascript" src="'+ $scope.site_root + 'temp/assets/extensions/data-aggregator-es5.js"></script>';
+            content += '<script type="text/javascript" src="'+ $scope.site_root + 'temp/assets/extensions/standard-period-selector-es5.js"></script>';
+            content += '<script type="text/javascript" src="'+ $scope.site_root + 'temp/assets/extensions/date-range-chooser-es5.js"></script>';
+        }    
         content += "</head><body>";
        // content += '<script type="text/javascript" src="http://static.fusioncharts.com/code/latest/fusioncharts.js"></script>';
         content += '<script type="text/javascript">'+ data +'</script>';
@@ -62,8 +72,8 @@ app.controller('chartsetupctrl', function($scope, $http, $timeout){
         return content;
     };
 
-    showoutput = function(fname){
-        selector.container.setAttribute('data',"data:text/html;charset=utf-8,"+escape(finalHTMLContent(fname)));
+    showoutput = function(fname, pass){
+        selector.container.setAttribute('data',"data:text/html;charset=utf-8,"+escape(finalHTMLContent(fname, pass)));
     };
 
     showMsg = function(msg) {
@@ -120,7 +130,7 @@ app.controller('chartsetupctrl', function($scope, $http, $timeout){
             $scope.link_description = data.description || '';
             $scope.link_type = data.type || '';
             getData($scope.site_root+'fc.charts.resource/'+data.fname, function(file_data){
-                showoutput(file_data);
+                showoutput(file_data, data.type === "timeseries" ? true : false);
                 $scope.link_content = file_data;//.replace(/\s\s\s?\s?/i, '\n');
             });
         });
@@ -140,7 +150,7 @@ app.controller('chartsetupctrl', function($scope, $http, $timeout){
         sendData($scope.site_root+'api/chartsetup/updatelinks', data, function(response){
             $timeout(function(){
                 showMsg("Content updated.", "s");
-                showoutput(data.filecontents);
+                showoutput(data.filecontents, data.type === "timeseries" ? true : false);
             }, 1000);
         });
 

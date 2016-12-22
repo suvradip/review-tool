@@ -112,7 +112,7 @@ router.get('/getlinks', function(req, res){
 
     token = auth.decode(req.session.token).auth;
     query = {username: token.username };
-    select = { _id:0, "links.linkid": 1, "links.name": 1, "links.fname": 1}; 
+    select = { _id:0, main:1, "links.linkid": 1, "links.name": 1, "links.fname": 1}; 
 
     if(Object.keys(req.query).length > 0){
         for(var _key in req.query) {
