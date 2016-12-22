@@ -92,6 +92,8 @@ router.get('/users/:username', function(req, res){
 			if(err) console.log('[router.js] :'+ err);
 			if(result){
 				//console.log(result);
+				var ctype = typeof findLink(result.links, result.main) !== "undefined" ? 
+									findLink(result.links, result.main).type : "";
 				res.render('maincharts', {ctype: findLink(result.links, result.main).type, susername: susername, jsfname: result.main || '', pusername: pusername, pname: pname, avatar: avatar});
 			}
 			else 
