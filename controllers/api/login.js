@@ -22,7 +22,12 @@ router.post('/validate', function(req, res, next) {  
                 if(err) { return  next(err); }
                 if(!valid) { return res.sendStatus(401); }
 
-                token = jwt.encode({username: username, avatar: result.avatar, name: result.name}, config.secretKey);
+                token = jwt.encode({username: username, 
+                                    avatar: result.avatar,
+                                    name: result.name, 
+                                    nbf: Date.now(), 
+                                    exp: Date.now() + config.tokenTime
+                                }, config.secretKey);
                 req.session.token = token;
                 res.type("html");
                 res.status(200).redirect(config.site_root+'users/'+username);

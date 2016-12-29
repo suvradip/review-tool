@@ -4,6 +4,7 @@
 	"port": 3300,
 	"site_root" : "/",
 	"secretKey" : "r3v13w-ut1l1ty",
+	"tokenTime" : 900000,
 	"mongodb": {
 		"constr" : "127.0.0.1:27017/fc-review",
 		"usr": "",

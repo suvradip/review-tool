@@ -1,0 +1,460 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitieal//EN">
+<html>
+
+<head>
+    <title>Time Series Chart test</title>
+    <script type="text/javascript" src='./fusioncharts.js'></script>
+
+    <!-- extension files -->
+    <script type="text/javascript" src="./extensions/growth-analyser-es5.js"></script>
+    <script type="text/javascript" src="./extensions/data-aggregator-es5.js"></script>
+    <script type="text/javascript" src="./extensions/standard-period-selector-es5.js"></script>
+    <script type="text/javascript" src="./extensions/date-range-chooser-es5.js"></script>
+</head>
+
+<body>
+
+    <div id='chart-container'></div>
+    <div id="container"></div>
+
+    <script type="text/javascript">
+        var data1;
+
+        function getNumDays (date1, date2) {
+          return (date2.getTime() - date1.getTime()) / (24 * 3600000);
+        }
+
+        function getDateStamps (startingDate, numDays) {
+          var time = startingDate,
+              months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct', 'Nov','Dec'];
+          time.setDate(time.getDate() - 1);
+
+          var nextDate = function (dt) {
+            dt.setDate(dt.getDate() + 1);
+            var day = dt.getDate(),
+                month = months[dt.getMonth()],
+                year = dt.getFullYear();
+
+            // Weekday and weekend wise fluctuating data - to show cyclic spans for weekday and weekend
+            pushDataForDayOfWeek(dt.getDay());
+
+            return (day < 10 ? "0" + day : day) +"-"+ month +"-"+ year;
+          }
+          var datesArr = [];
+          for (var i = 0; i < numDays; i++) {
+            //console.log(nextDate(time));
+            datesArr.push(nextDate(time));
+          }
+          return datesArr;
+        }
+
+
+        var dataArr = [[],[]];
+        function pushDataForDayOfWeek (dayOfWeek) {
+
+          var   weekend = dayOfWeek == 0 || dayOfWeek == 6 ? 1 : 0,
+                base = weekend ? 10 : 50,
+                range = weekend ? 200 : 200,
+                base2 = weekend ? 5 : 20,
+                range2 = weekend ? 100 : 100;
+
+
+          dataArr[0].push( Math.round(base + Math.random() * range));
+          dataArr[1].push( Math.round(base2 + Math.random() * range2));
+
+        }
+        function getData (id) {
+          return dataArr[id];
+        }
+
+        var startingDate = new Date(2015, 0, 1),
+            endingDate = new Date(),
+            numDays = getNumDays(startingDate, endingDate),
+            numData = numDays;
+
+        var tsChart,
+            width = 1200,
+            height = 600;
+
+        var series1 = "134,170,82,194,114,51,82,76,126,24,60,144,203,90,206,249,200,81,197,60,56,97,186,140,36,103,208,114,232,131,96,120,184,176,177,143,114,61,24,102,186,189,81,184,129,210,200,138,214,215,188,200,186,193,97,218,98,196,17,39,92,90,59,207,237,171,153,72,149,71,189,182,191,173,73,83,109,90,184,81,17,250,129,231,139,225,198,203,64,144,86,72,182,25,190,163,68,236,220,115,141,153,163,191,188,105,55,180,66,121,206,204,208,239,29,64,158,245,83,219,193,141,131,87,246,55,215,181,40,43,133,109,208,233,147,34,198,78,210,140,69,142,40,122,204,66,61,233,199,177,66,171,246,163,191,130,129,59,189,71,132,249,232,188,23,60,140,155,221,187,201,72,90,237,233,108,219,50,16,231,91,244,88,201,73,77,144,213,110,118,232,15,120,233,150,145,193,129,59,136,66,176,106,223,73,152,192,140,182,221,74,200,171,164,148,99,209,148,183,112,69,89,184,183,192,82,161,175,157,143,59,211,145,74,104,191,205,63,150,214,61,75,165,94,175,119,112,119,55,206,100,124,78,225,28,144,211,155,248,217,50,172,74,94,71,67,58,59,43,126,125,231,226,116,207,192,184,237,148,115,72,174,164,165,184,210,107,221,94,71,152,121,194,162,79,112,27,35,175,58,86,206,206,109,170,145,191,56,146,138,104,109,149,220,77,54,172,44,152,117,71,175,174,156,42,50,135,231,213,140,105,67,170,192,119,53,198,53,138,124,80,112,59,171,91,90,47,225,99,171,237,95,169,169,110,135,189,182,215,38,126,227,234,230,211,136,160,173,178,196,157,61,248,187,69,163,96,207,200,146,128,151,192,185,65,232,250,167,184,183,193,120,144,192,85,102,202,142,225,79,174,40,19,167,233,57,172,75,93,132,122,216,81,124,125,91,91,232,211,79,170,52,208,60,62,158,162,148,204,153,69,123,231,79,207,73,138,99,249,207,207,154,223,12,146,77,211,232,81,98,130,187,181,163,99,75,75,60,67,229,182,175,76,127,186,56,247,144,109,183,126,97,184,239,146,209,240,91,67,143,101,242,235,232,202,32,34,250,153,119,201,162,82,206,139,76,228,128,196,117,43,240,59,99,87,96,13,51,179,105,224,61,96,88,91,205,58,188,89,203,196,156,212,195,233,85,93,75,102,72,221,145,174,99,31,165,222,140,71,184,231,17,169,196,91,230,147,52,35,58,133,106,100,140,124,31,206,189,93,180,72,85,29,109,152,153,243,155,94,179,108,95,214,241,239,77,112,61,83,173,225,167,238,11,168,167,174,153,207,246,201,29,137,179,223,125,202,149,46,119,146,56,151,66,22,70,163,158,178,66,111,22,104,104,66,197,87,60,14,28,208,196,59,214,66,38,11,215,106,225,96,149,62,204,150,213,144,117,239,116,76,96,133,198,150,85,165,131,103,185,206,150,214,204,122,145,206,246,184,193,206,37,147,214,206,52,91,202,75,206,117,211,160,82,82,166,181,179,209,158,214,80,136,168,52,245,127,89,36,72,113,136,53,100,185,137,128,194,129,77,153,198,98".split(',');
+        var series2 = "72,49,64,90,24,116,46,87,39,91,48,111,83,65,67,87,14,39,72,80,32,20,115,7,33,98,98,99,58,104,83,43,99,97,45,35,59,27,40,90,46,60,57,38,97,85,91,54,55,37,81,8,9,91,31,119,23,29,17,55,68,32,92,33,53,78,60,56,47,29,37,84,63,32,72,94,42,55,78,72,81,71,119,27,63,113,64,22,72,81,96,45,103,63,99,31,71,113,103,64,68,105,103,25,21,26,80,104,6,107,25,114,82,33,25,67,99,20,34,117,33,61,30,48,81,53,50,72,103,13,69,77,34,109,96,92,22,92,118,26,22,48,41,101,57,79,76,60,69,60,67,112,62,38,79,49,100,82,79,85,33,97,68,103,35,105,92,45,23,102,29,84,71,39,49,119,45,40,27,72,29,117,37,77,80,66,94,66,101,61,40,35,101,40,57,96,33,90,43,13,40,90,112,30,82,87,93,41,99,79,79,117,92,15,27,64,58,47,73,15,15,50,69,102,44,93,22,93,84,86,44,54,86,12,25,99,81,65,22,100,13,74,89,108,108,113,21,77,69,64,92,84,27,49,48,103,41,51,44,44,59,20,67,83,80,33,57,114,6,10,21,35,87,49,39,59,51,77,98,25,81,88,60,8,21,67,105,69,33,72,89,88,99,103,57,80,94,49,62,86,60,75,119,7,95,62,62,31,64,69,41,97,111,103,115,116,104,47,23,81,37,69,120,97,13,63,59,53,43,112,119,48,100,89,53,107,25,86,28,37,100,91,62,88,94,30,43,74,104,30,108,118,26,84,59,65,60,98,115,80,95,90,38,23,74,115,64,18,84,57,82,113,26,96,32,113,51,41,33,105,17,39,115,36,115,89,29,81,42,60,100,39,63,74,10,95,109,77,36,111,91,43,70,52,55,115,50,115,27,66,83,77,77,26,32,96,36,51,65,74,46,31,18,78,85,117,37,118,26,96,89,90,73,98,31,69,16,37,71,58,76,115,41,58,99,52,95,69,65,35,37,14,67,101,119,57,75,100,40,112,111,55,22,106,14,51,104,33,114,106,79,89,17,42,96,77,87,77,15,56,93,61,96,88,113,25,84,23,36,35,51,106,74,47,101,29,83,24,46,70,100,59,55,50,101,57,8,42,50,113,55,35,41,68,99,36,59,85,118,107,51,98,82,57,23,51,57,64,43,63,82,76,31,93,49,66,60,65,40,25,70,40,80,24,25,61,90,115,94,65,58,89,120,84,64,22,37,42,46,106,118,88,96,83,63,22,85,23,39,11,32,68,112,94,45,40,48,92,21,79,102,22,31,11,29,29,44,34,73,77,72,64,88,87,42,48,91,96,8,115,103,60,37,86,94,65,74,85,75,86,34,75,22,58,116,120,25,30,66,13,40,69,106,50,100,74,18,89,29,34,60,115,84,5,94,97,29,104,59,64,93,64,109,42,30,84,73,86,118,69,71,37,22,98,92,103,71,110,106,81,98,26,101,120,69,111,47,105,11,67,104,65,54,55,88,76,54,24,29,103,65,53,89,98,111,47,48,41,22,75,37,72,23,30,93,7,43,40,81,71,84,47,58".split(',');
+        var cat = "05-Nov-2018,06-Nov-2018,07-Nov-2018,08-Nov-2018,09-Nov-2018,10-Nov-2018,11-Nov-2018,12-Nov-2018,13-Nov-2018,14-Nov-2018,15-Nov-2018,16-Nov-2018,17-Nov-2018,18-Nov-2018,19-Nov-2018,20-Nov-2018,21-Nov-2018,22-Nov-2018,23-Nov-2018,24-Nov-2018,25-Nov-2018,26-Nov-2018,27-Nov-2018,28-Nov-2018,29-Nov-2018,30-Nov-2018,01-Dec-2018,02-Dec-2018,03-Dec-2018,04-Dec-2018,05-Dec-2018,06-Dec-2018,07-Dec-2018,08-Dec-2018,09-Dec-2018,10-Dec-2018,11-Dec-2018,12-Dec-2018,13-Dec-2018,14-Dec-2018,15-Dec-2018,16-Dec-2018,17-Dec-2018,18-Dec-2018,19-Dec-2018,20-Dec-2018,21-Dec-2018,22-Dec-2018,23-Dec-2018,24-Dec-2018,25-Dec-2018,26-Dec-2018,27-Dec-2018,28-Dec-2018,29-Dec-2018,30-Dec-2018,31-Dec-2018,01-Jan-2019,02-Jan-2019,03-Jan-2019,04-Jan-2019,05-Jan-2019,06-Jan-2019,07-Jan-2019,08-Jan-2019,09-Jan-2019,10-Jan-2019,11-Jan-2019,12-Jan-2019,13-Jan-2019,14-Jan-2019,15-Jan-2019,16-Jan-2019,17-Jan-2019,18-Jan-2019,19-Jan-2019,20-Jan-2019,21-Jan-2019,22-Jan-2019,23-Jan-2019,24-Jan-2019,25-Jan-2019,26-Jan-2019,27-Jan-2019,28-Jan-2019,29-Jan-2019,30-Jan-2019,31-Jan-2019,01-Feb-2019,02-Feb-2019,03-Feb-2019,04-Feb-2019,05-Feb-2019,06-Feb-2019,07-Feb-2019,08-Feb-2019,09-Feb-2019,10-Feb-2019,11-Feb-2019,12-Feb-2019,13-Feb-2019,14-Feb-2019,15-Feb-2019,16-Feb-2019,17-Feb-2019,18-Feb-2019,19-Feb-2019,20-Feb-2019,21-Feb-2019,22-Feb-2019,23-Feb-2019,24-Feb-2019,25-Feb-2019,26-Feb-2019,27-Feb-2019,28-Feb-2019,01-Mar-2019,02-Mar-2019,03-Mar-2019,04-Mar-2019,05-Mar-2019,06-Mar-2019,07-Mar-2019,08-Mar-2019,09-Mar-2019,10-Mar-2019,11-Mar-2019,12-Mar-2019,13-Mar-2019,14-Mar-2019,15-Mar-2019,16-Mar-2019,17-Mar-2019,18-Mar-2019,19-Mar-2019,20-Mar-2019,21-Mar-2019,22-Mar-2019,23-Mar-2019,24-Mar-2019,25-Mar-2019,26-Mar-2019,27-Mar-2019,28-Mar-2019,29-Mar-2019,30-Mar-2019,31-Mar-2019,01-Apr-2019,02-Apr-2019,03-Apr-2019,04-Apr-2019,05-Apr-2019,06-Apr-2019,07-Apr-2019,08-Apr-2019,09-Apr-2019,10-Apr-2019,11-Apr-2019,12-Apr-2019,13-Apr-2019,14-Apr-2019,15-Apr-2019,16-Apr-2019,17-Apr-2019,18-Apr-2019,19-Apr-2019,20-Apr-2019,21-Apr-2019,22-Apr-2019,23-Apr-2019,24-Apr-2019,25-Apr-2019,26-Apr-2019,27-Apr-2019,28-Apr-2019,29-Apr-2019,30-Apr-2019,01-May-2019,02-May-2019,03-May-2019,04-May-2019,05-May-2019,06-May-2019,07-May-2019,08-May-2019,09-May-2019,10-May-2019,11-May-2019,12-May-2019,13-May-2019,14-May-2019,15-May-2019,16-May-2019,17-May-2019,18-May-2019,19-May-2019,20-May-2019,21-May-2019,22-May-2019,23-May-2019,24-May-2019,25-May-2019,26-May-2019,27-May-2019,28-May-2019,29-May-2019,30-May-2019,31-May-2019,01-Jun-2019,02-Jun-2019,03-Jun-2019,04-Jun-2019,05-Jun-2019,06-Jun-2019,07-Jun-2019,08-Jun-2019,09-Jun-2019,10-Jun-2019,11-Jun-2019,12-Jun-2019,13-Jun-2019,14-Jun-2019,15-Jun-2019,16-Jun-2019,17-Jun-2019,18-Jun-2019,19-Jun-2019,20-Jun-2019,21-Jun-2019,22-Jun-2019,23-Jun-2019,24-Jun-2019,25-Jun-2019,26-Jun-2019,27-Jun-2019,28-Jun-2019,29-Jun-2019,30-Jun-2019,01-Jul-2019,02-Jul-2019,03-Jul-2019,04-Jul-2019,05-Jul-2019,06-Jul-2019,07-Jul-2019,08-Jul-2019,09-Jul-2019,10-Jul-2019,11-Jul-2019,12-Jul-2019,13-Jul-2019,14-Jul-2019,15-Jul-2019,16-Jul-2019,17-Jul-2019,18-Jul-2019,19-Jul-2019,20-Jul-2019,21-Jul-2019,22-Jul-2019,23-Jul-2019,24-Jul-2019,25-Jul-2019,26-Jul-2019,27-Jul-2019,28-Jul-2019,29-Jul-2019,30-Jul-2019,31-Jul-2019,01-Aug-2019,02-Aug-2019,03-Aug-2019,04-Aug-2019,05-Aug-2019,06-Aug-2019,07-Aug-2019,08-Aug-2019,09-Aug-2019,10-Aug-2019,11-Aug-2019,12-Aug-2019,13-Aug-2019,14-Aug-2019,15-Aug-2019,16-Aug-2019,17-Aug-2019,18-Aug-2019,19-Aug-2019,20-Aug-2019,21-Aug-2019,22-Aug-2019,23-Aug-2019,24-Aug-2019,25-Aug-2019,26-Aug-2019,27-Aug-2019,28-Aug-2019,29-Aug-2019,30-Aug-2019,31-Aug-2019,01-Sep-2019,02-Sep-2019,03-Sep-2019,04-Sep-2019,05-Sep-2019,06-Sep-2019,07-Sep-2019,08-Sep-2019,09-Sep-2019,10-Sep-2019,11-Sep-2019,12-Sep-2019,13-Sep-2019,14-Sep-2019,15-Sep-2019,16-Sep-2019,17-Sep-2019,18-Sep-2019,19-Sep-2019,20-Sep-2019,21-Sep-2019,22-Sep-2019,23-Sep-2019,24-Sep-2019,25-Sep-2019,26-Sep-2019,27-Sep-2019,28-Sep-2019,29-Sep-2019,30-Sep-2019,01-Oct-2019,02-Oct-2019,03-Oct-2019,04-Oct-2019,05-Oct-2019,06-Oct-2019,07-Oct-2019,08-Oct-2019,09-Oct-2019,10-Oct-2019,11-Oct-2019,12-Oct-2019,13-Oct-2019,14-Oct-2019,15-Oct-2019,16-Oct-2019,17-Oct-2019,18-Oct-2019,19-Oct-2019,20-Oct-2019,21-Oct-2019,22-Oct-2019,23-Oct-2019,24-Oct-2019,25-Oct-2019,26-Oct-2019,27-Oct-2019,28-Oct-2019,29-Oct-2019,30-Oct-2019,31-Oct-2019,01-Nov-2019,02-Nov-2019,03-Nov-2019,04-Nov-2019,05-Nov-2019,06-Nov-2019,07-Nov-2019,08-Nov-2019,09-Nov-2019,10-Nov-2019,11-Nov-2019,12-Nov-2019,13-Nov-2019,14-Nov-2019,15-Nov-2019,16-Nov-2019,17-Nov-2019,18-Nov-2019,19-Nov-2019,20-Nov-2019,21-Nov-2019,22-Nov-2019,23-Nov-2019,24-Nov-2019,25-Nov-2019,26-Nov-2019,27-Nov-2019,28-Nov-2019,29-Nov-2019,30-Nov-2019,01-Dec-2019,02-Dec-2019,03-Dec-2019,04-Dec-2019,05-Dec-2019,06-Dec-2019,07-Dec-2019,08-Dec-2019,09-Dec-2019,10-Dec-2019,11-Dec-2019,12-Dec-2019,13-Dec-2019,14-Dec-2019,15-Dec-2019,16-Dec-2019,17-Dec-2019,18-Dec-2019,19-Dec-2019,20-Dec-2019,21-Dec-2019,22-Dec-2019,23-Dec-2019,24-Dec-2019,25-Dec-2019,26-Dec-2019,27-Dec-2019,28-Dec-2019,29-Dec-2019,30-Dec-2019,31-Dec-2019,01-Jan-2020,02-Jan-2020,03-Jan-2020,04-Jan-2020,05-Jan-2020,06-Jan-2020,07-Jan-2020,08-Jan-2020,09-Jan-2020,10-Jan-2020,11-Jan-2020,12-Jan-2020,13-Jan-2020,14-Jan-2020,15-Jan-2020,16-Jan-2020,17-Jan-2020,18-Jan-2020,19-Jan-2020,20-Jan-2020,21-Jan-2020,22-Jan-2020,23-Jan-2020,24-Jan-2020,25-Jan-2020,26-Jan-2020,27-Jan-2020,28-Jan-2020,29-Jan-2020,30-Jan-2020,31-Jan-2020,01-Feb-2020,02-Feb-2020,03-Feb-2020,04-Feb-2020,05-Feb-2020,06-Feb-2020,07-Feb-2020,08-Feb-2020,09-Feb-2020,10-Feb-2020,11-Feb-2020,12-Feb-2020,13-Feb-2020,14-Feb-2020,15-Feb-2020,16-Feb-2020,17-Feb-2020,18-Feb-2020,19-Feb-2020,20-Feb-2020,21-Feb-2020,22-Feb-2020,23-Feb-2020,24-Feb-2020,25-Feb-2020,26-Feb-2020,27-Feb-2020,28-Feb-2020,29-Feb-2020,01-Mar-2020,02-Mar-2020,03-Mar-2020,04-Mar-2020,05-Mar-2020,06-Mar-2020,07-Mar-2020,08-Mar-2020,09-Mar-2020,10-Mar-2020,11-Mar-2020,12-Mar-2020,13-Mar-2020,14-Mar-2020,15-Mar-2020,16-Mar-2020,17-Mar-2020,18-Mar-2020,19-Mar-2020,20-Mar-2020,21-Mar-2020,22-Mar-2020,23-Mar-2020,24-Mar-2020,25-Mar-2020,26-Mar-2020,27-Mar-2020,28-Mar-2020,29-Mar-2020,30-Mar-2020,31-Mar-2020,01-Apr-2020,02-Apr-2020,03-Apr-2020,04-Apr-2020,05-Apr-2020,06-Apr-2020,07-Apr-2020,08-Apr-2020,09-Apr-2020,10-Apr-2020,11-Apr-2020,12-Apr-2020,13-Apr-2020,14-Apr-2020,15-Apr-2020,16-Apr-2020,17-Apr-2020,18-Apr-2020,19-Apr-2020,20-Apr-2020,21-Apr-2020,22-Apr-2020,23-Apr-2020,24-Apr-2020,25-Apr-2020,26-Apr-2020,27-Apr-2020,28-Apr-2020,29-Apr-2020,30-Apr-2020,01-May-2020,02-May-2020,03-May-2020,04-May-2020,05-May-2020,06-May-2020,07-May-2020,08-May-2020,09-May-2020,10-May-2020,11-May-2020,12-May-2020,13-May-2020,14-May-2020,15-May-2020,16-May-2020,17-May-2020,18-May-2020,19-May-2020,20-May-2020,21-May-2020,22-May-2020,23-May-2020,24-May-2020,25-May-2020,26-May-2020,27-May-2020,28-May-2020,29-May-2020,30-May-2020,31-May-2020,01-Jun-2020,02-Jun-2020,03-Jun-2020,04-Jun-2020,05-Jun-2020,06-Jun-2020,07-Jun-2020,08-Jun-2020,09-Jun-2020,10-Jun-2020,11-Jun-2020,12-Jun-2020,13-Jun-2020,14-Jun-2020,15-Jun-2020,16-Jun-2020,17-Jun-2020,18-Jun-2020,19-Jun-2020,20-Jun-2020,21-Jun-2020,22-Jun-2020,23-Jun-2020,24-Jun-2020,25-Jun-2020,26-Jun-2020,27-Jun-2020,28-Jun-2020,29-Jun-2020,30-Jun-2020,01-Jul-2020,02-Jul-2020,03-Jul-2020,04-Jul-2020,05-Jul-2020,06-Jul-2020,07-Jul-2020,08-Jul-2020,09-Jul-2020,10-Jul-2020,11-Jul-2020,12-Jul-2020,13-Jul-2020,14-Jul-2020,15-Jul-2020,16-Jul-2020,17-Jul-2020,18-Jul-2020,19-Jul-2020,20-Jul-2020,21-Jul-2020,22-Jul-2020,23-Jul-2020,24-Jul-2020,25-Jul-2020,26-Jul-2020,27-Jul-2020,28-Jul-2020,29-Jul-2020,30-Jul-2020,31-Jul-2020,01-Aug-2020,02-Aug-2020,03-Aug-2020,04-Aug-2020,05-Aug-2020,06-Aug-2020,07-Aug-2020,08-Aug-2020,09-Aug-2020,10-Aug-2020,11-Aug-2020,12-Aug-2020,13-Aug-2020,14-Aug-2020,15-Aug-2020,16-Aug-2020,17-Aug-2020,18-Aug-2020,19-Aug-2020,20-Aug-2020,21-Aug-2020,22-Aug-2020,23-Aug-2020,24-Aug-2020,25-Aug-2020,26-Aug-2020,27-Aug-2020,28-Aug-2020,29-Aug-2020,30-Aug-2020,31-Aug-2020,01-Sep-2020,02-Sep-2020,03-Sep-2020,04-Sep-2020,05-Sep-2020,06-Sep-2020,07-Sep-2020,08-Sep-2020,09-Sep-2020,10-Sep-2020,11-Sep-2020,12-Sep-2020,13-Sep-2020,14-Sep-2020,15-Sep-2020,16-Sep-2020,17-Sep-2020,18-Sep-2020,19-Sep-2020,20-Sep-2020,21-Sep-2020,22-Sep-2020,23-Sep-2020,24-Sep-2020,25-Sep-2020,26-Sep-2020,27-Sep-2020,28-Sep-2020,29-Sep-2020,30-Sep-2020,01-Oct-2020,02-Oct-2020,03-Oct-2020,04-Oct-2020,05-Oct-2020,06-Oct-2020,07-Oct-2020".split(',');
+        FusionCharts.ready(function() {
+            tsChart = new FusionCharts({
+                type: 'timeseries',
+                plottype: 'line',
+                renderAt: 'chart-container',
+                width: width,
+                height: height,
+                dataFormat: 'json',
+                dataSource: {
+                      chart: {
+                          animation: 1,
+                          axes: [{
+                              uid: 'aa',
+                              x: {},
+                              y: {}
+                            }, {
+                              uid: 'bb',
+                              x: function(store) {
+                                  return store.getAxesByIndex(0).x;
+                              },
+                              y: {}
+                          }],
+                          datasets: [{
+                              category: {
+                                  dateformat: "%e-%b-%Y",
+                                  data: cat
+                              },
+                              dataset: [{
+                                  uid: 'ds-1',
+                                  series: [{
+                                          plot: {
+                                              type: 'line'
+                                          },
+                                          name: "California",
+                                          data: series1
+                                      },
+                                      {
+                                          plot: {
+                                              type: 'column'
+                                          },
+                                          name: "Arizona",
+                                          data: series2
+                                      }
+                                  ]
+                              }]
+                          }],
+                          caption: [{
+                              title: {
+                                  text: 'Business in USA',
+                                  style: {
+                                      'font-size': 35,
+                                      'fill': '#545454'
+                                  }
+                              },
+                              subtitle: {
+                                  text: 'State wise sales (USD in million)',
+                                  style: {
+                                      'font-size': 25,
+                                      'font-weight': 'Semibold',
+                                      'fill': '#7B7B7B'
+                                  }
+                              }
+                          }],
+                          legend: [{
+                              preDrawHook: function() {},
+                              layout: function (obj) {
+                                  return obj.inline;
+                              }
+                          }],
+                          canvas: [{
+                              uid: 'canvas-1',
+                              axes: function(store) {
+                                  return store.getAxesByIndex(0);
+                              },
+                              dataset: function(store) {
+                                  return store.getDatasetsByIndex(0);
+                              }
+                          }]
+                      },
+                    _extensions: {
+                        'growth-analyser': {
+                           'axisFormatter': function (axisName, growthMode) {
+                             return axisName + ' growth w.r.t ' + growthMode + ' value';
+                           },
+                           'posWrtCanvas': 'top',
+                           'layout': 'inline',
+                           'alignment': 'right',
+                           'orientation': 'horizontal',
+                           'style': {
+                             'category': {
+                               'font-size': '13px',
+                               'color': '#4b4b4b ',
+                               'font-family': '"Lucida Grande", Sans-serif',
+                               'fontWeight': 'bold'
+                             },
+                             'subCategory': {
+                               'font-size': '12px',
+                               'color': '#4b4b4b ',
+                               'font-family': '"Lucida Grande", Sans-serif'
+                             },
+                             'popup': {
+                               'fontSize': '10px',
+                               'lineHeight': '15px',
+                               'font-family': '"Lucida Grande", Sans-serif',
+                               'stroke': '#676767 ',
+                               'stroke-width': '2'
+                             }
+                           }
+                         },
+                        'standard-period-selector': {
+                          'default-select': 'ALL',
+                          'posWrtCanvas': 'top',
+                          'layout': 'inline',
+                          'alignment': 'left',
+                          'orientation': 'horizontal',
+                          'customMultipliers': {
+                            'millisecond': [1, 500],
+                            'second': [1, 5, 15, 30],
+                            'minute': [1, 5, 15, 30],
+                            'hour': [1, 3, 6, 12],
+                            'day': [1, 7, 15],
+                            'month': [1, 3, 6],
+                            'year': [1, 3]
+                          },
+                          'style': {
+                            'label-config': {
+                              // --config--
+                              text: {
+                                style: {
+                                  'font-family': '"Lucida Grande", sans-serif',
+                                  'font-size': '13',
+                                  'fill': '#696969',
+                                  'font-weight': 'bold'
+                                }
+                              },
+                              container: {
+                                height: 22
+                              }
+                            },
+                            'all-config': {
+                              // --config--
+                              fill: '#ffffff',
+                              labelFill: '#696969',
+                              symbolStrokeWidth: '2',
+                              stroke: '#ced5d4',
+                              strokeWidth: '1',
+                              hoverFill: '#ced5d4',
+                              height: 22,
+                              radius: 1,
+                              margin: {
+                                right: 5
+                              },
+                              btnTextStyle: {
+                                'fontFamily': '"Lucida Grande", sans-serif',
+                                'fontSize': '13',
+                                'fill': '#696969',
+                                'line-height': '1',
+                                'letter-spacing': '-0.04em'
+                              }
+                            },
+                            'calculated-config': {
+                              // --config--
+                              fill: '#ffffff',
+                              labelFill: '#696969',
+                              symbolStrokeWidth: '2',
+                              stroke: '#ced5d4',
+                              strokeWidth: '1',
+                              hoverFill: '#ced5d4',
+                              height: 22,
+                              radius: 1,
+                              margin: {
+                                right: 0
+                              },
+                              btnTextStyle: {
+                                'fontFamily': '"Lucida Grande", sans-serif',
+                                'fontSize': '13',
+                                'fill': '#696969',
+                                'line-height': '1',
+                                'letter-spacing': '-0.04em'
+                              }
+                            },
+                            'contextual-config-first': {
+                              fill: '#ffffff',
+                              labelFill: '#696969',
+                              symbolStrokeWidth: '2',
+                              stroke: '#ced5d4',
+                              strokeWidth: '1',
+                              height: 22,
+                              hoverFill: '#ced5d4',
+                              radius: 1,
+                              margin: {
+                                right: 0,
+                                left: 5
+                              },
+                              btnTextStyle: {
+                                'fontFamily': '"Lucida Grande", sans-serif',
+                                'fontSize': '13',
+                                'fill': '#696969',
+                                'line-height': '1',
+                                'letter-spacing': '-0.04em'
+                              }
+                            },
+                            'contextual-config': {
+                              fill: '#ffffff',
+                              labelFill: '#696969',
+                              symbolStrokeWidth: '2',
+                              stroke: '#ced5d4',
+                              strokeWidth: '1',
+                              height: 22,
+                              hoverFill: '#ced5d4',
+                              radius: 1,
+                              margin: {
+                                right: 0,
+                                left: 0
+                              },
+                              btnTextStyle: {
+                                'fontFamily': '"Lucida Grande", sans-serif',
+                                'fontSize': '13',
+                                'fill': '#696969',
+                                'line-height': '1',
+                                'letter-spacing': '-0.04em'
+                              }
+                            }
+                          }
+                        },
+                        'data-aggregator': {
+                          disabled: false,
+                          position: 'top',
+                          alignment: 'left',
+                          layout: 'inline',
+                          aggregate: {
+                            timeUnit: 'month',
+                            timeMultiplier: '3',
+                            method: 'mean'
+                          },
+                          orientation: 'horizontal',
+                          styles: {
+                            label: {
+                              'font-size': 13,
+                              'font-family': '"Lucida Grande", sans-serif',
+                              'font-weight': 'normal',
+                              'fill': '#4b4b4b',
+                              'height': 22
+                            },
+                            timeMultiplierInputField: {
+                              active: {
+                                'fill': '#fff',
+                                'labelFill': '#696969',
+                                'stroke': '#c8cecd',
+                                'strokeWidth': 1,
+                                'radius': 1,
+                                // 'displayListAt': 'top',
+                                'shadow': {
+                                  'fill': '#000',
+                                  'opacity': 0.35
+                                },
+                                'width': 50,
+                                'height': 22
+                              }
+                            },
+                            timePeriodInputField: {
+                              active: {
+                                'fill': '#fff',
+                                'labelFill': '#696969',
+                                'stroke': '#c8cecd',
+                                'strokeWidth': 1,
+                                'radius': 1,
+                                // 'displayListAt': 'top',
+                                'shadow': {
+                                  'fill': '#000',
+                                  'opacity': 0.35
+                                },
+                                'width': 90,
+                                'height': 22
+                              }
+                            },
+                            aggregationMethodInputField: {
+                              active: {
+                                'fill': '#fff',
+                                'labelFill': '#696969',
+                                'stroke': '#c8cecd',
+                                'strokeWidth': 1,
+                                'radius': 1,
+                                // 'displayListAt': 'top',
+                                'shadow': {
+                                  'fill': '#000',
+                                  'opacity': 0.35
+                                },
+                                'width': 100,
+                                'height': 22
+                              }
+                            },
+                            dropDown: {
+                              active: {
+                                'fill': '#898b8b',
+                                'labelFill': '#fff'
+                              },
+                              normal: {
+                                'fill': '#fff',
+                                'stroke': '#898b8b',
+                                'radius': 2,
+                                'labelFill': '#000',
+                                'hoverFill': '#e6e8e8',
+                                'hoverLabelFill': '#696969'
+                              }
+                            },
+                            applyButton: {
+                              active: {
+                                'fill': '#555',
+                                'labelFill': '#f3f3f3',
+                                'stroke': '#ced5d4',
+                                'strokeWidth': 0,
+                                'hoverFill': '#555',
+                                'hoverStrokeWidth': 0,
+                                'hoverStroke': '',
+                                'radius': 1,
+                                'shadow': {
+                                  'fill': '#000',
+                                  'opacity': 0.35
+                                },
+                                'width': 54,
+                                'height': 22
+                              },
+                              inactive: {
+                                'fill': '#bebebe',
+                                'stroke-width': 0,
+                                'stroke': '#ced5d4',
+                                'labelFill': '#f3f3f3'
+                              }
+                            },
+                            resetButton: {
+                              active: {
+                                'fill': '#898b8b',
+                                'labelFill': '#f3f3f3',
+                                'stroke': '#ced5d4',
+                                'strokeWidth': 0,
+                                'hoverFill': '#898b8b',
+                                'hoverStrokeWidth': 0,
+                                'hoverStroke': '',
+                                'radius': 1,
+                                'shadow': {
+                                  'fill': '#000',
+                                  'opacity': 0.35
+                                },
+                                'width': 54,
+                                'height': 22
+                              },
+                              inactive: {
+                                'fill': '#bebebe',
+                                'stroke-width': 0,
+                                'stroke': '#ced5d4',
+                                'labelFill': '#f3f3f3'
+                              }
+                            },
+                            base: {
+                              font: {
+                                'fontSize': 11,
+                                // 'fontWeight': 'bold',
+                                'fontFamily': '"Lucida Grande", sans-serif'
+                                // 'fontStyle': 'italic'
+                              }
+                            }
+                          }
+                        },
+                        "date-range-chooser": {
+                          "layout": "inline",
+                          "orientation": "horizontal",
+                          "position": "top",
+                          "alignment": "right"
+                        }
+                    }
+                }
+            })
+            .render();
+        });
+    </script>
+</body>
+
+</html>

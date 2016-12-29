@@ -1,0 +1,245 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitieal//EN">
+<html>
+
+<head>
+    <title>Time Series Chart test</title>
+    <script type="text/javascript" src='./fusioncharts.js'></script>
+
+    <!-- extension files -->
+    <script type="text/javascript" src="./extensions/growth-analyser-es5.js"></script>
+    <script type="text/javascript" src="./extensions/data-aggregator-es5.js"></script>
+    <script type="text/javascript" src="./extensions/standard-period-selector-es5.js"></script>
+    <script type="text/javascript" src="./extensions/date-range-chooser-es5.js"></script>
+</head>
+
+<body>
+
+    <div id='chart-container'></div>
+    <div id="container"></div>
+
+    <script type="text/javascript">
+        var tsChart;
+
+        function getRandomDates(len) {
+            var day = 1,
+                months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                year = 2015,
+                month = 0,
+                arr = [];
+
+            for (i = 0; i < len; i++) {
+                if (month === 11 && day === 31) {
+                    year++;
+                    month = 0;
+                }
+                if (day > 30 || (month === 1 && day === 28)) {
+                    day = 1;
+                    month++;
+                }
+                if (month > 11) {
+                    month = 0;
+                }
+
+
+
+                dateStr = day + '-' + months[month] + '-' + year;
+                arr.push(dateStr);
+                day++;
+            }
+            return arr;
+        }
+
+        function getRandomSeries(len) {
+            var arr = [];
+
+            for (i = 0; i < len; i++) {
+                arr.push(Math.floor(Math.random() * 10));
+            }
+            return arr;
+        }
+
+        function getRandomCandleSeries(len) {
+            var arr = [],
+                open,
+                high,
+                low,
+                close;
+
+            for (i = 0; i < len; i++) {
+                open = Math.floor(Math.random() * 1000);
+                close = Math.floor(Math.random() * 1000);
+                high = Math.floor(Math.random() * 1000);
+                low = Math.floor(Math.random() * 1000);
+
+                arr.push([open, high, low, close]);
+            }
+
+            return arr;
+        }
+
+        function getNumDays (date1, date2) {
+          return (date2.getTime() - date1.getTime()) / (24 * 3600000);
+        }
+
+        function getDateStamps (startingDate, numDays) {
+          var time = startingDate,
+              months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct', 'Nov','Dec'];
+          time.setDate(time.getDate() - 1);
+
+          var nextDate = function (dt) {
+            dt.setDate(dt.getDate() + 1);
+            var day = dt.getDate(),
+                month = months[dt.getMonth()],
+                year = dt.getFullYear();
+
+            // Weekday and weekend wise fluctuating data - to show cyclic spans for weekday and weekend
+            pushDataForDayOfWeek(dt.getDay());
+
+            return (day < 10 ? "0" + day : day) +"-"+ month +"-"+ year;
+          }
+          var datesArr = [];
+          for (var i = 0; i < numDays; i++) {
+            //console.log(nextDate(time));
+            datesArr.push(nextDate(time));
+          }
+          return datesArr;
+        }
+
+
+        var candleStickDataArr = [],
+            baseValue = 500,
+            counter = 0;
+
+        function pushDataForDayOfWeek (dayOfWeek) {
+
+          weekend = dayOfWeek == 0 || dayOfWeek == 6 ? 1 : 0;
+
+          var base = baseValue + 100 * Math.sin(++counter * 2 * Math.PI * 3/numDays) + 200 * Math.cos(++counter * 2 * Math.PI * 0.5/numDays) + Math.round(Math.random() * 150) * Math.cos(++counter * 2 * Math.PI * 0.5/numDays),
+
+              range = Math.round(Math.random() * 200);
+
+          if (weekend) {
+            candleStickDataArr.push(undefined);
+          } else {
+            var open = Math.round(base + Math.random() * range),
+                close = Math.round(base + Math.random() * range),
+                high = Math.round(base + Math.random() * range),
+                low = Math.round(base + Math.random() * range);
+
+            candleStickDataArr.push([open, Math.max( Math.max(open, close), high), Math.min( Math.min(open, close), low), close]);
+          }
+        }
+        
+        function getCandleStickData () {
+          return candleStickDataArr;
+        }
+
+        var startingDate = new Date(2014, 2, 10),
+            endingDate = new Date(),
+            numDays = getNumDays(startingDate, endingDate),
+            numData = numDays;
+
+
+        var tsChart,
+            width = 1200,
+            height = 600;
+
+        FusionCharts.ready(function() {
+            tsChart = new FusionCharts({
+                type: 'timeseries',
+                plottype: 'line',
+                renderAt: 'chart-container',
+                width: width,
+                height: height,
+                dataFormat: 'json',
+                dataSource: {
+                    chart: {
+                        axes: [{
+                            uid: 'aa',
+                            x: {},
+                            y: {}
+                        }, {
+                            uid: 'bb',
+                            x: function(store) {
+                                return store.getAxesByIndex(0).x;
+                            },
+                            y: {}
+                        }],
+                        datasets: [{
+                            category: {
+                                dateformat: "%e-%b-%Y",
+                                data: getDateStamps(startingDate, numDays)
+                            },
+                            dataset: [{
+                                uid: 'ds-1',
+                                series: [{
+                                        plot: {
+                                            type: 'candlestick'
+                                        },
+                                        name: "HSM",
+                                        data: getCandleStickData()
+                                    }
+                                ]
+                            }]
+                        }],
+                        caption: [{
+                            title: {
+                                text: 'Business in USA - 4',
+                                style: {
+                                    'font-size': 35,
+                                    'fill': '#545454'
+                                }
+                            },
+                            subtitle: {
+                                text: 'State wise sales (USD in million)',
+                                style: {
+                                    'font-size': 25,
+                                    'font-weight': 'Semibold',
+                                    'fill': '#7B7B7B'
+                                }
+                            }
+                        }],
+                        legend: [{
+                            preDrawHook: function() {},
+                            layout: function (obj) {
+                                return obj.inline;
+                            }
+                        }],
+                        canvas: [{
+                            uid: 'canvas-1',
+                            axes: function(store) {
+                                return store.getAxesByIndex(0);
+                            },
+                            dataset: function(store) {
+                                return store.getDatasetsByIndex(0);
+                            }
+                        }],
+                        navigator: [{
+                            position: function (obj) {
+                                return obj.top;
+                            }
+                        }]
+                    },
+                    extensions: {
+                      'daterangechooser': {
+                        disabled: true
+                      },
+                      'standardperiodselector': {
+                        disabled: true
+                      },
+                      'growthanalyserext': {
+                        disabled: true
+                      },
+                      'data-aggregator': {
+                        disabled: true
+                      }
+                    }
+                }
+
+            })
+            .render();
+        });
+    </script>
+</body>
+
+</html>
