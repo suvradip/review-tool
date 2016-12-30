@@ -45,8 +45,9 @@ app.use(session({
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json({limit:1024*1024*20, type:'application/json'}));
+//{ extended:true,limit:1024*1024*20,type:'application/x-www-form-urlencoding' }
+app.use(bodyParser.urlencoded({ extended: false  }));
 app.use(express.static('public'));
 
 //rootdir delcaration

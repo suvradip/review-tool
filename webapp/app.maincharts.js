@@ -42,11 +42,18 @@ app.controller('mainchartctrl', function($scope, $http, $timeout){
   			canvas,
   			ctx,
   			svgSize,
-  			img;
+  			img,
+            fc;
 
-		svg = document.querySelector( "svg" );
-		svgData = new XMLSerializer().serializeToString( svg );
+        fc = FusionCharts('chartobject-1');
+        
+        if(typeof fc.jsVars.instanceAPI !== "undefined"){
+            svgData = fc.jsVars.instanceAPI.components.paper.toSVG();
+        } else {
+            svgData = fc.jsVars.fcObj.apiInstance._paper.toSVG();
+        }
 
+        svg = document.querySelector( "svg" );
 		canvas = document.createElement( "canvas" );
 		ctx = canvas.getContext( "2d" );
 		svgSize = svg.getBoundingClientRect();
@@ -54,9 +61,8 @@ app.controller('mainchartctrl', function($scope, $http, $timeout){
         canvas.width = svgSize.width;
         canvas.height = svgSize.height;
 
-		img = document.createElement( "img" );
+		img = document.createElement( "img" );     
 		img.setAttribute( "src", "data:image/svg+xml;base64," + btoa( svgData ) );
-
 		img.onload = function() {
 		    ctx.drawImage( img, 0, 0 );
 		    sendData($scope.site_root+'api/create-screenshot', {data: canvas.toDataURL("image/png"), name: name}, function(){});

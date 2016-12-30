@@ -10,12 +10,18 @@ auth = function(req, res, next){
 	if(token && typeof token !== 'undefined') {
         try {
             auth = jwt.decode(token, config.secretKey);
-       /*     res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
-    		res.header('Expires', '-1');
-    		res.header('Pragma', 'no-cache');*/
+            res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+    		res.header('Expires', new Date(Date.now() + config.tokenTime)); //15 MINTS
+    		res.header('Pragma', 'no-cache');
+
+            auth.exp =  Date.now() + config.tokenTime;
+            // console.log("curr ->" + new Date(auth.nbf));
+            // console.log("Exp ->" + new Date(auth.exp));
+            token = jwt.encode(auth, config.secretKey);
+            req.session.token = token;
             next();
         } catch(err) {
-            if(err) { return  res.status(401).send('authentication: invalid signature.' + err).end(); }
+            if(err) { return  res.status(401).send('authentication: signature expired, please login again.' ).end(); }
         } 
 	} else {
 		return res.status(403).send({ 
