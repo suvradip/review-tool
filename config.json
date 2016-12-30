@@ -16,4 +16,5 @@
         "directory" : {
                 "fc.charts.resource" : "/public/fc.charts.resource",
                 "screenshots" : "/public/screenshots"
+    }
 }
