@@ -101,7 +101,10 @@ router.get('/users/:username', function(req, res){
 
 //showdata page
 router.get('/showdata', function(req, res){
-	res.render('showdata');
+	var sess = req.session,
+		usrdata;
+	usrdata = auth.decode(sess.token).auth;	
+	res.render('showdata', {ctype:"", pusername: usrdata.username, pname: usrdata.name, avatar: usrdata.avatar});
 });
 
 router.get('/users/:username/setchart', function(req, res){

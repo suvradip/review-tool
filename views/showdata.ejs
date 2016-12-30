@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Show Data - FusionCharts</title>
-	<link rel="stylesheet" type="text/css" href="<%= site_root%>css/style.css">
-	<!-- angularjs install -->
-	<script type="text/javascript" src="<%= site_root%>bower_components/angular/angular.min.js"></script>
-	<!-- a js file for angular operation -->
+	<title>Show Data panel: Fusioncharts - Review</title>
+	<!-- head template inlude -->
+	<%- include layouts/head.ejs %>
     <script type="text/javascript" src="<%= site_root%>webapp/app.showdata.js"></script>
 </head>
 <body>
@@ -29,7 +27,8 @@
 								</thead>
 								<tbody>
 								<tr  ng-if="reviews.length === 0">
-									<td align="center" colspan="5">No data to display</td>	
+									<td ng-if="reviews.isReady" align="center" colspan="5">Please wait, data is loading</td>
+									<td ng-if="!reviews.isReady" align="center" colspan="5">No data to display</td>	
 								</tr>
 									<tr  ng-if="reviews.length > 0" ng-repeat="unit in reviews">
 										<td>{{ unit.name }}</td>
@@ -39,7 +38,7 @@
 											<div><strong>Build:</strong>{{ unit.build }}</div>
 										</td>
 										<td>{{ unit.review }}</td>
-										<td><div class="attachment"><a href="<%= site_root%>screenshots/{{ unit.ssid }}">screenshots.png</a></div></td>
+										<td><div ><a href="<%= site_root%>screenshots/{{ unit.ssid }}"><img width="120" height="130" src="<%= site_root%>screenshots/{{ unit.ssid }}" alt="screenshots"/></a></div></td>
 										<td><pre><code>{{ unit.data }}</code></pre></td>
 									</tr>										
 								</tbody>

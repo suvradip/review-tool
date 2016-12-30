@@ -6,7 +6,7 @@ auth = function(req, res, next){
 	var sess = req.session,
 		token;
 	token = sess.token || req.headers['x-auth'];
-
+    //console.log(token);
 	if(token && typeof token !== 'undefined') {
         try {
             auth = jwt.decode(token, config.secretKey);

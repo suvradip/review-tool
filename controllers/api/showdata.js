@@ -1,13 +1,13 @@
 var router = require('express').Router(),
-    review = require('../../models/reviews');
+    user = require(global.rootdir+'/models/users');
 
 router.get('/', function (req, res) {
     var entries,
-        projection = {},
+        projection = {"links.reviews" :1},
         query = {};
 
-    entries = review.find(query, projection);
-
+    //entries = user.find(query, projection);
+    entries = user.distinct("links.reviews");
     entries.then(function (result) {
         console.log('[showdata.js] Retreived Successfully!');
         res.status(200).json(result).end();

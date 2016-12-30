@@ -7,6 +7,7 @@ app.controller('dataSection', function($scope, $http){
 	//scope variable declare & defined	
 	$scope.site_root = '';
 	$scope.reviews = [];
+    $scope.reviews.isReady = true;
 
 	getData = function(url, callback){
         $http({
@@ -34,6 +35,7 @@ app.controller('dataSection', function($scope, $http){
     $scope.showAllReviews = function(site_root){
         $scope.site_root = site_root;
     	getData($scope.site_root+'api/showdata', function(response){
+            $scope.reviews.isReady = false;
     		$scope.reviews = response.map(function(ele){
     			var d = new Date(ele.time);
     			return {
@@ -42,7 +44,7 @@ app.controller('dataSection', function($scope, $http){
     				width: ele.chartinfo.width,
                     height: ele.chartinfo.height,
                     build: ele.chartinfo.buildno,
-    				data: JSON.stringify(ele.chartjson, null, 4),
+    				data: JSON.stringify(ele.chartinfo.datasource, null, 4),
     				ssid: ele.screenshots,
     				date: d.toLocaleDateString(),
     				time: d.toLocaleTimeString()
