@@ -99,12 +99,12 @@ router.get('/users/:username', function(req, res){
 		.select({main:1, linkid:1, links:1, _id:0})
 		.exec(function(err, result){
 			if(err) console.log('[router.js] :'+ err);
-			if(result){
+			if(result.links.length > 0){
 				console.log(result);
 				res.render('maincharts', {linkid:result.linkid, ctype: findLink(result.links, result.linkid), susername: susername, jsfname: result.main || '', pusername: pusername, pname: pname, avatar: avatar});
+			} else { 
+				res.redirect(config.site_root+'users/'+ pusername +'/setchart');	
 			}
-			else 
-				res.render('maincharts', {susername: susername, jsfname: '', pusername: pusername, pname: pname, avatar: avatar});		
 
 		}); 	
 });
