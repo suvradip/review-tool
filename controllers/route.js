@@ -1,36 +1,40 @@
 var router = require('express').Router(),
 	auth = require(global.rootdir+'/controllers/token'),
 	users = require(global.rootdir+'/models/users'),
+	config = require(global.rootdir+'/config.json'),
 	_ = require("lodash"),
 	findLink;
 
 	findLink = function(links, name){
-	    return _.find(links, {fname: name});
+		var res;
+	    res = _.find(links, {linkid: name});
+	    return (res && typeof res !== "undefined".type) ? res.type : '';
 	};
 
-//=======================
-//page routing design url
-//=======================
+//=============================
+// Design urls for page routing
+//=============================
 
 //revirew page global
 router.get('/', function(req, res){
-	var pusername = '',
-		pname = '',
-		avatar='',
-		sess,
-		userdata;
+	// var pusername = '',
+	// 	pname = '',
+	// 	avatar='',
+	// 	sess,
+	// 	userdata;
 
-	sess = req.session;	
+	// sess = req.session;	
 	
-	if(sess.token && typeof sess.token !== 'undefined'){
-		userdata = auth.decode(sess.token).auth;
-		pusername = userdata.username;
-		pname = userdata.name;
-		avatar = userdata.avatar;
-	}
+	// if(sess.token && typeof sess.token !== 'undefined'){
+	// 	userdata = auth.decode(sess.token).auth;
+	// 	pusername = userdata.username;
+	// 	pname = userdata.name;
+	// 	avatar = userdata.avatar;
+	// }
 
-	susername = req.params.username;
-	res.render('index', {pusername: pusername, pname: pname, avatar: avatar});
+	// susername = req.params.username;
+	// res.render('index', {pusername: pusername, pname: pname, avatar: avatar});
+	res.redirect(config.site_root+'login/');
 });
 
 //login page
@@ -40,8 +44,9 @@ router.get('/login', function(req, res){
 });
 
 
-
-//==========page routing design url=============
+//====================================
+// Normal design url for page routing
+// ===================================
 
 //api for login page
 router.use('/api/login/', require(global.rootdir+'/controllers/api/login'));
@@ -52,14 +57,20 @@ router.use('/api/review', require(global.rootdir+'/controllers/api/reviews'));
 //api for create screenshots
 router.use('/api/create-screenshot', require(global.rootdir+'/controllers/imageConstruct'));
 
-//=== router middleware to protect this api ====
+
+//====================================================================
+// A middleware to protect some urls which need proper authentications
+// ===================================================================
+
 router.use(require(global.rootdir+'/controllers/auth'));
-//=== router middleware END ====
+
+// END of middleware
 
 
 
-
-//==== register page after middleware
+//================================================
+// registration of page url after the middleware
+// ===============================================
 
 //personal review page
 router.get('/users', function(req, res){
@@ -85,12 +96,12 @@ router.get('/users/:username', function(req, res){
 	susername = req.params.username;
 	req.session.secusername = susername;
 	users.findOne({'username': susername})
-		.select({main:1, links:1, _id:0})
+		.select({main:1, linkid:1, links:1, _id:0})
 		.exec(function(err, result){
 			if(err) console.log('[router.js] :'+ err);
 			if(result){
-				//console.log(result);
-				res.render('maincharts', {ctype: findLink(result.links, result.main).type, susername: susername, jsfname: result.main || '', pusername: pusername, pname: pname, avatar: avatar});
+				console.log(result);
+				res.render('maincharts', {linkid:result.linkid, ctype: findLink(result.links, result.linkid), susername: susername, jsfname: result.main || '', pusername: pusername, pname: pname, avatar: avatar});
 			}
 			else 
 				res.render('maincharts', {susername: susername, jsfname: '', pusername: pusername, pname: pname, avatar: avatar});		
@@ -126,7 +137,7 @@ router.get('/users/:username/setchart', function(req, res){
 	res.render('setchart', {ctype:"", pusername: pusername, pname: pname, avatar: avatar});
 });
 
-//==== register page after middleware
+//end of registration
 
 
 //====================

@@ -10,7 +10,8 @@ app.controller('chartsetupctrl', function($scope, $http, $timeout){
         showoutput,
         selector,
         finalHTMLContent,
-        showMsg;
+        showMsg,
+        filterInit;
 
     //for checkbox    
     $scope.link_check = false;
@@ -43,7 +44,10 @@ app.controller('chartsetupctrl', function($scope, $http, $timeout){
     getlinks = function() {
         getData($scope.site_root+'api/chartsetup/getlinks', function(response){
             $scope.links = {};
-            $scope.links.data = response.result.links;
+            $scope.links.data = response.result.links.map(function(ele){
+                ele.filter  = true;
+                return ele;
+            });
             $scope.links.defltValue = response.result.main;
         });    
     };
@@ -83,9 +87,17 @@ app.controller('chartsetupctrl', function($scope, $http, $timeout){
         }, 2500);
     };
     
+    filterInit = function() {
+        getData($scope.site_root+'assets/charts.json', function(response){
+            //console.log(response);
+            $scope.chartTypes = response;
+        });
+    };
+
     $scope.register = function(obj){
         $scope.site_root = obj.site_root;
         getlinks();
+        filterInit();
     };
 
     //triiger on post button-click
@@ -162,5 +174,24 @@ app.controller('chartsetupctrl', function($scope, $http, $timeout){
         $scope.link_type = "";
         $scope.link_content = "";
     };
+
+    $scope.filter = function() {
+
+        if($scope.selectChart && $scope.selectChart !== "") {
+            
+            $scope.links.data.map(function(ele, index){
+                if(ele.type === $scope.selectChart)
+                    ele.filter = true;
+                else
+                    ele.filter = false;
+                
+                return ele;
+            });
+        } else {
+            getlinks();
+        }
+    };
+    
+
 
 });

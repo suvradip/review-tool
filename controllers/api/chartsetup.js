@@ -29,6 +29,7 @@ router.post('/', function(req, res, next) {  
                     codeblock;
 
                 link_data = {   
+                    linkid: "L-"+new Date().getTime(),
                     name: req.body.name, 
                     fname: req.body.fname,
                     type: req.body.type,
@@ -54,12 +55,23 @@ router.post('/', function(req, res, next) {  
                 
                 promise2 = users.update({ username: r.username }, {$push: { links: link_data } });
 
-                if(link_data.update){
-                    users.update({username: r.username}, {$set: {main: link_data.fname}});
-                }
+                // if(link_data.update){
+                //     users.update({username: r.username}, {$set: {main: link_data.fname}});
+                // }
 
-                promise2.then(function() {
+                promise2.then(function(result) {
                     console.log('[chartsetup.js] new links created successfully!');
+                    if(link_data.update){
+                        users.update({username: r.username}, {$set: {main: link_data.fname, linkid: link_data.linkid }})
+                            .exec(function(err, uresult){
+                                if(err) {
+                                    console.log("[chartsetup.js] ERRO: Default chart not updated.");
+                                    return err;
+                                }
+
+                                console.log("[chartsetup.js] Default chart updated");
+                            });
+                    }
                     res.status(200).send({success: true, message: 'data update.'}).end();
                 })
                 .catch(function (err) {
@@ -112,7 +124,7 @@ router.get('/getlinks', function(req, res){
 
     token = auth.decode(req.session.token).auth;
     query = {username: token.username };
-    select = { _id:0, main:1, "links.linkid": 1, "links.name": 1, "links.fname": 1}; 
+    select = { _id:0, main:1, "links.linkid": 1, "links.name": 1, "links.type":1, "links.fname": 1}; 
 
     if(Object.keys(req.query).length > 0){
         for(var _key in req.query) {
@@ -173,9 +185,7 @@ router.post('/updatelinks', function(req, res){
          
             if(linkdata.update) {
                
-                var p = users.update({'username':username, 'links.linkid': linkid},{
-                    $set: {main: fname }
-                });
+                var p = users.update({'username':username },{ $set: {main: fname, linkid: linkid }});
 
                 p.then(function(){
                     console.log('[chartsetup.js] linkdata updated successfully!');

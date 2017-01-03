@@ -1,5 +1,5 @@
 var router = require('express').Router(),
-    user = require(global.rootdir+'/models/users');
+    reviews = require(global.rootdir+'/models/reviews');
 
 router.get('/', function (req, res) {
     var entries,
@@ -7,7 +7,9 @@ router.get('/', function (req, res) {
         query = {};
 
     //entries = user.find(query, projection);
-    entries = user.distinct("links.reviews");
+    //entries = user.distinct("links.reviews");
+    entries = reviews.find({})
+        .sort({time: -1});
     entries.then(function (result) {
         console.log('[showdata.js] Retreived Successfully!');
         res.status(200).json(result).end();
