@@ -14,13 +14,17 @@
 	<% include layouts/header.ejs %>
 	<div class="content" ng-app='chartsetup' >
 		<div class="container" ng-controller='chartsetupctrl' ng-init="register({site_root:'<%= site_root%>'})">
-			<div class="row">
-				<section >
-					<div class="chart-wrapper" >
-						<div id="chart-container"></div>
-					</div>
-				</section>
-			</div>
+<!-- 			<div class="row">
+				<div class="col-lg-2">
+					<span>Filter By</span>
+				</div>
+				<div class="col-lg-10">
+					<span>chart : </span>
+					<select ng-change="filter()"  ng-model="selectChart" ng-options="chart.value as chart.value for chart in chartTypes">
+						<option value=""></option>
+					</select>
+				</div>
+			</div> -->
 			<div class="row">
 				<div class="col-lg-2">
 					<a href="<%= site_root%>users/<%- pusername%>/setchart">create a new</a>
@@ -28,7 +32,7 @@
 						<h2>Other links</h2>
 							<ul>
 								<li ng-repeat='link in links.data'>
-									<label ng-class="{'nav-active': $index === selectedIndex, 'nav-setdf': links.defltValue === link.fname }" ng-click="linkDetails($index, $event)" data-linkid="{{ link.linkid }}">{{ link.name }}</label>	
+									<label ng-show="link.filter" ng-class="{'nav-active': $index === selectedIndex, 'nav-setdf': links.defltValue === link.fname }" ng-click="linkDetails($index, $event)" data-linkid="{{ link.linkid }}">{{ link.name }}</label>	
 								</li>
 							</ul>
 					</nav>
@@ -45,7 +49,10 @@
 						</div>
 						<div class="fgroup">
 							<label>Chart type</label>
-							<input type="text"  ng-model="link_type">
+							<!-- <input type="text"  ng-model="link_type"> -->
+							<select ng-model="link_type" ng-options="chart.value as chart.value for chart in chartTypes">
+								<option value="">select one</option>
+							</select>
 						</div>
 						<div class="fgroup">
 							<label>Content*</label>

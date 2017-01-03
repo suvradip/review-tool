@@ -71,19 +71,19 @@ app.controller('mainchartctrl', function($scope, $http, $timeout){
 
     $scope.loadAllReviews = function(obj){
         var chartref;
-
+        //console.log(obj);
         $scope.site_root = obj.site_root;
-
+        $scope.linkid = obj.linkid;
         $timeout(function() {
             for(var ii in FusionCharts.items)
             chartref = FusionCharts.items[ii];
             $scope.data = chartref.getJSONData();
         }, 1500);
 
-    	getData($scope.site_root+'api/review/users/'+obj.susername, function(response){
+    	getData($scope.site_root+'api/review/'+$scope.linkid, function(response){
            
             if(response.success && typeof response.result !== 'undefined'){
-        		$scope.posts = response.result.reviews.map(function(ele){
+        		$scope.posts = response.result.map(function(ele){
         			var d = new Date(ele.time);
         			return {
         				name: ele.name,
@@ -112,6 +112,7 @@ app.controller('mainchartctrl', function($scope, $http, $timeout){
         //this data saved to db
         data = {
                 review: $scope.review,
+                linkid: $scope.linkid,
                 ssid: ssid,
                 chartinfo : {
                     type: chartref.chartType(),
@@ -120,8 +121,34 @@ app.controller('mainchartctrl', function($scope, $http, $timeout){
                     datasource : chartref.getJSONData(),
                     build: 'xx-xx'
                 }
-            };    
+            };
         
+        if(chartref.chartType() === "timeseries"){
+            var c,
+                r1,
+                r2,
+                temp = {};            
+
+            temp.reactiveModel = {};    
+            temp.globalReactiveModel = {};    
+            temp.datasource = {};
+
+            c  = chartref.apiInstance.getComponentStore().getCanvasByIndex(0).composition;
+            r1 = c.impl.reactiveModel;
+            r2 = c.impl.globalReactiveModel;
+           
+            for(var a in r1.model) {
+                temp.reactiveModel[a] = r1.model[a];
+            }
+
+             for(var b in r2.model) {
+                temp.globalReactiveModel[a] = r1.model[a];
+            }
+
+            //console.log(JSON.stringify(temp, null, 4));
+            temp.datasource = data.chartinfo.datasource;
+            data.chartinfo.datasource = temp;            
+        }
 
         //create screenshots
 		createScreenshot(ssid);

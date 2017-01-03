@@ -18,7 +18,8 @@
   "dependencies": {
     "angular": "^1.5.9",
     "fusioncharts": "^3.11.3",
-    "fusioncharts-angular": "^1.0.0"
+    "fusioncharts-angular": "^1.0.0",
+    "clipboard": "^1.5.16"
   },
   "devDependencies": {
     "angular": "~1.5.9"

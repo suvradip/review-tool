@@ -6,13 +6,13 @@ auth = function(req, res, next){
 	var sess = req.session,
 		token;
 	token = sess.token || req.headers['x-auth'];
-
+    //console.log(token);
 	if(token && typeof token !== 'undefined') {
         try {
             auth = jwt.decode(token, config.secretKey);
-            res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
-    		res.header('Expires', new Date(Date.now() + config.tokenTime)); //15 MINTS
-    		res.header('Pragma', 'no-cache');
+            //res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+    		//res.header('Expires', new Date(Date.now() + config.tokenTime)); //15 MINTS
+    		//res.header('Pragma', 'no-cache');
 
             auth.exp =  Date.now() + config.tokenTime;
             // console.log("curr ->" + new Date(auth.nbf));

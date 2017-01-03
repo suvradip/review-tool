@@ -23,11 +23,14 @@ router.post('/', function(req, res, next) {  
         secusername = req.session.secusername;
 
         review = {
+            reviewid: "RR-"+new Date().getTime(),
+            linkid: req.body.linkid,
             username: user.username,
             name: user.name,
             avatar: user.avatar,
             review: req.body.review,
             screenshots: req.body.ssid,
+            isActive: false,
             chartinfo: {
                 type: req.body.chartinfo.type,
                 width: req.body.chartinfo.width,
@@ -38,22 +41,9 @@ router.post('/', function(req, res, next) {  
         };
 
         // need edit    
-        // entry = new users({
-        //     username: 'anonymous',
-        //     review: req.body.review,
-        //     avatar: req.body.avatar,
-        //     name: req.body.name || 'anonymous name',
-        //     screenshots: req.body.ssid,
-        //     chartinfo: {
-        //         type: req.body.chartinfo.type,
-        //         width: req.body.chartinfo.width,
-        //         height: req.body.chartinfo.height,
-        //         buildno: req.body.chartinfo.build
-        //     },
-        //     chartjson: req.body.chartdata
-        // });
+        entry = new reviews(review);
 
-        users.findOne({username: secusername})
+        /*users.findOne({username: secusername})
             .select({main:1, username:1})
             .exec(function(err, result){
                 if(err) console.log(err);
@@ -83,30 +73,57 @@ router.post('/', function(req, res, next) {  
                 } else {
                     res.status(200).json({success: false, message: 'no users found.'}).end();
                 }
-            });
+            });*/
         //end edit need
+        
+        promise = entry.save();
+        promise.then(function(result){
+            console.log(result);
+            console.log('[review.js] new review inserted.');
+            var obj,
+                d;
+            d = new Date();
+
+            obj = user;
+            obj.review = review.review;
+            obj.ssid = review.screenshots;
+            obj.time = d.toLocaleTimeString();
+            obj.date = d.toLocaleDateString();
+           // console.log(obj);
+            /*users.update({username: user.username}, {$push: {'reviews':  { linkid: req.body.linkid, reviewid: result.reviewid} } })
+                .exec(function(err, result){
+                    if(err) console.log("error");
+
+                    console.log("updated");
+                });*/
+            res.status(200).send({success:true, obj: obj}).end();
+        })
+        .catch(function(err){
+            console.log('[review.js] insertion Failed!');
+            res.status(200).json({success: false, message: 'no users found.'}).end();
+        });
         
 });
 
-router.get('/users/:username', function (req, res) {
+router.get('/:linkid', function (req, res) {
     var entries,
-        username,
+        linkid,
         projection,
         query;
     
-    username = req.params.username;
-    query = {username: username};    
-    projection = {};
+    linkid = req.params.linkid;
+    query = {linkid: linkid};    
+    projection = {avatar:1, username:1, review:1};
     //entries = review.find(query, projection);
 
-    users.findOne(query)
-        .select({main: 1, links: 1, _id: 0})
+    reviews.find(query)
+        .select({avatar: 1, review:1, time:1, name:1, username:1, screenshots:1, isActive:1, _id: 0})
         .exec(function(err, result) {
             if(result) {
                 
-                var reviews;   
+                //var reviews;   
                 if(err) console.log(err);
-                result = findresult(result.links, {"fname": result.main});
+                //result = findresult(result.links, {"fname": result.main});
                 res.status(200).json({success: true, result: result}).end();
             } else {
 
@@ -123,6 +140,35 @@ router.get('/users/:username', function (req, res) {
     //     console.log(err);
     //     res.status(404).end();
     // });
+});
+
+router.post('/update/:reviewid', function(req, res){
+    var reviewid,
+        flag;
+
+    reviewid = req.params.reviewid;    
+
+    promise = reviews.update({reviewid: reviewid}, {$set: {isActive: true}});
+    promise.then(function() {
+        console.log('[review.js] updated successfully!');
+        // var obj,
+        //     d;
+        // d = new Date();
+
+        // obj = user;
+        // obj.review = review.review;
+        // obj.ssid = review.screenshots;
+        // obj.time = d.toLocaleTimeString();
+        // obj.date = d.toLocaleDateString();
+        // console.log(obj);
+        res.status(200).send({success:true}).end();
+    })
+    .catch(function (err) {
+        console.log('[review.js] Failed updation!');
+        console.log(err);
+        res.status(404).end();
+    });
+            
 });
 
 //global user
