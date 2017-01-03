@@ -277,7 +277,7 @@ header .user-menu {
   position: absolute;
   z-index: 10;
   right: 0;
-  max-width: 150px;
+ /* max-width: 150px;*/
   list-style: none;
   margin: 0;
   padding: 5px 10px;
