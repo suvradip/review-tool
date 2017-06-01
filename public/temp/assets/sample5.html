@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FusionCharts Time Series with slack stats</title>
+    <!-- The core -->
+    <script type="text/javascript" src='./fusioncharts.js'></script>
+
+    <!-- extension files -->
+  <!--   <script type="text/javascript" src="./extensions/growth-analyser-es6.min.js"></script>
+    <script type="text/javascript" src="./extensions/fcts-ext-dataaggregator-es6.js"></script>
+    <script type="text/javascript" src="./extensions/standard-period-selector-es6.min.js"></script>
+    <script type="text/javascript" src="./extensions/fcts-ext-daterange-es6.min.js"></script> -->
+
+    <style type="text/css">
+      @font-face {
+        font-family: "MyriadPro";
+        src: url('MyriadPro.ttf') format("truetype");
+      }
+
+      body {
+        background: #f9f9f9;
+      }
+
+      h2 {
+        display: block;
+        box-sizing: border-box;
+        margin: 20px 0 5px 30px;
+        font-family: 'MyriadPro';
+        line-height: 2rem;
+      }
+
+      .clr1 {
+        /*color: #ef9c00*/
+        color: rgb(33, 150, 243);
+      }
+
+      .clr2 {
+        /*color: #f2de98;*/
+        color: rgb(76, 175, 80);
+      }
+
+      #chart-container {
+        margin: 5px 0px 0px 30px;
+        display: inline-block;
+        border: 1px solid #e8e8e8;
+        border-radius: 8px;
+        box-shadow: 0 1px 0 rgba(0,0,0, .25);
+        position: relative;
+      }
+    </style>
+
+</head>
+<body>
+    <h2><span class="clr1">Direct</span> & <span class="clr2">Group</span> messaging</h2>
+    <div id='chart-container'></div>
+
+    <script type="text/javascript">
+
+    /*
+        DateFormat : An extra learning curve for the user. Normal Auto detection should
+                    Be applied. Throws error in case of not defined.
+        Canvas : Why do I have to define Canvas and axes specifically. Dont these be drawn
+                Automatically for common usecase. The customization is desired in case of advance
+                Usage. Axes & Canvas should not be mandatory.
+        Error : Error tracking not intelligent enough. Throws JS error. Should throw human readble
+                Comprehensible Errors.
+    */
+
+        var tsChart,
+            allData,
+            reqData = {},
+            request = new XMLHttpRequest();
+
+        request.open('GET', 'slack_usage.json', true);
+
+
+        function filterDate(dataStore) {
+            var dates = [],
+                dms = [],
+                gms = [],
+                len = dataStore && dataStore.length,
+                i = 0,
+                obj;
+
+            for (i; i < len; i += 1) {
+                obj = dataStore[i];
+                dates.push(obj.day);
+                dms.push(obj.data.num_messages_dms);
+                gms.push(obj.data.num_messages_groups)
+
+            }
+            //debugger;
+            reqData.dates = dates.sort();
+            reqData.dms = dms;
+            reqData.gms = gms;
+
+            renderTS();
+        }
+
+        request.onload = function() {
+          if (request.status >= 200 && request.status < 400) {
+            // Success!
+            allData = JSON.parse(request.responseText);
+            filterDate(allData.all);
+          } else {
+            // We reached our target server, but it returned an error
+            console.log(request.response)
+          }
+        };
+
+        request.onerror = function() {
+          // There was a connection error of some sort
+          console.log('Error! in loading data.')
+        };
+
+        request.send();
+
+        function renderTS() {
+            //debugger;
+            FusionCharts.ready(function(){
+                tsChart = new FusionCharts({
+                    type: 'timeseries',
+                    plottype: 'line',
+                    renderAt: 'chart-container',
+                    width: '964',
+                    height: '487',
+                    dataFormat: 'json',
+                    dataSource: {
+                        chart: {
+                            container: {
+                                bound: {
+                                    _style: {
+                                        fill: '#ffffff',
+                                        'border-radius': '8'
+                                    }
+                                }/*,
+                                paddingX: 0,
+                                paddingY: 0*/
+                            },
+                            axes: [
+                                {
+                                    x: {
+                                        singleTick: true,
+                                        major: {
+                                            tick: {
+                                                hide: false,
+                                                _style: {
+                                                    stroke: '#a2a3a5'
+                                                }
+                                            },
+                                            text: {
+                                                _style: {
+                                                    'font-size': '10px',
+                                                    'fill': '#a2a3a5'
+                                                }
+                                            }
+                                        },
+                                        minor: {
+                                            tick: {
+                                                hide: false,
+                                                _style: {
+                                                    fill: '#a2a3a5'
+                                                }
+                                            },
+                                            text: {
+                                                _style: {
+                                                    'font-size': '10px',
+                                                    'fill': '#a2a3a5'
+                                                }
+                                            }
+                                        }
+                                    },
+                                    y: {
+                                        major: {
+                                            text: {
+                                                _style: {
+                                                    'font-size': '10px',
+                                                    'fill': '#f2de98'
+                                                }
+                                            }
+                                        },
+                                        minor: {
+                                            tick: {
+                                                length: 10
+                                            }
+                                        }
+                                    }
+                                }
+                            ],
+                            /*caption: [{
+                              title: {
+                                text: 'Direct Messages vs Group Messages'
+                              }
+                            }],*/
+                            datasets: [{
+                                category: {
+                                    dateformat:'%Y-%m-%d',
+                                    data: reqData.dates
+                                },
+                                dataset: [
+                                    {
+                                        uid: 'ds-1',
+                                        series: [
+                                            {
+                                                plot: {
+                                                    type: "line",
+                                                    style: {
+                                                        _stroke: "#ef9c00",
+                                                        'stroke-width': 1
+                                                    }
+                                                },
+                                                name: "People directly mesaging",
+                                                data: reqData.dms,
+
+                                            },
+                                            {
+                                                plot: {
+                                                    type: "line",
+                                                    style: {
+                                                        _stroke: "#f2de98",
+                                                        'stroke-width': 1
+                                                    }
+                                                },
+                                                name: "People messaging in groups",
+                                                data: reqData.gms
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }],
+                            canvas: [{
+                                uid: 'cnv-1',
+                                axes: function (store) {
+                                    return store.getAxesByIndex(0);
+                                },
+                                dataset: function (store) {
+                                    return store.getDatasetsByIndex(0);
+                                },
+                                divlines: {
+                                    _style: {
+                                        fill: 'none',
+                                        stroke: '#f2de98',
+                                        'stroke-width': 0.5
+                                    }
+                                },
+                                style: {
+                                    'border-top': '0px'
+                                }
+                            }],
+                            legend: [{
+                                position: function(obj) {
+                                    return obj.top;
+                                },
+                                alignment: function(obj) {
+                                    return obj.right;
+                                },
+                                preDrawHook: function centerAlign() {
+                                    var self = this,
+                                        parentsArr = self.getParents(),
+                                        canvas = parentsArr[0].cacheByName('canvasContainer'),
+                                        config = this.config;
+
+                                    config.x = canvas.getX() + canvas.getWidth() - self.getWidth();
+                                }
+                            }],
+                            navigator: {
+                                selectionBox: {
+                                    style: {
+                                        fill: '#ff6600',
+                                        stroke: '#000000'
+                                    }
+                                },
+                                style: {
+                                    fill: '#555459',
+                                    stroke: 'none',
+                                    'fill-opacity': 1,
+                                    'border-top': '0px #aaaaaa solid',
+                                    'border-right': '0px #ffffff solid',
+                                    'border-bottom': '0px #aaaaaa solid',
+                                    'border-left': '0px #ffffff solid'
+                                }
+
+                            }
+
+                        }
+                    }
+                }).render();
+            })
+        }
+
+
+    </script>
+
+</body>
+</html>

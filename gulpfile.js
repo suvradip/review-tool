@@ -59,7 +59,7 @@ gulp.task( 'html', function() {
 //	
 //////////////////////////////////////////
 gulp.task( 'browserSync', function() {
-	browserSync.init(['./public/css/*.css',  './views/index.ejs'], {
+	browserSync.init(['./public/css/*.css',  './views/*.ejs'], {
         proxy: "localhost:3300"
   	});	
 });
@@ -80,5 +80,5 @@ gulp.task('watch', function() {
 
 
 
-gulp.task('dev', ['watch:server', 'watch', 'browserSync']);
-//gulp.task('dev', ['watch:server', 'watch']);
+//gulp.task('dev', ['watch:server', 'watch', 'browserSync']);
+gulp.task('dev', ['watch:server']);

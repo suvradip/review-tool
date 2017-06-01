@@ -1,7 +1,14 @@
-//Header
+
+.row [class*="col"]{
+box-sizing: border-box;
+}
+
 body {
 	background-color: $baseColor; 
 }
+
+//Header
+//
 header {
 	.wrapper {
 		width: 100%;
@@ -10,6 +17,138 @@ header {
 		position: fixed;
 		z-index: 2000;
 	}
+
+	.user-block {
+	position: relative;
+	}
+
+	.user {
+		color: lighten($themeGray, 5%);
+		text-align: right;
+		span, .user-avatar {
+			display: inline-block;
+			*zoom:1; *display: inline;
+			vertical-align: middle;
+		}
+		.user-avatar {
+			margin-left: 5px;
+			cursor: pointer;
+			&:hover {
+				.user-menu {
+					display: inline-block;
+					*zoom:1; *display: inline;
+				}
+			}
+
+			img {
+				border: 1px solid $themeGray;
+				padding: 2px;
+			}
+		}
+	}
+	.user-menu {
+		display: none;
+		position: absolute;
+		z-index: 10;
+		right: 0;		
+		max-width: 150px;
+		list-style: none;
+		margin: 0;
+		padding: 5px 10px;
+		background-color : lighten($baseColor, 10%);
+		li {
+			display: inline-block;
+			*zoom:1; *display: inline;			
+			line-height: 1.2;
+			&:first-child {
+			border: none; 
+				a {
+					border-left: none;
+					padding: 0;
+    				margin-left: 0;
+    				cursor: pointer;
+				}
+			}
+			a {
+				font-size: 12px;
+				line-height: 1.2;
+				display: block;
+				text-decoration: none;				
+				color:  lighten($baseColor, 40%);
+				padding: 0 0 0 10px;
+    			margin-left: 10px;
+				text-transform: capitalize;
+				border-left: 1px solid lighten($baseColor, 20%);
+				&:hover, &:active{
+					color: lighten($baseColor, 45%);
+				}
+				&:visited, &:focus  {
+					color: lighten($baseColor, 40%);
+				}
+
+			}
+		}
+
+		&:before {
+			content: "";
+			width: 0;
+			height: 0;
+			position: absolute;
+			margin-top: -15px;
+			right: 15px;
+			border-bottom: 15px solid lighten($baseColor, 10%);
+			border-right: 15px solid transparent;
+			border-left: 15px solid transparent;
+		}
+
+	}
+}
+
+//Nav 
+
+nav {
+	h2 {
+		font-size: 20px;	
+		color: $darkGray;	
+	}
+
+	ul {
+		margin-left: 0;
+		padding-left: 0;
+		list-style: none;
+		li {	
+			&:hover {
+				color: $darkGray;	
+			}
+			label {
+				display: block;
+				padding: 5px;
+				cursor: pointer;
+				position: relative;
+				border-top: 1px solid $themeGray;			
+				&.nav-active {
+					border-top: 1px solid $themeGray;		
+					&:after {
+						content: "";
+						width: 0;
+						height: 0;
+						border-left: 16px solid $themeGray;
+						border-top: 16px solid transparent;
+						border-bottom: 16px solid transparent;
+						position: absolute;
+						right: -16px;
+    					top: -1px;
+					}	
+				}			
+			}
+
+			&:first-child {
+				label {
+					border-top: none;
+				}
+			}	
+		}
+	}
 }
 
 
@@ -17,10 +156,41 @@ header {
 .content {
 	padding-top: 60px;
 	background-color: $white; 
+	min-height: 300px;   
 }
 .chart-wrapper {
 	margin: 30px 0;
 	text-align: center;
+}
+
+.block-wrapper {
+	text-align: center;
+	form {
+		display: inline-block;
+		padding: 20px;
+		margin: 60px 0;
+		background-color: $themeGray;
+		border: 1px solid $lighterGray
+	}
+}
+
+.form-holder {
+	margin: 20px 30px 30px;
+}
+
+aside {
+	background-color: $themeGray;
+	border: 1px solid darken($themeGray, 5%);
+	padding: 15px;
+	ul {
+		margin: 0;
+		padding-left: 20px;
+		li {
+			margin-bottom: 10px;
+			color: $lightGray;
+			font-style: italic;
+		}
+	}
 }
 
 //Footer
@@ -36,4 +206,9 @@ footer {
 	@media (min-width: $screen-md) {
 		text-align: left;
 	}   
+}
+
+.nav-active {
+	color: #5f5f5f;
+    background-color: #edeff0;
 }

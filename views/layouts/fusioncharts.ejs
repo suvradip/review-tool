@@ -1,0 +1,23 @@
+<% if(ctype == "timeseries"){ %>
+
+	<!-- temp of installing fusioncharts -->
+	<script type="text/javascript" src="<%- site_root%>temp/assets/fusioncharts.js"></script>
+	<script type="text/javascript" src="<%- site_root%>temp/assets/extensions/growth-analyser-es5.js"></script>
+	<script type="text/javascript" src="<%- site_root%>temp/assets/extensions/data-aggregator-es5.js"></script>
+	<script type="text/javascript" src="<%- site_root%>temp/assets/extensions/standard-period-selector-es5.js"></script>
+	<script type="text/javascript" src="<%- site_root%>temp/assets/extensions/date-range-chooser-es5.js"></script>
+	<!-- end of installing fusioncharts  -->
+
+<% } else { %>
+
+	<!-- installing fusioncharts  -->
+	<script type="text/javascript" src="<%- site_root%>bower_components/fusioncharts/fusioncharts.js"></script>
+	
+<% } %>
+
+<!-- installing fusioncharts zune theme -->
+<script type="text/javascript" src="<%- site_root%>bower_components/fusioncharts/themes/fusioncharts.theme.zune.js"></script>
+<script type="text/javascript" src="<%- site_root%>bower_components/fusioncharts/themes/fusioncharts.theme.carbon.js"></script>
+<script type="text/javascript" src="<%- site_root%>bower_components/fusioncharts/themes/fusioncharts.theme.fint.js"></script>
+<script type="text/javascript" src="<%- site_root%>bower_components/fusioncharts/themes/fusioncharts.theme.ocean.js"></script>
+<!-- end of installing fusioncharts  -->

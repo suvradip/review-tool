@@ -1,0 +1,280 @@
+[{
+	"name": "Column2D",
+	"value": "column2d"
+}, {
+	"name": "Column3D",
+	"value": "column3d"
+}, {
+	"name": "Line2D",
+	"value": "line"
+}, {
+	"name": "Area2D",
+	"value": "area2d"
+}, {
+	"name": "Bar2D",
+	"value": "bar2d"
+}, {
+	"name": "Bar3D",
+	"value": "bar3d"
+}, {
+	"name": "Pie2D",
+	"value": "pie2d"
+}, {
+	"name": "Pie3D",
+	"value": "pie3d"
+}, {
+	"name": "Doughnut2D",
+	"value": "doughnut2d"
+}, {
+	"name": "Doughnut3D",
+	"value": "doughnut3d"
+}, {
+	"name": "Pareto2D",
+	"value": "pareto2d"
+}, {
+	"name": "Pareto3D",
+	"value": "pareto3d"
+}, {
+	"name": "Multi-seriesColumn2D",
+	"value": "mscolumn2d"
+}, {
+	"name": "Multi-seriesColumn3D",
+	"value": "mscolumn3d"
+}, {
+	"name": "Multi-seriesLine2D",
+	"value": "msline"
+}, {
+	"name": "Multi-seriesBar2D",
+	"value": "msbar2d"
+}, {
+	"name": "Multi-seriesBar3D",
+	"value": "msbar3d"
+}, {
+	"name": "Multi-seriesArea2D",
+	"value": "msarea"
+}, {
+	"name": "Marimekko",
+	"value": "marimekko"
+}, {
+	"name": "ZoomLine",
+	"value": "zoomline"
+}, {
+	"name": "ZoomLineDY",
+	"value": "zoomlinedy"
+}, {
+	"name": "StackedColumn2D",
+	"value": "stackedcolumn2d"
+}, {
+	"name": "StackedColumn3D",
+	"value": "stackedcolumn3d"
+}, {
+	"name": "StackedBar2D",
+	"value": "stackedbar2d"
+}, {
+	"name": "StackedBar3D",
+	"value": "stackedbar3d"
+}, {
+	"name": "StackedArea2D",
+	"value": "stackedarea2d"
+}, {
+	"name": "Multi-seriesStackedColumn2D",
+	"value": "msstackedcolumn2d"
+}, {
+	"name": "Multi-series2DSingleYCombinationChart(Column+Line+Area)",
+	"value": "mscombi2d"
+}, {
+	"name": "Multi-series3DSingleYCombinationChart(Column+Line+Area)",
+	"value": "mscombi3d"
+}, {
+	"name": "Multi-seriesColumn3D+Line-SingleYAxis",
+	"value": "mscolumnline3d"
+}, {
+	"name": "StackedColumn2D+LinesingleYAxis",
+	"value": "stackedcolumn2dline"
+}, {
+	"name": "StackedColumn3D+LinesingleYAxis",
+	"value": "stackedcolumn3dline"
+}, {
+	"name": "Multi-series2DDualYCombinationChart(Column+Line+Area)",
+	"value": "mscombidy2d"
+}, {
+	"name": "Multi-seriesColumn3D+Line-DualYAxis",
+	"value": "mscolumn3dlinedy"
+}, {
+	"name": "StackedColumn3D+LineDualYAxis",
+	"value": "stackedcolumn3dlinedy"
+}, {
+	"name": "Multi-seriesStackedColumn2D+LineDualYAxis",
+	"value": "msstackedcolumn2dlinedy"
+}, {
+	"name": "ScatterChart",
+	"value": "scatter"
+}, {
+	"name": "ZoomScatterChart",
+	"value": "zoomscatter"
+}, {
+	"name": "BubbleChart",
+	"value": "bubble"
+}, {
+	"name": "ScrollColumn2D",
+	"value": "scrollcolumn2d"
+}, {
+	"name": "ScrollLine2D",
+	"value": "scrollline2d"
+}, {
+	"name": "ScrollArea2D",
+	"value": "scrollarea2d"
+}, {
+	"name": "ScrollStackedColumn2D",
+	"value": "scrollstackedcolumn2d"
+}, {
+	"name": "ScrollCombination2D(SingleY)",
+	"value": "scrollcombi2d"
+}, {
+	"name": "ScrollCombination2D(DualY)",
+	"value": "scrollcombidy2d"
+}, {
+	"name": "Real-timeAngular",
+	"value": "angulargauge"
+}, {
+	"name": "Real-timeBulb",
+	"value": "bulb"
+}, {
+	"name": "Real-timeCylinder",
+	"value": "cylinder"
+}, {
+	"name": "Real-timeHorizontalLED",
+	"value": "hled"
+}, {
+	"name": "Real-timeHorizontalLinear",
+	"value": "hlineargauge"
+}, {
+	"name": "Real-timeThermometer",
+	"value": "thermometer"
+}, {
+	"name": "Real-timeVerticalLED",
+	"value": "vled"
+}, {
+	"name": "Real-timeArea",
+	"value": "realtimearea"
+}, {
+	"name": "Real-timeColumn",
+	"value": "realtimecolumn"
+}, {
+	"name": "Real-timeLine",
+	"value": "realtimeline"
+}, {
+	"name": "Real-timeStackedArea",
+	"value": "realtimestackedarea"
+}, {
+	"name": "Real-timeStackedColumn",
+	"value": "realtimestackedcolumn"
+}, {
+	"name": "Real-timeLine(DualY)",
+	"value": "realtimelinedy"
+}, {
+	"name": "SparkLine",
+	"value": "sparkline"
+}, {
+	"name": "SparkColumn",
+	"value": "sparkcolumn"
+}, {
+	"name": "SparkWin/Loss",
+	"value": "sparkwinloss"
+}, {
+	"name": "Horizontalbulletgraph",
+	"value": "hbullet"
+}, {
+	"name": "Verticalbulletgraph",
+	"value": "vbullet"
+}, {
+	"name": "FunnelChart",
+	"value": "funnel"
+}, {
+	"name": "PyramidChart",
+	"value": "pyramid"
+}, {
+	"name": "GanttChart",
+	"value": "gantt"
+}, {
+	"name": "LogarithmicColumn2DChart",
+	"value": "logmscolumn2d"
+}, {
+	"name": "LogarithmicLine2DChart",
+	"value": "logmsline"
+}, {
+	"name": "Single-SeriesSpline2D",
+	"value": "spline"
+}, {
+	"name": "Single-SeriesSplineArea2D",
+	"value": "splinearea"
+}, {
+	"name": "Multi-SeriesSpline2D",
+	"value": "msspline"
+}, {
+	"name": "Multi-SeriesSplineArea2D",
+	"value": "mssplinearea"
+}, {
+	"name": "ErrorBarChart",
+	"value": "errorbar2d"
+}, {
+	"name": "ErrorLine2DChart",
+	"value": "errorline"
+}, {
+	"name": "ErrorScatterChart",
+	"value": "errorscatter"
+}, {
+	"name": "Inversey-AxisArea2DChart",
+	"value": "inversemsarea"
+}, {
+	"name": "Inversey-AxisColumn2DChart",
+	"value": "inversemscolumn2d"
+}, {
+	"name": "Inversey-AxisLine2DChart",
+	"value": "inversemsline"
+}, {
+	"name": "Drag-ableColumn2DChart",
+	"value": "dragcolumn2d"
+}, {
+	"name": "Drag-ableLine2DChart",
+	"value": "dragline"
+}, {
+	"name": "Drag-ableArea2DChart",
+	"value": "dragarea"
+}, {
+	"name": "TreemapChart",
+	"value": "treemap"
+}, {
+	"name": "RadarChart",
+	"value": "radar"
+}, {
+	"name": "HeatMapChart",
+	"value": "heatmap"
+}, {
+	"name": "BoxandWhiskerChart",
+	"value": "boxandwhisker2d"
+}, {
+	"name": "Candle-StickChart",
+	"value": "candlestick"
+}, {
+	"name": "DragNodeChart",
+	"value": "dragnode"
+}, {
+	"name": "StepLineCharts",
+	"value": "msstepLine"
+}, {
+	"name": "Multi-axisLineChart",
+	"value": "multiaxisline"
+}, {
+	"name": "Multi-levelPieChart",
+	"value": "multilevelpie"
+}, {
+	"name": "Select-ScatterChart",
+	"value": "selectscatter"
+}, {
+	"name": "Waterfall/CascadeChart",
+	"value": "waterfall2d"
+}, {
+	"name": "KagiChart",
+	"value": "kagi"
+}]

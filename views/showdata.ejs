@@ -1,27 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
-	<link rel="stylesheet" type="text/css" href="<%= site_root%>css/style.css">
-	<!-- angularjs install -->
-	<script type="text/javascript" src="<%= site_root%>bower_components/angular/angular.min.js"></script>
-	<!-- a js file for angular operation -->
+	<title>Show Data panel: Fusioncharts - Review</title>
+	<!-- head template inlude -->
+	<%- include layouts/head.ejs %>
     <script type="text/javascript" src="<%= site_root%>webapp/app.showdata.js"></script>
+    <script type="text/javascript" src="<%- site_root%>bower_components/clipboard/dist/clipboard.min.js"></script>
 </head>
 <body>
-	<header>
-		<div class="wrapper">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-12">
-						<a href="<%= site_root%>"><img src="<%= site_root%>images/logo-white.png" alt="FusionCharts - Data to delight... in minutes"/></a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</header>
+	<!-- header template include -->
+	<% include layouts/header.ejs %>
 	<div class="content" ng-app='showdata' >
-		<div class="container" ng-controller='dataSection' ng-init='showAllReviews("<%= site_root%>")'>
+		<div class="container" ng-controller='dataSection' ng-init='register("<%= site_root%>")'>
+<!-- 		<div class="row">
+		<div class="col-lg-2">
+			<span>Filter By</span>
+		</div>
+		<div class="col-lg-10">
+			<span>chart : </span>
+			<select ng-change="filter()"  ng-model="selectChart" ng-options="chart.value as chart.value for chart in chartTypes">
+				<option value=""></option>
+			</select>
+		</div>
+	</div> -->
 			<div class="row">
 				<div class="col-lg-12">
 					<section >
@@ -34,11 +35,13 @@
 										<th class="reviews">Review</th>
 										<th class="screenshot">Screenshot</th>
 										<th class="data">Data</th>
+										<th class="data">Status</th>
 									</tr>
 								</thead>
 								<tbody>
 								<tr  ng-if="reviews.length === 0">
-									<td align="center" colspan="5">No data to display</td>	
+									<td ng-if="reviews.isReady" align="center" colspan="6">Please wait, data is loading</td>
+									<td ng-if="!reviews.isReady" align="center" colspan="6">No data to display</td>	
 								</tr>
 									<tr  ng-if="reviews.length > 0" ng-repeat="unit in reviews">
 										<td>{{ unit.name }}</td>
@@ -48,33 +51,24 @@
 											<div><strong>Build:</strong>{{ unit.build }}</div>
 										</td>
 										<td>{{ unit.review }}</td>
-										<td><div class="attachment"><a href="<%= site_root%>screenshots/{{ unit.ssid }}">screenshots.png</a></div></td>
-										<td><pre><code>{{ unit.data }}</code></pre></td>
+										<td><div ><a href="<%= site_root%>screenshots/{{ unit.ssid }}"><img width="120" height="130" ng-src="<%= site_root%>screenshots/{{ unit.ssid }}" alt="screenshots"/></a></div></td>
+										<td><pre id="p{{$index}}"><code>{{ unit.data }}</code></pre><a href="#" data-clipboard-target="#p{{$index}}" class="copyjson">copyjson</a></td>
+										<td>
+										<img ng-src="<%= site_root%>images/icons/{{ unit.active ? 'green-flag.png' : 'shield.png' }}" ng-model="postimg" alt="" data-reviewid={{unit.id}} ng-click="updatePost($event);"></td>
 									</tr>										
 								</tbody>
 							</table>
 						</div>
 					</section>
-				
+			
 				</div>
 			</div>
 		</div>
 	</div>
-	<footer>
-		<div class="container">
-			<div class="row">
-				<div class="col-md-8 col-lg-6"><p class="copyright small mt10">&copy; 2002-
-				2016 InfoSoft Global Private Limited. <span>All Rights Reserved.</span></p></div>
-				<div class="col-md-4  col-lg-6">
-				<ul class="social-icon-holder">
-					<li class="fc-blog-icon"><a data-analytics-event="Outgoing Links|Blog|Blog" class="trackEvent" href="http://www.fusioncharts.com/blog/" target="_blank" title="The FusionCharts Blog"><span>The FusionCharts Blog</span></a></li>
-					<li class="facebook-icon"><a data-analytics-event="Outgoing Links|Social Follows|FaceBook" class="trackEvent" href="https://www.facebook.com/FusionCharts" target="_blank" title="Like us on Facebook"><span>Like us on Facebook</span></a></li>
-					<li class="twitter-icon"><a data-analytics-event="Outgoing Links|Social Follows|Twitter" class="trackEvent" href="https://twitter.com/FusionCharts" target="_blank" title="Follow us on Twitter"><span>Follow FusionCharts on Twitter</span></a></li>
-					<li class="googleplus-icon"><a data-analytics-event="Outgoing Links|Social Follows|Google Plus" class="trackEvent" href="https://plus.google.com/+FusionCharts" target="_blank" title="Follow us on Google Plus"><span>Need Info</span></a></li>
-				</ul>
-				</div>
-			</div>
-		</div>
-	</footer>
+	<!-- footer template include -->
+	<% include layouts/footer.ejs %>
 </body>
+<script type="text/javascript">
+	new Clipboard('.copyjson');
+</script>
 </html>

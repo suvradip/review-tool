@@ -1,0 +1,37 @@
+<header>
+	<div class="wrapper">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8">
+					<a href="<%- site_root%>"><img src="<%- site_root%>images/logo-white.png" alt="FusionCharts - Data to delight... in minutes"/></a>
+				</div>
+				<% if(pusername !== '') { %>					
+					<div class="col-lg-4 user-block">
+						<div class="user">
+							<span>Hello! <%- pname%></span>
+							<div class="user-avatar">
+								<a href="<%- site_root%>users/<%- pusername%>"><img width="30" height="30" src="<%- site_root%>images/avatar/<%- avatar%>" alt="avatar"/></a>
+								<ul class="user-menu">
+									<li>
+									<a href="<%- site_root%>users/<%- pusername%>">home</a>
+									</li>
+									<li>
+										<a href="<%- site_root%>users/<%- pusername%>/setchart">setup</a>
+									</li>
+									<li>
+										<a href="<%- site_root%>showdata">Data</a>
+									</li>
+									<li>
+										<a href="<%- site_root%>api/login/logout">logout</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+						
+					</div>
+				<% } %>	
+			</div>
+		</div>
+	</div>
+</header>
+<!-- header template inlude end -->

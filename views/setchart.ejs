@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<!-- head template inlude -->
+	<% include layouts/head.ejs %>
+	<!-- installing fusioncharts  -->
+	<% include layouts/fusioncharts.ejs %>
+	<!-- a js file for angular operation -->
+  <script type="text/javascript" src="<%= site_root%>webapp/app.chartsetup.js"></script>
+</head>
+<body>
+	<!-- header template include -->
+	<% include layouts/header.ejs %>
+	<div class="content" ng-app='chartsetup' >
+		<div class="container" ng-controller='chartsetupctrl' ng-init="register({site_root:'<%= site_root%>'})">
+<!-- 			<div class="row">
+				<div class="col-lg-2">
+					<span>Filter By</span>
+				</div>
+				<div class="col-lg-10">
+					<span>chart : </span>
+					<select ng-change="filter()"  ng-model="selectChart" ng-options="chart.value as chart.value for chart in chartTypes">
+						<option value=""></option>
+					</select>
+				</div>
+			</div> -->
+			<div class="row">
+				<div class="col-lg-2">
+					<a href="<%= site_root%>users/<%- pusername%>/setchart">create a new</a>
+					<nav>
+						<h2>Other links</h2>
+							<ul>
+								<li ng-repeat='link in links.data'>
+									<label ng-show="link.filter" ng-class="{'nav-active': $index === selectedIndex, 'nav-setdf': links.defltValue === link.fname }" ng-click="linkDetails($index, $event)" data-linkid="{{ link.linkid }}">{{ link.name }}</label>	
+								</li>
+							</ul>
+					</nav>
+				</div>
+				<div class="col-lg-5">
+					<section class="form-holder">
+						<div class="fgroup">
+							<label>Link name*</label>
+							<input type="text"  ng-model="link_name" >
+						</div>
+						<div class="fgroup">
+							<label>Description</label>
+							<textarea  cols="25" rows="2" ng-model="link_description"></textarea>
+						</div>
+						<div class="fgroup">
+							<label>Chart type</label>
+							<!-- <input type="text"  ng-model="link_type"> -->
+							<select ng-model="link_type" ng-options="chart.value as chart.value for chart in chartTypes">
+								<option value="">select one</option>
+							</select>
+						</div>
+						<div class="fgroup">
+							<label>Content*</label>
+							<textarea  cols="25" rows="12" ng-model="link_content"></textarea>
+						</div>
+						<div class="fgroup">
+							<label>Make it final</label>
+							<input type="checkbox"  ng-model="link_check">
+						</div>	
+						<div class="fgroup">
+							<input type="submit" value="submit" ng-hide="btn_action" ng-click="setchart()"  class="btn btn-info">
+							<input type="submit" value="update" ng-show="btn_action" ng-click="updatedata()"  class="btn btn-info">
+							<input type="reset" ng-click="reset()">
+						</div>
+					</section>
+				</div>
+				<div class="col-lg-5">
+					<div style="min-height:30px">{{ msg }}</div>
+					<div >
+						<object type="text/html" style="width:100%; min-height: 400px" src="" data="" id="output"></object>
+					</div>
+					<aside>
+						<ul class="info-list">
+							<!-- <li>Chartid must be `sampleChart`</li> -->
+							<li>Chart container id/renderat must be `chart-container`</li>
+						</ul>
+					</aside>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- footer template include -->
+	<% include layouts/footer.ejs %>
+</body>
+</html>

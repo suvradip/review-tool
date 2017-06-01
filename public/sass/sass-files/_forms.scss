@@ -48,7 +48,7 @@ input[type="color"] {
 
 textarea {
 	width: 100%;
-
+	resize: vertical;
 	&.textarea-code {
 		border: 1px dashed $lighterGray;
 		padding: 10px;
@@ -56,3 +56,29 @@ textarea {
 	}
 }
 
+
+.fgroup {
+	@include clearfix();
+	margin-bottom: 10px;
+
+	label {
+		width: 80px;
+		display: inline-block;
+		*zoom:1; *display: inline;
+		margin-right: 10px;
+		vertical-align: top;
+		color: $darkGray;
+	}
+
+	input[type="text"], input[type="password"], textarea {
+		width: 400px;
+		margin-left: 0;
+	}
+	input[type="submit"], input[type="reset"] {
+		margin-left: 10px;
+	}
+
+	input[type="submit"] {
+			margin-left: 91px;
+	}
+}
